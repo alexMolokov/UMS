@@ -1,0 +1,1920 @@
+syntax = "proto2";
+package EncryptServer.Protocol.Vipadmin;
+option optimize_for = LITE_RUNTIME;
+
+message auth_start
+{
+    /* nonce, the server checks that the command's id
+     * equals to auth_start's id */
+    required int32 id = 1;
+}
+
+message auth_start_response
+{
+    required int32 id = 1;
+    required int32 server_seed = 2;    
+}
+
+message auth_request
+{
+    required int32 id = 1;
+    required int32 client_seed = 2;
+    optional bytes check_access = 3;
+}
+
+message SecurityField
+{
+    required string id = 1;
+    optional string value_str = 2;
+    optional bool value_bool = 3;
+    optional int32 value_int = 4;
+    repeated SecurityField value_field = 5;
+}
+
+message SecurityTemplate
+{
+    optional string id = 1;
+    optional string name = 2;
+    repeated SecurityField permissions = 3;
+    repeated SecurityField lock = 4;
+    repeated SecurityField autologout = 5;
+    repeated SecurityField fake_secret_phrase = 6;
+
+    repeated SecurityField security_fields = 7;
+}
+
+message ContactlistTemplateGroup
+{
+    required string id = 1;
+    optional string name = 2;
+    repeated string users = 3;
+}
+message ContactlistTemplate
+{
+    required string id = 1;
+    optional string name = 2;
+    repeated ContactlistTemplateGroup groups = 3;
+}
+
+message DynamicContactlistGroup
+{
+    required string id = 1;
+    optional string name = 2;
+    optional bool is_default = 3 [default=false];
+}
+
+message user_packet
+{
+    required string id = 1;
+    required int32 user_limit = 2;
+    required string date_from = 3;
+    required string date_to = 4;
+    required int32 status = 5;
+    required int32 user_count = 6;
+    required int32 blocked = 7;
+    required string plan = 8;
+    required string plan_name = 9;
+    required string created = 10;
+}
+
+message ldap_fields_map_item
+{
+    optional string internal_field = 1;
+    repeated string ldap_element_names = 2;
+}
+
+message ba_ldap_policy
+{
+    optional bool autoimport = 1;
+    optional bool autoupdate_profile = 2;
+    optional string search_filter = 3;
+    repeated ldap_fields_map_item fields_map = 5;
+
+    optional string search_base = 6;
+
+    optional string autoimport_cl_template_id = 7;
+    optional string autoimport_cl_dynamic_group = 8;
+    optional string block_filter = 9;
+
+    repeated ldap_fields_map_item directory_fields_map = 10;
+
+    // Is any user allowed to browse LDAP subtree by user profiles?
+    optional bool allowed_browse_users = 11;
+
+    // per BA admin_dn? admin_password?
+
+    // optional SecurityTemplate security_template = 9;
+    // repeated string tags = 11;
+    // repeated limit limits = 12;
+    // repeated subscription subscriptions = 13;
+    // optional sip_parameters sip = 14;
+    // optional string lang = 15 [default="en"];
+}
+
+message business_account
+{
+    required string id = 1;
+    optional string name = 2;
+    optional int32 access = 3;
+    optional string keys = 4;
+    optional string owner = 5;
+    optional string details = 6;
+    optional bool blocked = 7 [default=false];
+    optional int32 user_count = 8; // active user count only (not blocked), total count might be greater
+    optional int32 user_limit = 9;
+    repeated string tags = 10;
+    repeated SecurityTemplate security_templates = 11;
+    repeated ContactlistTemplate contactlist_templates = 12;
+    repeated DynamicContactlistGroup dynamic_contactlist_groups = 13;
+    optional int32 account_id = 14;
+    optional float balance = 15;
+    repeated user_packet packets = 16;
+    repeated string join_requests = 17;
+    optional bool user_pack_enabled = 18 [default=true];
+    optional bool validate_login = 19 [default=true];
+    optional bool sip_admin_enabled = 20 [default=false];
+    // base DN for BA admin's searches
+    optional string ldap_base_dn = 21;
+
+    optional int32 pregenerated_keys_available = 22;
+    optional int32 pregenerated_keys_used = 23;
+    optional int32 pregenerated_keys_exported = 24;
+
+    optional int32 accounts_waiting_initialization = 25;
+    optional ba_ldap_policy ldap_policy = 26;
+}
+
+message business_account_short
+{
+    required string id = 1;
+    optional string name = 2;
+    optional string owner = 3;
+    optional bool blocked = 4 [default=false];
+    optional string ldap_base_dn = 6;
+    optional int32 user_limit = 7;
+}
+
+message domain_admin
+{
+    required string id = 1;
+    optional int32 access = 2;
+    optional bool user_pack_enabled = 3 [default=false];
+    optional bool validate_login = 4 [default=false];
+    optional bool sip_admin_enabled = 5 [default=false];
+}
+
+message auth_request_response
+{
+    enum Status
+    {
+        OK=1;
+        RETRY=2;
+        BAD_AUTH=3;
+        NOT_ALLOWED=4;
+        NOT_FOUND=5;
+        ADMIN_WITHOUT_PASSWORD=6;
+        LOGIN_EXISTS=7;
+        INVALID_LOGIN=8;
+        INVALID_EMAIL=9;
+        USER_LIMITS_REACHED=10;
+        CONTACTLIST_OP_FAILED=11;
+        INVALID_PARAMETER=12;
+        EMAIL_EXISTS=13;
+        INTERNAL_SERVER_ERROR=14;
+        INVALID_USER_PACK_ID=15;
+        USER_PACK_LIMIT_REACHED=16;
+        USER_PACK_BLOCKED=17;
+        NO_ADMIN_SECTION=18;
+        INVALID_LDAP_DN=19;
+        KEYS_LIMIT_REACHED=20;
+        DUPLICATE_LDAP_DN=21;
+    }
+    required int32 id = 1;
+    repeated business_account accounts = 2;
+    repeated domain_admin domains = 3;
+    optional int32 status = 4;
+}
+
+message Date {
+    required int32 year = 1;
+    required int32 month = 2;
+    required int32 day = 3;
+}
+
+message Filter
+{
+    optional int32 field = 1;
+    optional string filter_str = 2;
+    optional int32 filter_from_int = 3;
+    optional float filter_from_float = 4;
+    optional int32 filter_to_int = 5;
+    optional float filter_to_float = 6;
+    optional Date filter_date_from = 7;
+    optional Date filter_date_to = 8;
+    optional bool filter_checked = 9;
+    optional int64 filter_from_int64 = 10;
+    optional int64 filter_to_int64 = 11;
+}
+
+message get_user_list
+{
+    enum Field
+    {
+        FIELD_LOGIN=1;
+        FIELD_NICKNAME=2;
+        FIELD_LAST_LOGIN_TIME=3;
+        FIELD_CREATED=4;
+        FIELD_BLOCKED=5;
+        FIELD_BA_BLOCKED=6;
+        FIELD_INITIALIZED=7;
+        FIELD_EVENTS_COUNT=8;
+        FIELD_FILE_SIZE=9;
+        FIELD_ONLINE_MODE=10;
+        FIELD_BALANCE=12;
+        FIELD_LAST_LOGIN_IP=13;
+        FIELD_TARIFF=14;
+        FIELD_DESIRED_LOGIN=15;
+        FIELD_EMAIL=16;
+        FIELD_COMMENTS=17;
+        FIELD_TAGS=18;
+        FIELD_USER_PACK_ID=19;
+        FIELD_SIP_REGISTRATION=20;
+        FIELD_SIP_LOGIN=21;
+        FIELD_BA_BALANCE_LIMIT=22;
+        FIELD_BA_BALANCE_USED=23;
+        FIELD_BUSINESS_ACCOUNT=24;
+        FIELD_NAME1=25;
+        FIELD_NAME2=26;
+        FIELD_NAME3=27;
+        FIELD_SECURITY_PARAMETERS=28;
+        FIELD_OU=29;
+    }
+
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional bool sort_desc = 4 [default = true];
+    optional Field sort_field = 5 [default=FIELD_LOGIN];
+    optional int32 offset = 6 [default = 0];
+    repeated Filter filter = 7;
+    optional int32 extra_code = 8;
+    repeated Field fields_to_load = 9; // Defaults to all fields in range FIELD_LOGIN..FIELD_BUSINESS_ACCOUNT
+    optional int32 page_size = 10 [default = 100];
+
+    optional string ou_id = 11;
+    optional int32 ou_scope = 12 [default = 2];
+}
+
+message User
+{
+    required string login = 1;
+    optional string nickname = 2;
+    optional int32 last_login_time = 3;
+    optional int32 created = 4;
+    optional bool blocked = 5;
+    optional bool ba_blocked = 6;
+    optional bool initialized = 7;
+    optional int32 events_count = 8;
+    optional int64 file_size = 9;
+    optional bool online_mode = 10;
+    optional float balance = 11;
+    optional string last_login_ip = 12;
+    optional string tariff = 13;
+    optional string desired_login=14;
+    optional string email=15;
+    optional string comments=16;
+    repeated string tags = 17;
+    optional string user_pack_id=18;
+    optional bool sip_registration=19;
+    optional string sip_login=20;
+    optional float ba_balance_limit = 21 [default = -1];
+    optional float ba_balance_used = 22 [default = 0];
+    optional string business_account=23;
+
+    optional string name1 = 24;
+    optional string name2 = 25;
+    optional string name3 = 26;
+
+    optional SecurityTemplate security_parameters = 27;
+
+    optional string ou_id = 28;
+    optional string title = 29;
+}
+
+message get_user_list_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+    optional int32 offset = 5;
+    optional int32 total_count = 6;
+    optional int32 page_size = 7;
+    repeated User users = 8;
+    optional int32 extra_code = 9;
+}
+
+message get_user_profile
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+}
+
+message UserPassword
+{
+    required string id = 1;
+    optional string value = 2;
+}
+
+message UserKeys
+{
+    required string id = 1;
+    required int32 version = 2;
+    optional bool current = 3;
+    optional string created_date = 4;
+    optional string created_by = 5;
+    optional string created_ip = 6;
+    optional string deleted_date = 7;
+    optional string deleted_by = 8;
+    optional string deleted_ip = 9;
+    optional bool removed = 10;
+    optional bool has_pph = 11;
+    optional string pkey = 12;
+    optional string cert = 13;
+    optional bool pregenerated = 14;
+    optional string stored_pph = 15;
+}
+
+message get_user_profile_response {
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+    optional string nickname = 5;
+    optional string name1 = 6;
+    optional string name2 = 7;
+    optional string name3 = 8;
+    optional string vcard = 9;
+    optional string image = 10;
+    optional string login = 12;
+    optional string desired_login=13;
+    optional string email=14;
+    optional string comments=15;
+    optional string subscription=16;
+    optional int32 subscription_code=17;
+    repeated string tags = 18;
+    optional SecurityTemplate security_parameters = 19;
+    repeated UserPassword passwords = 20;
+    optional bool blocked = 21;
+    optional bool blocked_in_business_account = 22;
+    optional string crypt_record_id = 23;
+    optional string user_pack_id=24;
+    optional bool sip_registration = 25;
+    optional string sip_login = 26;
+    optional string sip_password = 27;
+    optional float balance = 28 [default = 0];
+    optional float ba_balance_limit = 29 [default = -1];
+    optional float ba_balance_used = 30 [default = 0];
+    repeated UserKeys keys = 31;
+    optional string last_security_change_date=32;
+    optional string last_password_change_date=33;
+    optional string active_certificate=34;
+    optional string ldap_dn=35;
+    optional int32 secret_phrase_mode=36;
+    optional int32 account_keys_state=37 [default = 0];
+    optional int32 preliminary_reset_mode=38 [default = 0];
+}
+
+message update_user_profile {
+    optional string nickname = 1;
+    optional string name1 = 2;
+    optional string name2 = 3;
+    optional string name3 = 4;
+    optional string vcard = 5;
+    optional string image = 6;
+}
+
+message save_user_profile
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+
+    optional string nickname = 5;
+    optional string name1 = 6;
+    optional string name2 = 7;
+    optional string name3 = 8;
+    optional string vcard = 9;
+    optional string image = 10;
+
+    optional string title = 11;
+}
+
+message get_ba_admins
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+}
+
+message BaAdministrator
+{
+    required string login = 1;
+    required string domain = 2;
+    optional int32 role = 3;
+    optional string certificate = 4;
+    optional string certificate_version = 5;
+}
+
+message get_ba_admins_response
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+    repeated BaAdministrator admins = 4;
+}
+
+message BaAdministratorConfig
+{
+    required string login = 1;
+    required string domain = 2;
+    optional int32 role = 3;
+    optional string keys = 4;
+}
+
+message ba_config_admins
+{
+    enum Operation
+    {
+        OP_SAVE_KEYS=1;
+    }
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 operation = 3;
+    repeated BaAdministratorConfig admins = 4;
+}
+
+message ba_config_admins_response
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+    optional int32 operation = 4;
+}
+
+message get_ba_parameters
+{
+    required int32 id = 1;
+    optional string business_account_id = 2 [default=""];
+    optional string domain_id = 3 [default=""];
+
+    optional string target_business_account_id = 4; // BA id to query, business_account_id by default
+}
+
+message get_ba_parameters_response
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+    optional business_account ba_params = 4;
+}
+
+message save_ba_parameters
+{
+    enum Param
+    {
+        PARAM_NAME = 3;
+        PARAM_DETAILS = 4;
+        PARAM_USER_LIMIT = 5;
+    }
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional Param param = 3;
+    optional string value = 4;
+
+    optional string domain_id = 5 [default=""];
+    optional string target_business_account_id = 6; // BA id to change, business_account_id by default
+}
+
+message ba_add_admin
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional string login = 3;
+    optional int32 role = 4;
+    optional string keys = 5;
+}
+
+message ba_delete_admin
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional string login = 3;
+}
+
+message ba_change_admin_role
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional string login = 3;
+    optional int32 role = 4;
+}
+
+message set_admin_password
+{
+    optional string password = 1;
+    optional int32 id = 2; // must be set for password change
+}
+
+message set_admin_password_response
+{
+    required int32 status = 1;
+}
+
+message AdminLogRecord
+{
+    optional int32  event=1;
+    optional int32  event_status=2;
+    optional string login=3;
+    optional string domain=4;
+    optional string address=5;
+    optional string session_id=6;
+    optional string domain_id=7;
+    optional string buisness_account_id=8;
+    optional string user=9;
+    optional int32  time=10;
+    optional int32  extra_code=11;
+}
+
+message ba_get_admin_logs
+{
+    enum Field
+    {
+        FIELD_EVENT=1;
+        FIELD_EVENT_STATUS=2;
+        FIELD_LOGIN=3;
+        FIELD_DOMAIN=4;
+        FIELD_ADDRESS=5;
+        FIELD_SESSION_ID=6;
+        FIELD_DOMAIN_ID=7;
+        FIELD_BUSINESS_ACCOUNT_ID=8;
+        FIELD_USER=9;
+        FIELD_TIME=10;
+        FIELD_EXTRA_CODE=11;
+    }
+
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional bool sort_desc = 3 [default = true];
+    optional Field sort_field = 4 [default=FIELD_TIME];
+    optional int32 offset = 5 [default = 0];
+    repeated Filter filter = 6;
+}
+
+message ba_get_admin_logs_response
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+    optional int32 offset = 4;
+    optional int32 total_count = 5;
+    optional int32 page_size = 6;
+    repeated AdminLogRecord records = 7;
+}
+
+message UserLogRecord
+{
+    optional int32  event=1;
+    optional int32  code=2;
+    optional string login=3;
+    optional string domain=4;
+    optional string address=5;
+    optional string session_id=6;
+    optional int32 version_ini=7;
+    optional int32 version_def=8;
+    optional string business_account_id=9;
+    optional int32  time=10;
+    optional string system=11;
+    optional string system_version=12;
+    optional string locale=13;
+    optional bool fs_encrypted=14 [default=false];
+    optional string app_instance=15;
+    optional string subscription=16;
+    optional int32 subscription_code=17;
+}
+
+message get_user_logs
+{
+    enum Field
+    {
+        FIELD_EVENT=1;
+        FIELD_CODE=2;
+        FIELD_LOGIN=3;
+        FIELD_DOMAIN=4;
+        FIELD_ADDRESS=5;
+        FIELD_SESSION_ID=6;
+        FIELD_VERSION_INI=7;
+        FIELD_VERSION_DEF=8;
+        FIELD_BUSINESS_ACCOUNT_ID=9;
+        FIELD_TIME=10;
+        FIELD_SYSTEM=11;
+        FIELD_SYSTEM_VERSION=12;
+        FIELD_LOCALE=13;
+        FIELD_FS_ENCRYPTED=14;
+        FIELD_APP_INSTANCE=15;
+        FIELD_SUBSCRIPTION=16;
+        FIELD_SUBSCRIPTION_STATUS=17;
+    }
+
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional bool sort_desc = 4 [default = true];
+    optional Field sort_field = 5 [default=FIELD_TIME];
+    optional int32 offset = 6 [default = 0];
+    repeated Filter filter = 7;
+    optional string login = 8;
+}
+
+message get_user_logs_response
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+    optional int32 offset = 4;
+    optional int32 total_count = 5;
+    optional int32 page_size = 6;
+    repeated UserLogRecord records = 7;
+    optional string login = 8;
+    optional string domain_id = 9;
+}
+
+message ba_add_new_user_tag {
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional string user_tag = 3;
+    optional int32 parameter1 = 4;
+    optional string login = 5;
+    optional string domain_id = 6;
+}
+
+message ba_add_new_user_tag_response {
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+    optional string user_tag = 4;
+    optional int32 parameter1 = 5;
+    optional string login = 6;
+    optional string domain_id = 7;
+}
+
+message ba_dynamic_group {
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 operation = 3;
+    optional string group_id = 4;
+    optional string group_name = 5;
+    optional bool remove_from_contactlists = 6;
+}
+
+message ba_dynamic_group_response {
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+    optional int32 operation = 4;
+    optional string group_id = 5;
+    optional string group_name = 6;
+}
+
+message ba_dynamic_group_users_read {
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional string group_id = 3;
+}
+
+message ba_dynamic_group_users_read_response{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+    optional string group_id = 4;
+    repeated string users = 5;
+}
+
+message ba_shared_contactlist {
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 operation = 3;
+    optional string template_id = 4;
+    optional string template_name = 5;
+    optional string parameter1 = 6;
+    optional string parameter2 = 7;
+    optional string parameter3 = 8;
+}
+
+message ba_shared_contactlist_response {
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+    optional int32 operation = 4;
+    optional string template_id = 5;
+}
+
+message sip_parameters
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional string login = 3;
+    optional string domain_id = 4;
+
+    optional bool sip_registration = 5;
+    optional string sip_login = 6;
+    optional string sip_password = 7;
+}
+
+message LimitValue
+{
+    optional int32  value_int = 1;
+    optional string value_str = 2;
+    optional float  value_float = 3;
+}
+
+message limit {
+    enum Types
+    {
+        TYPE_INT = 1;
+        TYPE_STR = 2;
+        TYPE_FLOAT = 3;
+    }
+    required string name = 1;
+    optional int32  type = 2 [default = 0];
+    optional LimitValue current = 3;
+    optional LimitValue total = 4;
+}
+
+message subscription {
+    required string name = 1;
+    optional string date_from = 2;
+    optional string date_to = 3;
+    optional int32 status = 4;
+}
+
+message UserCommand {
+    optional string password = 1;
+    optional string email = 2;
+    optional string name1 = 3;
+    optional string name2 = 4;
+    optional string name3 = 5;
+    optional bool blocked = 6;
+    optional string nickname = 7;
+    optional sip_parameters sip = 8;
+    repeated subscription subscriprions = 9;
+    repeated limit limits = 10;
+    optional string comments = 11;
+    optional string encrypted_fake_secret = 12;
+    optional string encrypted_unlock_code = 13;
+    optional string encrypted_password = 14;
+    optional string fake_checkdata = 15;
+    optional string unlock_code = 16;
+    optional string password_hex = 17;
+    optional string ldap_dn = 18; // Only in case of LDAP import
+    optional int32 secret_phrase_mode = 19 [default=0];
+    optional int32 account_keys_state = 20 [default=0];
+    optional int32 preliminary_reset_mode = 21 [default=0];
+}
+
+message CryptRecord
+{
+    optional string cert = 1;
+    optional string pk = 2;
+    optional string pph = 3;
+    optional string salg = 4;
+    optional int32 salgkey = 5;
+    optional string aalg = 6;
+    optional int32 aalgkey = 7;
+    optional string iv = 8;
+    optional string halg = 9;
+}
+
+message add_user {
+    required int32 id = 1;
+    required string login = 2;
+    optional string domain_id = 3;
+    optional string business_account_id = 4;
+    required UserCommand user = 5;
+    optional bool can_morph_login = 6;
+    optional string contactlist_template_id = 7;
+    optional string contactlist_dynamic_group = 8;
+    optional SecurityTemplate security_template = 9;
+    optional CryptRecord crypt_record  = 10;
+    repeated string tags = 11;
+    repeated limit limits = 12;
+    repeated subscription subscriptions = 13;
+    optional sip_parameters sip = 14;
+    optional string lang = 15 [default="en"];
+    optional string user_pack_id = 16;
+    optional string security_template_id = 18;
+    optional string comments = 19;
+
+    optional string ou = 20;
+}
+
+message add_user_response {
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+    optional int32 status = 5;
+    optional string registered_login = 6;
+}
+
+message get_user_contactlist
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+}
+
+message ContactListUser
+{
+    required string vid = 1;
+    optional int32 self_auth = 2;
+    optional int32 peer_auth = 3;
+    optional bool deleted = 4;
+    optional bool blacklist = 5;
+    optional int32 visibility = 6;
+    optional int32 events = 7;
+    optional string group_id = 8;
+    optional int32 sent_events = 9;
+}
+
+message ContactListGroup
+{
+    required string id = 1;
+    optional string name = 2;
+    optional bool deleted = 3;
+    repeated ContactListUser users = 4;
+}
+
+message get_user_contactlist_response {
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+    optional string login = 5;
+    repeated ContactListGroup groups = 6;
+    repeated ContactListUser ungroupped_users = 7;
+}
+
+message user_contactlist_operation {
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+    optional int32 operation = 5;
+    optional string parameter1 = 6;
+    optional string parameter2 = 7;
+    optional string parameter3 = 8;
+}
+
+message user_contactlist_operation_response {
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+    optional int32 operation = 5;
+    optional string parameter1 = 6;
+    optional string parameter2 = 7;
+    optional string parameter3 = 8;
+    optional int32 status = 9;
+}
+
+message OnlineSession
+{
+    optional string session_id=1;
+    optional int32 version_ini=2;
+    optional int32 version_def=3;
+    optional string business_account_id=4;
+    optional string system=5;
+    optional string system_version=6;
+    optional string locale=7;
+    optional bool fs_encrypted=8 [default=false];
+    optional string app_instance=9;
+    optional string process = 10;
+    optional string ip = 11;
+    optional int32 login_time= 12;
+    optional string resource = 13;
+    optional bool data_channel = 14;
+    optional string login=15;
+    optional string domain=16;
+    optional int32 commands_per_second=17;
+    optional bool is_dead=18;
+}
+
+message UsersSession
+{
+    optional string login=1;
+    optional string domain=2;
+    optional string business_account_id=3;
+    repeated OnlineSession sessions = 4;
+}
+
+message get_online_sessions {
+    enum Field
+    {
+        FIELD_LOGIN=1;
+        FIELD_DOMAIN=2;
+        FIELD_SESSION_ID=3;
+        FIELD_VERSION_INI=4;
+        FIELD_VERSION_DEF=5;
+        FIELD_BUSINESS_ACCOUNT_ID=6;
+        FIELD_SYSTEM=7;
+        FIELD_SYSTEM_VERSION=8;
+        FIELD_LOCALE=9;
+        FIELD_FS_ENCRYPTED=10;
+        FIELD_APP_INSTANCE=11;
+        FIELD_PROCESS = 12;
+        FIELD_IP = 13;
+        FIELD_LOGIN_TIME = 14;
+        FIELD_RESOURCE = 15;
+        FIELD_DATA_CHANNEL = 16;
+        FIELD_SESSIONS_COUNT = 17;
+        FIELD_COMMANDS_PER_SECOND = 18;
+    }
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+    optional bool sort_desc = 5 [default = true];
+    optional Field sort_field = 6 [default=FIELD_LOGIN];
+    optional int32 offset = 7 [default = 0];
+    repeated Filter filter = 8;
+}
+
+message get_online_sessions_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+    optional int32 offset = 5;
+    optional int32 total_count = 6;
+    optional int32 page_size = 7;
+    repeated UsersSession sessions = 8;
+    optional string login = 9;
+}
+
+message close_online_sessions
+{
+    enum Field
+    {
+        OP_CLOSE_APP=1;
+        OP_CLOSE_ALL_APPS=2;
+        OP_DISCONNECT_SESSION=3;
+        OP_DISCONNECT_ALL_SESSIONS=4;
+    }
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+    optional int32 operation = 5;
+    optional string session_id = 6;
+    optional int32 parameter1 = 7;
+}
+
+message close_online_sessions_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+    optional string login = 5;
+    optional int32 parameter1 = 6;
+}
+
+message save_extra_user_profile
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+    optional string desired_login = 5;
+    optional string email = 6;
+    optional string comments = 7;
+    repeated string tags = 8;
+    optional string user_pack_id = 9;
+    optional string ldap_dn = 10;
+}
+
+message save_extra_user_profile_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+    optional string login = 5;
+}
+
+message save_user_security
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+    optional int32 operation = 5;
+    optional bool block = 6;
+    optional bool ba_block = 7;
+    repeated SecurityField fields = 8;
+    optional CryptRecord crypt_record = 9;
+    optional string old_pph = 10;
+    optional string old_record_id = 11;
+    optional int32 secret_phrase_mode=12;
+    optional int32 account_keys_state=13;
+    optional int32 preliminary_reset_mode=14;
+    optional string phash = 15;
+    optional string phash_hex = 16;
+}
+
+message save_user_security_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+    optional string login = 5;
+    optional int32 operation = 6;
+}
+
+message save_sip_parameters_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+    optional string login = 5;
+    optional int32 operation = 6;
+}
+
+message ba_security_template
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 operation = 3;
+    optional string template_id = 4;
+    optional string template_name = 5;
+    optional SecurityTemplate security_template = 6;
+}
+
+message ba_security_template_response
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+    optional int32 operation = 4;
+    optional string template_id = 5;
+}
+
+message delete_user
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+}
+
+message expel_user
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+}
+
+message accept_ba_join_request
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    repeated string logins = 4;
+    optional string user_pack_id = 5;
+}
+
+message decline_ba_join_request
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    repeated string logins = 4;
+}
+message ba_join_request_response
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+}
+message ba_suspend_user_pack
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional string user_pack_id = 3;
+}
+message ba_resume_user_pack
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional string user_pack_id = 3;
+}
+message set_ba_balance_limit
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+    optional int32 value = 5;
+}
+message set_ba_balance_limit_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+    optional string login = 5;
+}
+
+message clear_user_history
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+    optional int32 status = 5;
+
+    // Possible values: "events", "filesystem"
+    optional string type = 6;
+}
+
+message ba_block
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+
+    optional string domain_id = 4;
+}
+
+message ba_unblock
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+
+    optional string domain_id = 4;
+}
+
+message ba_apply_security_template
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional SecurityTemplate security_template = 3;
+    repeated string users=4;
+}
+message ba_apply_security_template_response
+{
+    required int32 id = 1;
+    optional string business_account_id = 2;
+    optional int32 status = 3;
+    repeated string users=4;
+}
+
+message delete_users
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    repeated string users = 4;
+}
+
+message expel_users
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    repeated string users = 4;
+}
+
+message delete_users_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+    repeated string users=5;
+}
+
+message expel_users_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+    repeated string users=5;
+}
+
+
+message ldap_field_map
+{
+    required string field=1;
+    optional string mapped_field=2;
+}
+
+message list_ldap_users
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    // where to search, server's default is used if blank
+    optional string dn_search_base = 4;
+    // what to search
+    optional string ldap_search_filter = 5;
+    // which LDIF fields to load (the rest are ignored), leave empty for all fields
+    repeated string fields_to_load = 6;
+    optional bool skip_imported = 7 [default=false];
+}
+
+message list_ldap_users_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    required int32 status = 4;
+    repeated ldap_field_map fields_mapping = 5;
+
+    optional int32 raw_error_code = 6;
+    optional string raw_error_message = 7;
+}
+
+// Ask for the next list_ldap_users_response with the next users bunch
+message list_ldap_users_getmore
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional bool stop = 5 [default=false]; // stop the search?
+}
+
+message ldap_attribute
+{
+    required string name = 1;
+    required string value = 2;
+}
+
+message ldap_record
+{
+    required string dn = 1;
+    repeated ldap_attribute attributes = 2;
+}
+
+message list_ldap_users_getmore_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    required int32 status = 4;
+    repeated ldap_record users = 5; // no users in case of the last response
+
+    optional int32 raw_error_code = 6;
+    optional string raw_error_message = 7;
+}
+
+message kill_last_op
+{
+}
+
+message ba_refresh_contactlist
+{
+    required int32 id = 1;
+    required string business_account_id = 2;
+    optional int32 status = 3;
+}
+
+message get_list_of_business_accounts
+{
+    required int32 id = 1;
+    required string domain_id = 2;
+}
+
+message get_list_of_business_accounts_response
+{
+    required int32 id = 1;
+    required string domain_id = 2;
+    required int32 status = 3;
+    repeated string account_ids = 4;
+    repeated business_account_short accounts = 5;
+}
+
+message create_business_account
+{
+    enum MoveUsersType
+    {
+        NO_SD_USERS=0;
+        ALL_USERS=1;
+        NONE_USERS=2;
+    }
+    required int32 id = 1;
+    required string domain_id = 2;
+
+    required string owner_login = 3;
+    required int32 user_limit = 4;
+    required string name = 5;
+    optional bool blocked = 6 [default = false];
+    optional string ou = 7;
+    optional int32 move_users_type = 8;
+}
+
+message create_business_account_response
+{
+    required int32 id = 1;
+    required string domain_id = 2;
+    required int32 status = 3;
+    optional bool from_ou = 4 [default=false];
+
+    optional business_account account = 5;
+}
+
+message move_user_to_business_account
+{
+    required int32 id = 1;
+    required string domain_id = 2;
+
+    required string target_business_account_id = 3;
+    optional string login = 4;
+    repeated string logins = 5;
+}
+
+message move_user_to_business_account_response
+{
+    required int32 id = 1;
+    required string domain_id = 2;
+    required int32 status = 3;
+}
+
+message pregenerated_key
+{
+    optional bytes pub_key = 1;
+    optional bytes priv_key = 2;
+    optional string sc = 3;
+    optional string id =4;
+    optional int32 creation_time = 5;
+    optional bytes admin_priv_key = 6;
+    optional string admin_pph = 7;
+}
+message add_pregenerated_keys
+{
+    required int32 id = 1;
+    required string business_account_id = 2;
+    repeated pregenerated_key keys=3;
+}
+message add_pregenerated_keys_response
+{
+    required int32 id = 1;
+    required string business_account_id = 2;
+    required int32 status = 3;
+    optional int32 count = 4;
+}
+message export_pregenerated_keys
+{
+    required int32 id = 1;
+    required string business_account_id = 2;
+    required int32 count = 3;
+}
+message export_pregenerated_keys_response
+{
+    required int32 id = 1;
+    required string business_account_id = 2;
+    required int32 status = 3;
+    repeated pregenerated_key keys=4;
+}
+message remove_pregenerated_keys
+{
+    required int32 id = 1;
+    required string business_account_id = 2;
+    optional Date date_from = 3;
+    optional Date date_to = 4;
+    repeated string keys = 5;
+}
+message remove_pregenerated_keys_response
+{
+    required int32 id = 1;
+    required string business_account_id = 2;
+    required int32 status = 3;
+}
+
+message get_user_event_logs
+{
+    enum Field {
+        FIELD_LOGIN = 1; // filter_str
+        FIELD_SESSION_ID = 2; // filter_str
+        FIELD_BUSINESS_ACCOUNT_ID = 3; // filter_str
+        FIELD_IP_ADDRESS = 4; // filter_str
+        FIELD_TIME_MICROSEC = 5; // filter_{from,to}_int64
+        FIELD_COMMAND_CODE = 6; // filter_{from,to}_int
+        FIELD_STATUS = 7; // filter_{from,to}_int
+        FIELD_ARGUMENT_1 = 8; // filter_str
+        FIELD_OBJECT = 9; // filter_str
+    }
+
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    repeated Filter filter = 4;
+    // ask server to return not more than items_limit log items
+    optional int32 items_limit = 5;
+    optional bool time_sort_order_inc = 6 [default=true];
+    // how many items to skip
+    optional int32 offset = 7;
+}
+
+message UserLogItem
+{
+    required string login = 1;
+    optional string business_account_id = 2;
+    optional string session_id = 3;
+    optional string ip_address = 4;
+    optional int64 time_microseconds = 5;
+    // protobuf code * 100 + ext_code, described in shared/protocol/client_event_log_codes.txt
+    optional int32 code = 6;
+    optional int32 status = 7;
+    repeated string arguments = 8;
+    optional string object = 9;
+}
+
+message get_user_event_logs_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional int32 status = 4;
+    repeated UserLogItem log_items = 5;
+}
+
+message get_user_event_logs_count
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    repeated Filter filter = 4;
+}
+
+message get_user_event_logs_count_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional int32 status = 4;
+    optional int32 count = 5;
+}
+
+message export_accounts_autoconf
+{
+    required int32 id = 1;
+    required string business_account_id = 2;
+    optional string login_from = 3;
+    optional string login_to = 4;
+    optional string continue_from = 5;
+    optional bool with_keys = 6 [default = false];
+}
+message ExportAccountAutoconfKey
+{
+    required string id = 1;
+    optional string sc = 2;
+}
+message ExportAccountAutoconf
+{
+    required string login = 1;
+    optional string password = 2;
+    repeated ExportAccountAutoconfKey key = 3;
+}
+message export_accounts_autoconf_response
+{
+    required int32 id = 1;
+    required string business_account_id = 2;
+    required int32 status = 3;
+    repeated ExportAccountAutoconf account = 4;
+    optional int32 total = 5;
+    optional bool finished = 6;
+}
+
+message history_message
+{
+    required string receiver = 1;
+    required string author = 2;
+    optional int32 event_type = 3;
+    optional bytes content = 4;
+    optional int32 datetime = 5;
+}
+
+message read_user_keys
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+}
+message read_user_keys_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+    optional string login = 5;
+}
+
+message read_user_history
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+    repeated string contacts = 5;
+    optional int32 date_from = 6;
+    optional int32 date_to = 7;
+    optional bool count_total = 8;
+}
+message read_user_history_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+    optional string login = 5;
+    repeated history_message message = 6;
+    optional int32 total = 7;
+}
+
+message push_notification_broadcast
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+
+    optional string class = 3;
+    optional string text = 4;
+    optional int32 min_client_build = 5;
+    optional int32 max_client_build = 6;
+    optional string localization_key = 7;
+    optional string category = 8;
+}
+
+message push_notification_broadcast_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+
+    optional int32 status = 3;
+}
+
+message set_ldap_policy
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional ba_ldap_policy policy = 4;
+}
+
+message set_ldap_policy_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional int32 status = 4;
+}
+
+message server_parameters_ldap
+{
+    required bool enabled=1;
+    optional string uri=2;
+    optional string admin_dn=3;
+    optional string admin_password=4;
+    optional string base_dns=5;
+    optional bool tls=6;
+    repeated ldap_field_map user_map=7;
+    optional bool enable_search=8;
+    optional string exclude_search_filter=9;
+    repeated ldap_field_map directory_map=10;
+    optional string user_filter=11;
+    optional string directory_filter=12;
+    optional int32 max_results_per_search=13 [default = 1000];
+    optional string blocked_user_filter=14;
+    optional bool use_member_of_for_tree=15;
+}
+
+message search_field
+{
+    required string field=1;
+    optional bool enabled=2 [default=false];
+}
+
+message server_parameters_user_search
+{
+    repeated search_field fields=1;
+    optional bool enable_wildcard=2;
+    optional int32 wildcard_min_length=3 [default=1];
+}
+
+message server_parameters
+{
+    optional server_parameters_ldap ldap=1;
+    optional server_parameters_user_search user_search=2;
+}
+
+message get_server_parameters
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+}
+message get_server_parameters_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional int32 status = 3;
+
+    optional server_parameters parameters=4;
+}
+
+message set_server_parameters
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+
+    required server_parameters parameters = 3;
+}
+
+message set_server_parameters_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional int32 status = 3;
+
+    optional server_parameters parameters=4;
+}
+
+message ldap_test_connection
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+
+    required server_parameters_ldap parameters = 3;
+}
+message ldap_connection_status
+{
+    required int32 status=1;
+    required string dn=2;
+    optional string error=3;
+}
+message ldap_test_connection_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional int32 status = 3;
+
+    optional ldap_connection_status result=4;
+}
+
+message update_profile_from_ldap
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    repeated string logins=4;
+}
+
+message update_profile_from_ldap_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+
+    repeated string logins=5;
+}
+
+message set_business_account_short_parameters
+{
+    required int32 id = 1;
+    required string domain_id = 2;
+    required string target_business_account_id = 3;
+    optional string name = 4;
+    optional int32 user_limit = 5;
+    optional string owner = 6;
+    optional bool blocked = 7;
+}
+
+message set_business_account_short_parameters_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional int32 status = 3;
+}
+
+message remove_users_from_dynamic_group
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string group_id = 4;
+    repeated string users=5;
+    optional bool remove_from_contactlists = 6;
+}
+
+message remove_users_from_dynamic_group_response
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional int32 status = 4;
+}
+
+message join_team_account_apply
+{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login=4;
+
+    optional string contactlist_template_id = 7;
+    optional string contactlist_dynamic_group = 8;
+    optional SecurityTemplate security_template = 9;
+    repeated string tags = 10;
+    optional string security_template_id = 11;
+    optional string comments = 12;
+}
+message join_team_account_apply_response {
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+    optional string login = 4;
+    optional int32 status = 5;
+}
+
+message clear_mass_history {
+    optional int32 id = 1;
+}
+message clear_mass_history_response{
+    optional int32 status = 1;
+    optional int32 id = 2;
+}
+
+message ou_tree_item{
+    enum Barrier
+    {
+        BARRIER_DEFAULT=0;
+        BARRIER_ENABLE=1;
+        BARRIER_DISABL=2;
+    }
+
+    optional string id = 1;
+    optional string name = 2;
+    optional string sd = 3;
+    optional string parent = 4;
+    optional int32 timestamp = 5;
+
+    repeated ou_tree_item children = 6;
+
+    optional int32 barrier = 7;
+}
+
+message ou_tree_get_items{
+    enum Scope
+    {
+        SCOPE_SINGLE = 0;
+        SCOPE_DIRECT_CHILDREN = 1;
+        SCOPE_ALL = 2;
+    }
+
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional string parent = 4;
+    optional int32 scope = 5 [default = 2];
+    optional string prefix = 6;
+    optional bool with_sd = 7;
+    optional string login = 8;
+}
+message ou_tree_get_items_response{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional int32 status = 4;
+    repeated ou_tree_item items = 6;
+
+    repeated business_account_short accounts = 7;
+
+    optional bool enable_barriers = 8;
+    optional int32 default_barrier = 9;
+    optional string login = 10;
+}
+
+message ou_tree_add_items{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    repeated ou_tree_item items = 4;
+}
+message ou_tree_add_items_response{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional int32 status = 4;
+}
+
+message ou_tree_move_items{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional string to_item = 4;
+    repeated ou_tree_item items = 5;
+}
+message ou_tree_move_items_response{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional int32 status = 4;
+}
+
+message ou_tree_add_or_move_users{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional string to_item = 4;
+    repeated string users = 5;
+    optional bool add_only = 6 [default = false];
+}
+message ou_tree_add_or_move_users_response{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional int32 status = 4;
+}
+
+message ou_tree_remove_items{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    repeated string items = 4;
+}
+message ou_tree_remove_items_response{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional int32 status = 4;
+}
+
+message ou_tree_update_item{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional ou_tree_item item = 4;
+}
+message ou_tree_update_item_response{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional int32 status = 4;
+}
+
+message ou_tree_take_users{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional string item = 4;
+    repeated string users = 5;
+}
+message ou_tree_take_users_response{
+    required int32 id = 1;
+    optional string domain_id = 2;
+    optional string business_account_id = 3;
+
+    optional int32 status = 4;
+}
