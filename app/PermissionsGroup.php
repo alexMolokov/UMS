@@ -9,7 +9,6 @@ class PermissionsGroup extends Model
 {
     const MESSENGER = "messenger";
     const ADMIN = "admin";
-    const ADMIN_ROLES = "role";
     const LOG = "log";
     const FEEDBACK = "feedback";
 
@@ -17,9 +16,8 @@ class PermissionsGroup extends Model
 
     public static function getTitle($name) {
         $groups = [
-            self::MESSENGER => "Messenger users",
-            self::ADMIN => "System users",
-            self::ADMIN_ROLES => "System roles",
+            self::MESSENGER => "Messenger",
+            self::ADMIN => "System",
             self::FEEDBACK => "Feedback",
             self::LOG => "Log"
         ];

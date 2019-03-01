@@ -14,7 +14,6 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         $this->createAdminPermissions();
-        $this->createAdminRolePermissions();
         $this->createMessengerPermissions();
         $this->createFeedBackPermissions();
         $this->createLogPermissions();
@@ -48,14 +47,6 @@ class PermissionsTableSeeder extends Seeder
             "title" => Permission::getTitle(Permission::ADMIN_BLOCK_USER),
             "group_id" => $adminGroup["id"]
         ]);
-    }
-
-
-    private function createAdminRolePermissions(){
-        $adminGroup = PermissionsGroup::create([
-            "name" => PermissionsGroup::ADMIN_ROLES,
-            "title" => PermissionsGroup::getTitle(PermissionsGroup::ADMIN_ROLES)
-        ]);
 
         Permission::create([
             "name" => Permission::ADMIN_WATCH_ROLE,
@@ -79,9 +70,10 @@ class PermissionsTableSeeder extends Seeder
             "title" => Permission::getTitle(Permission::ADMIN_DELETE_ROLE),
             "group_id" => $adminGroup["id"]
         ]);
-
-
     }
+
+
+
     private function createMessengerPermissions(){
         $messengerGroup = PermissionsGroup::create([
             "name" => PermissionsGroup::MESSENGER,

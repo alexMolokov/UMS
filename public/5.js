@@ -148,6 +148,28 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -213,37 +235,69 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm.hasPermission(_vm.permissions.MESSENGER_WATCH_USER)
-          ? _c(
+        _c("li", { staticClass: "treeview" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("ul", { staticClass: "treeview-menu" }, [
+            _c(
               "li",
               [
                 _c(
                   "router-link",
                   { attrs: { to: { name: "messenger-users" } } },
                   [
-                    _c("i", { staticClass: "fa fa-users" }),
+                    _c("i", { staticClass: "fa fa-circle-o" }),
                     _vm._v(" "),
                     _c("span", [_vm._v("Пользователи")])
                   ]
                 )
               ],
               1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              [
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "messenger-users" } } },
+                  [
+                    _c("i", { staticClass: "fa fa-circle-o" }),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("Структура")])
+                  ]
+                )
+              ],
+              1
             )
-          : _vm._e(),
+          ])
+        ]),
         _vm._v(" "),
         _vm.hasPermission(_vm.permissions.LOG_WATCH)
           ? _c(
               "li",
               [
                 _c("router-link", { attrs: { to: "/logs" } }, [
-                  _c("i", { staticClass: "fa fa-pencil" }),
+                  _c("i", { staticClass: "fa fa-map-o" }),
                   _vm._v(" "),
                   _c("span", [_vm._v("Логи")])
                 ])
               ],
               1
             )
-          : _vm._e()
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "li",
+          [
+            _c("router-link", { attrs: { to: "/logs" } }, [
+              _c("i", { staticClass: "fa fa-envelope" }),
+              _vm._v(" "),
+              _c("span", [_vm._v("Обратная связь")])
+            ])
+          ],
+          1
+        )
       ])
     ])
   ])
@@ -256,7 +310,21 @@ var staticRenderFns = [
     return _c("a", { attrs: { href: "#" } }, [
       _c("i", { staticClass: "fa fa-wrench" }),
       _vm._v(" "),
-      _c("span", [_vm._v("Администрирование")]),
+      _c("span", [_vm._v("Система")]),
+      _vm._v(" "),
+      _c("span", { staticClass: "pull-right-container" }, [
+        _c("i", { staticClass: "fa fa-angle-left pull-right" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("i", { staticClass: "fa fa-users" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Мессенджер")]),
       _vm._v(" "),
       _c("span", { staticClass: "pull-right-container" }, [
         _c("i", { staticClass: "fa fa-angle-left pull-right" })
@@ -421,11 +489,11 @@ var render = function() {
     { staticClass: "main-header" },
     [
       _c("router-link", { staticClass: "logo", attrs: { to: "/dashboard" } }, [
-        _c("span", { staticClass: "logo-mini" }, [_vm._v("GAPP")]),
+        _c("span", { staticClass: "logo-mini" }, [_vm._v("UMS")]),
         _vm._v(" "),
         _c("span", { staticClass: "logo-lg" }, [
           _c("b", [_vm._v("Admin")]),
-          _vm._v("GAPP")
+          _vm._v("UMS")
         ])
       ]),
       _vm._v(" "),

@@ -11,8 +11,8 @@
   "Login exists": "Логин существует",
   "LOGIN_EXISTS": "Логин существует",
   "EMAIL_EXISTS": "Email существует",
-  "System users": "Пользователи системы",
-  "Messenger users": "Пользователи мессенджера",
+  "System": "Система",
+  "Messenger": "Мессенджер",
   "Log": "Логирование",
   "Watch user": "Видеть пользователей",
   "Edit user": "Редактировать пользователей",
@@ -24,5 +24,11 @@
   "Watch role": "Видеть роли",
   "Delete role": "Удалять роль",
   "Edit role": "Редактировать роль",
-  "System roles": "Роли"
+  "System roles": "Роли",
+  "Feedback": "Обратная связь",
+  "Create users": "Создавать пользователей",
+  "Create structure": "Создавать структуру",
+  "Edit structure": "Редактировать структуру",
+  "Move users": "Перемещать пользователей",
+  "Copy users": "Копировать пользователей"
 }

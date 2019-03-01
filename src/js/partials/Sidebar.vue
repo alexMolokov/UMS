@@ -8,7 +8,7 @@
           <li class="treeview">
             <a href="#">
               <i class="fa fa-wrench"></i>
-              <span>Администрирование</span>
+              <span>Система</span>
               <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -22,17 +22,39 @@
               </li>
             </ul>
           </li>
-          <li v-if="hasPermission(permissions.MESSENGER_WATCH_USER)">
-            <router-link :to="{name: 'messenger-users'}">
-              <i class="fa fa-users"></i> <span>Пользователи</span>
-            </router-link>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-users"></i>
+              <span>Мессенджер</span>
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+              <li>
+                <router-link :to="{name: 'messenger-users'}">
+                  <i class="fa fa-circle-o"></i> <span>Пользователи</span>
+              </router-link>
+              </li>
+
+              <li>
+                <router-link :to="{name: 'messenger-users'}">
+                  <i class="fa fa-circle-o"></i> <span>Структура</span>
+                </router-link>
+              </li>
+            </ul>
+
           </li>
           <li  v-if="hasPermission(permissions.LOG_WATCH)">
             <router-link to="/logs">
-              <i class="fa fa-pencil"></i> <span>Логи</span>
+              <i class="fa fa-map-o"></i> <span>Логи</span>
             </router-link>
           </li>
-
+          <li>
+            <router-link to="/logs">
+              <i class="fa fa-envelope"></i> <span>Обратная связь</span>
+            </router-link>
+          </li>
 
 
         </ul>

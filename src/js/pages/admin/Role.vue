@@ -33,7 +33,11 @@
                                 <div class="form-group" :class="{'has-error': errors.has('permissions')}">
                                     <label class="col-sm-2 control-label">Права</label>
                                     <div class="col-sm-10">
-                                        <liquor-tree  v-if="tree.loaded" :data="tree.data" :options="{ checkbox: true }" ref="tree"></liquor-tree>
+                                        <liquor-tree  v-if="tree.loaded" :data="tree.data" :options="{ checkbox: true }" ref="tree" @node:checked="">
+                                            <div slot-scope="{node}" class="node-container">
+                                                <div class="node-text"><span>{{ node.text}}</span> <i class="fas fa-stamp">1111</i> </div>
+                                            </div>
+                                        </liquor-tree>
                                         <span v-show="errors.has('permissions')" class="help-block">{{errors.first('permissions')}}</span>
                                     </div>
                                 </div>

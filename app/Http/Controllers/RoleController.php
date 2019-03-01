@@ -107,24 +107,32 @@ class RoleController extends Controller
 
     private  function _getPermissionsTree($checked = [])
     {
-        $ar = [];
+        $tree = [];
         $permissionsGroups = PermissionsGroup::with('permissions')->get();
-        foreach($permissionsGroups as $permissionsGroup)
-        {
-            $group = ["text" => __($permissionsGroup->title), "children" => [], "expanded" => true, "editable" => false, "dropable" => false, "draggable" => false, "data" => ["selectable" => false]];
-            foreach($permissionsGroup->permissions as $permission)
-            {
+        foreach($permissionsGroups as $permissionsGroup){
+
+            $group = [
+                "text" => __($permissionsGroup->title),
+                "children" => [], "expanded" => true,
+                "editable" => false,
+                "dropable" => false,
+                "draggable" => false,
+                "data" => ["selectable" => false]
+            ];
+
+            foreach($permissionsGroup->permissions as $permission) {
                 $group["children"][] = [
                     "text" => __($permission->title),
+                    "attributes" => ["approved" => true],
                     "id" => $permission->id,
                     "data" => ["name" => $permission->name, "selectable" => true],
                     "state" => ["checked" => in_array($permission->id, $checked)]
                 ];
 
             }
-            $ar[] = $group;
+            $tree[] = $group;
         }
-        return $ar;
+        return $tree;
 
 
 

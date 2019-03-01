@@ -224,6 +224,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -428,7 +432,39 @@ var render = function() {
                                   attrs: {
                                     data: _vm.tree.data,
                                     options: { checkbox: true }
-                                  }
+                                  },
+                                  on: { "node:checked": function($event) {} },
+                                  scopedSlots: _vm._u([
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var node = ref.node
+                                        return _c(
+                                          "div",
+                                          { staticClass: "node-container" },
+                                          [
+                                            _c(
+                                              "div",
+                                              { staticClass: "node-text" },
+                                              [
+                                                _c("span", [
+                                                  _vm._v(_vm._s(node.text))
+                                                ]),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "i",
+                                                  {
+                                                    staticClass: "fas fa-stamp"
+                                                  },
+                                                  [_vm._v("1111")]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      }
+                                    }
+                                  ])
                                 })
                               : _vm._e(),
                             _vm._v(" "),
