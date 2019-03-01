@@ -1,0 +1,131 @@
+<template>
+    <modal-window :id="id"  @close="close" class="in"  style="display: block" :show="true">
+        <div slot="title" v-translate>Новая роль</div>
+        <form :url="url" @submit.prevent.stop class="form-horizontal">
+            <div style="position: relative">
+                <loading-inform :state="state" @close="close">
+                    <div class="window-center" slot="ok-message">
+                        <div class="complete-body" v-translate>Роль была успешно создана.</div>
+                        <div class="button-close-ok"><button type="button" class="btn  btn-primary" v-translate @click="close">Ok</button></div>
+                    </div>
+                    <div slot="buttons"></div>
+                </loading-inform>
+                <div class="modal-body">
+                    <div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box-body">
+                                    <div class="form-group"  :class="{'has-error': errors.has('role')}">
+                                        <label for="role" class="col-sm-2 control-label">Роль</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="role" name="role" v-model="role.name"  v-validate="'required|min:3'" placeholder="Название">
+                                            <span v-show="errors.has('role')" class="help-block">{{errors.first('role')}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Права</label>
+                                        <div class="col-sm-10">
+                                            <liquor-tree  v-if="tree.loaded" :data="tree.data" :options="{ checkbox: true }" ref="tree"></liquor-tree>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <error-inform :err="err" :state="state"></error-inform>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" v-translate @click="validate">Создать</button>
+                </div>
+            </div>
+        </form>
+    </modal-window>
+</template>
+
+
+<script>
+
+    import modalWindow from './modalWindow.vue';
+    import ajaxform from '../../mixins/ajax-form.vue';
+    import errorInform from '../../mixins/error-inform.vue';
+    import loadingInform from '../../mixins/loading-inform.vue';
+    import liquorTree from 'liquor-tree'
+    import {mapState} from 'vuex';
+    import {mapMutations} from 'vuex';
+
+    export default {
+        name: 'form-create-login',
+        components: {
+            modalWindow,
+            errorInform,
+            loadingInform,
+            liquorTree
+        },
+        created(){
+            window.axios.post("/admin/permissions/tree", {lang: this.$store.state.lang}).then(({data}) => {
+                this.tree.data = data;
+                this.tree.loaded = true;
+            })
+        },
+        data() {
+                return {
+                    id: "create-login",
+                    url: "/admin/role/create",
+                    redirect: false,
+                    error: '',
+                    role: {
+                        "name": ""
+                    },
+
+                    tree: {
+                        loaded: false,
+                        data: []
+                    }
+                }
+            },
+            mixins: [ajaxform],
+            locales: {
+                uz: {}
+            },
+            methods: {
+
+                validate: function () {
+                    let role = this.role;
+                    let checked = this.$refs.tree.checked();
+
+
+
+                    let permissions = [];
+
+                    checked.forEach(function(permission) {
+                        if(permission.data.selectable) {
+                            permissions.push(permission.id);
+                        }
+                    });
+
+
+                    let data = {
+                        name: role.name,
+                        permissions: permissions
+                    };
+                    this.error = '';
+
+
+                    this.send(this.url, data, (response) => {
+                        this.$emit("form:create-role", response);
+                    }, () => {
+
+                    });
+                }
+            }
+
+    }
+</script>
+<style>
+    .tree-checkbox.checked, .tree-checkbox.indeterminate {
+        background-color: #3c8dbc;
+        border-color: #3c8dbc;
+    }
+</style>
+
