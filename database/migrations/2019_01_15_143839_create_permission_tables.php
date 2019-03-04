@@ -35,6 +35,7 @@ class CreatePermissionTables extends Migration
         Schema::create($tableNames['roles'], function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->string('description', 100)->nullable();
             $table->boolean('can_deleted')->default('1')->comment("Может ли быть удалена");
             $table->timestamps();
         });
@@ -98,6 +99,7 @@ class CreatePermissionTables extends Migration
         Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames) {
             $table->integer('permission_id')->unsigned();
             $table->integer('role_id')->unsigned();
+            $table->boolean('approved');
 
             $table->foreign('permission_id')
                 ->references('id')

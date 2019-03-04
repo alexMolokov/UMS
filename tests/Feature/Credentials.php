@@ -13,7 +13,7 @@ namespace Tests\Feature;
 class Credentials
 {
         public static function getSuperAdmin() {
-            return ["login" => "superadmin", "password" => "gappSuperAdmin"];
+            return ["login" => "superAdmin", "password" => "_superAdmin"];
         }
 
         public static function getManager() {

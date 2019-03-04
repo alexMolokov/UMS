@@ -25,21 +25,47 @@
                                 <div class="form-group"  :class="{'has-error': errors.has('role')}">
                                     <label for="role" class="col-sm-2 control-label">Роль</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="role" name="role" v-model="role.name"  v-validate="'required|min:3'" placeholder="Название" :disabled="!hasPermission(permissions.ADMIN_EDIT_ROLE)">
+                                        <input type="text" class="form-control" id="role" name="role" v-model="role.name" v-validate="{ required: true, min:3, regex: /^[a-zA-Z]{1,}$/ }" placeholder="Название (Только Латинские буквы)"  :disabled="!hasPermission(permissions.ADMIN_EDIT_ROLE)">
                                         <span v-show="errors.has('role')" class="help-block">{{errors.first('role')}}</span>
+                                    </div>
+                                </div>
+                                <div class="form-group"  :class="{'has-error': errors.has('description')}">
+                                    <label for="role" class="col-sm-2 control-label">Описание</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="description" name="description" v-model="role.description"  v-validate="'max:100'" placeholder="Описание">
+                                        <span v-show="errors.has('description')" class="help-block">{{errors.first('description')}}</span>
                                     </div>
                                 </div>
 
                                 <div class="form-group" :class="{'has-error': errors.has('permissions')}">
                                     <label class="col-sm-2 control-label">Права</label>
                                     <div class="col-sm-10">
-                                        <liquor-tree  v-if="tree.loaded" :data="tree.data" :options="{ checkbox: true }" ref="tree" @node:checked="">
-                                            <div slot-scope="{node}" class="node-container">
-                                                <div class="node-text"><span>{{ node.text}}</span> <i class="fas fa-stamp">1111</i> </div>
-                                            </div>
-                                        </liquor-tree>
-                                        <span v-show="errors.has('permissions')" class="help-block">{{errors.first('permissions')}}</span>
-                                    </div>
+
+                                        <div class="table-responsive">
+                                        <table class="table table-bordered" v-if="tree.loaded">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:20px">#</th>
+                                                    <th v-translate>Название</th>
+                                                    <th v-translate  style="width:90px">Одобрение</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody v-for="section in tree.data">
+                                                <tr><td colspan="3" class="section_name">{{section.text}}</td></tr>
+                                                <tr v-for="permission in section.children">
+                                                    <td class="form-group">
+                                                        <input type="checkbox"  v-model="selectedPermissions" @change="changeAttributes(permission.id)" :value="permission.id">
+                                                    </td>
+                                                    <td>{{permission.text}}</td>
+                                                    <td style="text-align: center">
+                                                        <input type="checkbox"  v-model="selectedAttributes" :value="permission.id" :disabled="isDisabled(permission.id)">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        </div>
+
+                                      </div>
                                 </div>
 
                                 <error-inform :err="err" :state="state"></error-inform>
@@ -85,21 +111,11 @@
             let path =  '/admin/role/' + this.role.id + '/get';
 
             this.uploadInfo(path, {}, (data) => {
-                for(let key in data)
-                {
-                    if(this.role[key] != "undefined") this.role[key] = data[key];
-                }
+                this.initRole(data);
+                this.initTree(data);
 
-                let permission = this.hasPermission(this.permissions.ADMIN_EDIT_ROLE);
+               // let permission = this.hasPermission(this.permissions.ADMIN_EDIT_ROLE);
 
-                data.tree.forEach(function(record) {
-                    record.state = {};
-                    if(!permission) record.state.disabled = true;
-                });
-
-
-                this.tree.data = data.tree;
-                this.tree.loaded = true;
 
             }, {}, (data) => {
 
@@ -111,35 +127,81 @@
                 error: '',
                 role: {
                     "id": "",
-                    "name": "",
-                    "permissions": []
-                },
+                    "name": ""
+                 },
                 tree: {
                     data: [],
                     loaded: false
                 },
-                permissions: PERMISSIONS
+                permissions: [], // key -> id, value {checked, approved, disabled},
+                selectedPermissions: [],
+                selectedAttributes: []
             }
         },
         computed: {
             ...mapGetters(["hasPermission"])
         },
         methods: {
+            initTree: function(data) {
+                this.tree.data = data.tree;
+
+                let self  = this;
+
+                data.tree.forEach(function(record) {
+                    record.children.forEach(function(permission) {
+
+                        if(permission.state.checked){
+                            self.selectedPermissions.push(permission.id);
+
+                            if(permission.attributes.approved)
+                                self.selectedAttributes.push(permission.id);
+                        }
+
+
+                    })
+                });
+
+                this.tree.loaded = true;
+            },
+            initRole: function(data) {
+                for(let key in data)
+                {
+                    if(this.role[key] != "undefined") this.role[key] = data[key];
+                }
+            },
+            changeAttributes: function(id)
+            {
+                if(this.isDisabled(id)) {
+                   let index =  this.selectedAttributes.indexOf(id);
+                   if(index !== -1) {
+                       this.selectedAttributes.splice(index,1);
+                   }
+                }
+
+            },
+            isDisabled(id) {
+                return this.selectedPermissions.indexOf(id) == -1
+            },
+
             validate: function()
             {
                 let permissions = [];
-                let checked = this.$refs.tree.checked();
 
-                checked.forEach(function(permission) {
-                    if(permission.data.selectable) {
-                        permissions.push(permission.id);
-                    }
+                let self = this;
+                self.selectedPermissions.forEach(function(permission) {
+                        permissions.push({
+                            "id": permission,
+                            "approved": self.selectedAttributes.indexOf(permission) != -1
+                        });
                 });
 
                 let data = {
-                    "name": this.role.name.trim(),
-                    permissions: permissions
+                    "name": this.role.name,
+                    "description": this.role.description,
+                     permissions: permissions
                 };
+
+                console.log(data);
 
 
                 this.send("/admin/role/" + this.role.id + "/update", data,
@@ -157,3 +219,15 @@
         }
     }
 </script>
+
+<style scoped="" lang="scss">
+    .section_name {
+        color: #fff;
+        background-color: #3c8dbc;
+        font-weight: bold;
+    }
+
+    tbody {
+        border-top: none !important;
+    }
+</style>

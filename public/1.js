@@ -5798,34 +5798,6 @@ var render = function() {
               : _vm._e()
           ],
           2
-        ),
-        _vm._v(" "),
-        _c(
-          "tfoot",
-          [
-            _vm._l(_vm.tableFields, function(field, fieldIndex) {
-              return [
-                field.visible
-                  ? [
-                      field.filtered
-                        ? [
-                            _c("th", [
-                              _c("input", {
-                                class: [
-                                  "vuetable-filter",
-                                  _vm.css.tableFilterClass
-                                ],
-                                attrs: { type: "text" }
-                              })
-                            ])
-                          ]
-                        : [_c("th", [_vm._v(" ")])]
-                    ]
-                  : _vm._e()
-              ]
-            })
-          ],
-          2
         )
       ])
 }
@@ -6833,6 +6805,27 @@ var render = function() {
                             ]
                           : undefined
                       }
+                    },
+                    {
+                      key: "loginMessenger",
+                      fn: function(props) {
+                        return _vm.isRender("loginMessenger")
+                          ? [
+                              _c(
+                                "router-link",
+                                {
+                                  attrs: {
+                                    to: {
+                                      name: "messenger-profile-id",
+                                      params: { id: props.rowData.login }
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(props.rowData.login))]
+                              )
+                            ]
+                          : undefined
+                      }
                     }
                   ])
                 })
@@ -7488,7 +7481,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
 
 
@@ -7514,7 +7506,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     dataClass: 'right aligned',
                     filtered: false
                 }, {
-                    name: '__component:login-messenger',
+                    name: '__slot:loginMessenger',
                     title: "Логин",
                     sortField: 'login',
                     filtered: true

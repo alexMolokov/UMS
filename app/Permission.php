@@ -28,6 +28,10 @@ class Permission extends SpatiePermission
 
     const LOG_WATCH = "log.watch";
 
+
+
+
+
     /**
      * Get title for show
      * @param string $name

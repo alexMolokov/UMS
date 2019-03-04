@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use App\Permission;
 
 class RolesTableSeeder extends Seeder
 {
@@ -17,7 +18,8 @@ class RolesTableSeeder extends Seeder
             "can_deleted" => '0'
         ]);
 
-        Role::create([
+
+        $role = Role::create([
             "name" => "departmentAdmin"
         ]);
 

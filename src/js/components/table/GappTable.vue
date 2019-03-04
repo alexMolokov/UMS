@@ -29,9 +29,6 @@
                                                   @vuetable:pagination-data="onPaginationData"
 
                                         >
-
-
-
                                             <template slot="login" slot-scope="props" v-if="isRender('login')">
                                                 <router-link :to="{name: 'admin-profile-id', params: { id: props.rowData.id }}">{{props.rowData.login}}</router-link>
                                             </template>
@@ -40,6 +37,9 @@
                                                 <router-link :to="{name: 'admin-role-id', params: { id: props.rowData.id }}">{{props.rowData.name}}</router-link>
                                             </template>
 
+                                            <template slot="loginMessenger" slot-scope="props" v-if="isRender('loginMessenger')">
+                                                <router-link :to="{name: 'messenger-profile-id', params: { id: props.rowData.login }}">{{props.rowData.login}}</router-link>
+                                            </template>
 
                                         </vuetable>
                                     </div>

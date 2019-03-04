@@ -20,11 +20,10 @@ class RoleController extends Controller
 
     public function createRole(RoleRequest $request)
     {
-        $params = $request->only(["name", "permissions"]);
+        $params = $request->only(["name", "description"]);
+        Role::create($params);
 
-        $role = Role::create(["name" => $params["name"]]);
-        $permissions = Permission::find($params["permissions"]);
-        $role->syncPermissions($permissions);
+        return response()->success();
     }
 
     /**
@@ -56,8 +55,19 @@ class RoleController extends Controller
         $role->update([
             "name" => $params["name"]
         ]);
-        $permissions = Permission::find($params["permissions"]);
+
+        $permissionsIds = [];
+        foreach($params["permissions"] as $permission)
+        {
+            $permissionsIds[] = $permission["id"];
+        }
+
+        $permissions = Permission::find($permissionsIds);
+
+
+
         $role->syncPermissions($permissions);
+
 
         return response()->success();
     }

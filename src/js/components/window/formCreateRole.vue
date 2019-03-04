@@ -18,17 +18,20 @@
                                     <div class="form-group"  :class="{'has-error': errors.has('role')}">
                                         <label for="role" class="col-sm-2 control-label">Роль</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="role" name="role" v-model="role.name"  v-validate="'required|min:3'" placeholder="Название">
+                                            <input type="text" class="form-control" id="role" name="role" v-model="role.name"  v-validate="{ required: true, min:3, regex: /^[a-zA-Z]{1,}$/}" placeholder="Название (Только Латинские буквы)">
                                             <span v-show="errors.has('role')" class="help-block">{{errors.first('role')}}</span>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Права</label>
+                                    <div class="form-group"  :class="{'has-error': errors.has('description')}">
+                                         <label for="role" class="col-sm-2 control-label">Описание</label>
                                         <div class="col-sm-10">
-                                            <liquor-tree  v-if="tree.loaded" :data="tree.data" :options="{ checkbox: true }" ref="tree"></liquor-tree>
+                                            <input type="text" class="form-control" id="description" name="description" v-model="role.description"  v-validate="'max:100'" placeholder="Описание">
+                                            <span v-show="errors.has('description')" class="help-block">{{errors.first('description')}}</span>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>
@@ -60,13 +63,6 @@
             modalWindow,
             errorInform,
             loadingInform,
-            liquorTree
-        },
-        created(){
-            window.axios.post("/admin/permissions/tree", {lang: this.$store.state.lang}).then(({data}) => {
-                this.tree.data = data;
-                this.tree.loaded = true;
-            })
         },
         data() {
                 return {
@@ -75,13 +71,10 @@
                     redirect: false,
                     error: '',
                     role: {
-                        "name": ""
-                    },
-
-                    tree: {
-                        loaded: false,
-                        data: []
+                        "name": "",
+                        "description": ""
                     }
+
                 }
             },
             mixins: [ajaxform],
@@ -91,28 +84,8 @@
             methods: {
 
                 validate: function () {
-                    let role = this.role;
-                    let checked = this.$refs.tree.checked();
-
-
-
-                    let permissions = [];
-
-                    checked.forEach(function(permission) {
-                        if(permission.data.selectable) {
-                            permissions.push(permission.id);
-                        }
-                    });
-
-
-                    let data = {
-                        name: role.name,
-                        permissions: permissions
-                    };
                     this.error = '';
-
-
-                    this.send(this.url, data, (response) => {
+                    this.send(this.url, this.role, (response) => {
                         this.$emit("form:create-role", response);
                     }, () => {
 
@@ -122,10 +95,5 @@
 
     }
 </script>
-<style>
-    .tree-checkbox.checked, .tree-checkbox.indeterminate {
-        background-color: #3c8dbc;
-        border-color: #3c8dbc;
-    }
-</style>
+
 

@@ -18,7 +18,6 @@
                         <div class="col-lg-8 col-md-12">
                             <h3 class="box-title">Пользователи Messenger</h3>
                         </div>
-
                     </div>
                 </div>
 
@@ -62,7 +61,7 @@
                             filtered: false
                         },
                         {
-                            name: '__component:login-messenger',
+                            name: '__slot:loginMessenger',
                             title: "Логин",
                             sortField: 'login',
                             filtered: true

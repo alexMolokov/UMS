@@ -5800,34 +5800,6 @@ var render = function() {
               : _vm._e()
           ],
           2
-        ),
-        _vm._v(" "),
-        _c(
-          "tfoot",
-          [
-            _vm._l(_vm.tableFields, function(field, fieldIndex) {
-              return [
-                field.visible
-                  ? [
-                      field.filtered
-                        ? [
-                            _c("th", [
-                              _c("input", {
-                                class: [
-                                  "vuetable-filter",
-                                  _vm.css.tableFilterClass
-                                ],
-                                attrs: { type: "text" }
-                              })
-                            ])
-                          ]
-                        : [_c("th", [_vm._v(" ")])]
-                    ]
-                  : _vm._e()
-              ]
-            })
-          ],
-          2
         )
       ])
 }
@@ -6835,6 +6807,27 @@ var render = function() {
                             ]
                           : undefined
                       }
+                    },
+                    {
+                      key: "loginMessenger",
+                      fn: function(props) {
+                        return _vm.isRender("loginMessenger")
+                          ? [
+                              _c(
+                                "router-link",
+                                {
+                                  attrs: {
+                                    to: {
+                                      name: "messenger-profile-id",
+                                      params: { id: props.rowData.login }
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(props.rowData.login))]
+                              )
+                            ]
+                          : undefined
+                      }
                     }
                   ])
                 })
@@ -7566,10 +7559,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(267)
-}
 var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(269)
@@ -7578,7 +7567,7 @@ var __vue_template__ = __webpack_require__(270)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -7613,46 +7602,8 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 267 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(268);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(91)("149838d4", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e628580e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./formCreateRole.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e628580e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./formCreateRole.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 268 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(90)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.tree-checkbox.checked, .tree-checkbox.indeterminate {\n    background-color: #3c8dbc;\n    border-color: #3c8dbc;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 267 */,
+/* 268 */,
 /* 269 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -7714,6 +7665,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -7729,18 +7683,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         modalWindow: __WEBPACK_IMPORTED_MODULE_0__modalWindow_vue___default.a,
         errorInform: __WEBPACK_IMPORTED_MODULE_2__mixins_error_inform_vue___default.a,
-        loadingInform: __WEBPACK_IMPORTED_MODULE_3__mixins_loading_inform_vue___default.a,
-        liquorTree: __WEBPACK_IMPORTED_MODULE_4_liquor_tree__["a" /* default */]
-    },
-    created: function created() {
-        var _this = this;
-
-        window.axios.post("/admin/permissions/tree", { lang: this.$store.state.lang }).then(function (_ref) {
-            var data = _ref.data;
-
-            _this.tree.data = data;
-            _this.tree.loaded = true;
-        });
+        loadingInform: __WEBPACK_IMPORTED_MODULE_3__mixins_loading_inform_vue___default.a
     },
     data: function data() {
         return {
@@ -7749,13 +7692,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             redirect: false,
             error: '',
             role: {
-                "name": ""
-            },
-
-            tree: {
-                loaded: false,
-                data: []
+                "name": "",
+                "description": ""
             }
+
         };
     },
 
@@ -7766,27 +7706,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
 
         validate: function validate() {
-            var _this2 = this;
+            var _this = this;
 
-            var role = this.role;
-            var checked = this.$refs.tree.checked();
-
-            var permissions = [];
-
-            checked.forEach(function (permission) {
-                if (permission.data.selectable) {
-                    permissions.push(permission.id);
-                }
-            });
-
-            var data = {
-                name: role.name,
-                permissions: permissions
-            };
             this.error = '';
-
-            this.send(this.url, data, function (response) {
-                _this2.$emit("form:create-role", response);
+            this.send(this.url, this.role, function (response) {
+                _this.$emit("form:create-role", response);
             }, function () {});
         }
     }
@@ -7917,8 +7841,13 @@ var render = function() {
                                     {
                                       name: "validate",
                                       rawName: "v-validate",
-                                      value: "required|min:3",
-                                      expression: "'required|min:3'"
+                                      value: {
+                                        required: true,
+                                        min: 3,
+                                        regex: /^[a-zA-Z]{1,}$/
+                                      },
+                                      expression:
+                                        "{ required: true, min:3, regex: /^[a-zA-Z]{1,}$/}"
                                     }
                                   ],
                                   staticClass: "form-control",
@@ -7926,7 +7855,8 @@ var render = function() {
                                     type: "text",
                                     id: "role",
                                     name: "role",
-                                    placeholder: "Название"
+                                    placeholder:
+                                      "Название (Только Латинские буквы)"
                                   },
                                   domProps: { value: _vm.role.name },
                                   on: {
@@ -7962,30 +7892,84 @@ var render = function() {
                             ]
                           ),
                           _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "label",
-                              { staticClass: "col-sm-2 control-label" },
-                              [_vm._v("Права")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "col-sm-10" },
-                              [
-                                _vm.tree.loaded
-                                  ? _c("liquor-tree", {
-                                      ref: "tree",
-                                      attrs: {
-                                        data: _vm.tree.data,
-                                        options: { checkbox: true }
+                          _c(
+                            "div",
+                            {
+                              staticClass: "form-group",
+                              class: {
+                                "has-error": _vm.errors.has("description")
+                              }
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-sm-2 control-label",
+                                  attrs: { for: "role" }
+                                },
+                                [_vm._v("Описание")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-sm-10" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.role.description,
+                                      expression: "role.description"
+                                    },
+                                    {
+                                      name: "validate",
+                                      rawName: "v-validate",
+                                      value: "max:100",
+                                      expression: "'max:100'"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "text",
+                                    id: "description",
+                                    name: "description",
+                                    placeholder: "Описание"
+                                  },
+                                  domProps: { value: _vm.role.description },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
                                       }
-                                    })
-                                  : _vm._e()
-                              ],
-                              1
-                            )
-                          ])
+                                      _vm.$set(
+                                        _vm.role,
+                                        "description",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: _vm.errors.has("description"),
+                                        expression: "errors.has('description')"
+                                      }
+                                    ],
+                                    staticClass: "help-block"
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.errors.first("description"))
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]
+                          )
                         ])
                       ])
                     ])
