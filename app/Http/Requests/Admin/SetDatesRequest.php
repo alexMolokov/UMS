@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChangeProfileAdminRequest extends ChangeProfileRequest
+class SetDatesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,9 @@ class ChangeProfileAdminRequest extends ChangeProfileRequest
      */
     public function rules()
     {
-        $rules = parent::rules();
-        $rules["blocked"] = "required|in:0,1";
-
-        return $rules;
+        return [
+            "date_from"  => "nullable|date_format:Y-m-d",
+            "date_to"  => "nullable|date_format:Y-m-d"
+        ];
     }
 }

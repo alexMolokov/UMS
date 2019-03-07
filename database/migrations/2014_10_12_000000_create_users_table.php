@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class CreateUsersTable extends Migration
 {
     const TABLE = "users";
-    const TABLE_USER_ORGANIZATION = "user_organization_unit";
+
     /**
      * Run the migrations.
      *
@@ -37,12 +37,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create(self::TABLE_USER_ORGANIZATION, function (Blueprint $table) {
-            $table->integer('user_id');
-            $table->uuid('organization_id')->nullable();
-            $table->primary(["user_id", "organization_id"]);
 
-        });
     }
 
     /**
@@ -52,7 +47,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(self::TABLE_USER_ORGANIZATION);
         Schema::dropIfExists(self::TABLE);
     }
 }

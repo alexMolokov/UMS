@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
+use App\OrganizationUnit\OrganizationUnit;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -17,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'login', 'password', 'blocked', 'position'
+        'firstname', 'lastname', 'email', 'login', 'password', 'blocked', 'position', 'date_from', 'date_to'
     ];
 
     /**
@@ -33,6 +35,14 @@ class User extends Authenticatable
     public static function getPasswordHash($password)
     {
         return bcrypt($password);
+    }
+
+    public function organizationUnits()
+    {
+        return $this->belongsToMany(
+           OrganizationUnit::class,
+           'user_organization_unit'
+        );
     }
 
 }

@@ -38,15 +38,42 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'permissions'
         ->where('id', '[1-9]{1}[0-9]{0,}')
         ->defaults("permission", Permission::ADMIN_EDIT_USER);
 
+    Route::post('/user/{id}/block', 'AdminUserController@block')
+        ->name('blockAdminUser')
+        ->where('id', '[1-9]{1}[0-9]{0,}')
+        ->defaults("permission", Permission::ADMIN_EDIT_USER);
+
+    Route::post('/user/{id}/setRoles', 'AdminUserController@setRoles')
+        ->name('setRolesAdminUser')
+        ->where('id', '[1-9]{1}[0-9]{0,}')
+        ->defaults("permission", Permission::ADMIN_EDIT_USER);
+
+    Route::post('/user/{id}/getRoles', 'AdminUserController@getRoles')
+        ->name('getRolesAdminUser')
+        ->where('id', '[1-9]{1}[0-9]{0,}')
+        ->defaults("permission", Permission::ADMIN_EDIT_USER);
+
+    Route::post('/user/{id}/setDates', 'AdminUserController@setDates')
+        ->name('setDatesAdminUser')
+        ->where('id', '[1-9]{1}[0-9]{0,}')
+        ->defaults("permission", Permission::ADMIN_EDIT_USER);
+
+    Route::post('/tree/children', 'OrganizationUnitController@getChildren')
+        ->name('getOrganizationUnitChildren')
+        ->defaults("permission", Permission::ADMIN_EDIT_USER);
+
+    Route::post('/user/tree/paths', 'OrganizationUnitController@getPaths')
+        ->name('getUserOrganizationUnitPaths')
+        ->defaults("permission", Permission::ADMIN_EDIT_USER);
 
 
     Route::post('/role/create', 'RoleController@createRole')->name("createRole")->defaults("permission", Permission::ADMIN_CREATE_ROLE);
 
 
-    Route::post('/role/{id}/update', 'RoleController@updateRole')->name("updateRole")->defaults("permission", Permission::ADMIN_EDIT_ROLE);
-    Route::post('/role/{id}/delete', 'RoleController@deleteRole')->name("deleteRole")->defaults("permission", Permission::ADMIN_EDIT_ROLE);
+    Route::post('/role/{id}/update', 'RoleController@update')->name("updateRole")->defaults("permission", Permission::ADMIN_EDIT_ROLE);
+    Route::post('/role/{id}/delete', 'RoleController@delete')->name("deleteRole")->defaults("permission", Permission::ADMIN_EDIT_ROLE);
     Route::post('/role/list', 'RoleController@listRole')->name("listRole")->defaults("permission", Permission::ADMIN_WATCH_ROLE);
-    Route::match(["get", "post"],'/role/{id}/get', 'RoleController@getRole')->name('getRole')->defaults("permission", Permission::ADMIN_WATCH_ROLE);;
+    Route::match(["get", "post"],'/role/{id}/get', 'RoleController@get')->name('getRole')->defaults("permission", Permission::ADMIN_WATCH_ROLE);;
     Route::match(["get", "post"],'/permissions/tree', 'RoleController@getPermissionsTree')->name("getPermissionsTree")->defaults("permission", Permission::ADMIN_WATCH_ROLE);
 
 

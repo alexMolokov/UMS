@@ -36,7 +36,7 @@ class CreatePermissionTables extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('description', 100)->nullable();
-            $table->boolean('can_deleted')->default('1')->comment("Может ли быть удалена");
+            $table->boolean('is_editable')->default('1')->comment("Может ли быть отредактирована");
             $table->timestamps();
         });
 
@@ -52,6 +52,7 @@ class CreatePermissionTables extends Migration
             $table->string('name')->unique();
             $table->string('title');
             $table->integer('group_id')->unsigned();
+            $table->boolean('is_approved')->default(0);
             $table->timestamps();
 
             $table->foreign($foreignKeys["permissions_groups"])
@@ -63,8 +64,6 @@ class CreatePermissionTables extends Migration
         Schema::create($tableNames['user_has_permissions'], function (Blueprint $table) use ($tableNames, $foreignKeys) {
             $table->integer($foreignKeys['users'])->unsigned();
             $table->integer('permission_id')->unsigned();
-            $table->uuid('org_id')->comment("Organization unit id");
-            $table->json('attr')->comment("Дополнительные аттрибуты");
 
             $table->foreign($foreignKeys['users'])
                 ->references('id')

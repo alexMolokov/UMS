@@ -9,6 +9,7 @@ class Permission extends SpatiePermission
     const MESSENGER_WATCH_USER = "messenger.watch.user";
     const MESSENGER_BLOCK_USER = "messenger.block.user";
     const MESSENGER_CREATE_USER = "messenger.create.user";
+    const MESSENGER_EDIT_USER = "messenger.edit.user";
     const MESSENGER_CREATE_STRUCTURE = "messenger.create.structure";
     const MESSENGER_EDIT_STRUCTURE = "messenger.edit.structure";
     const MESSENGER_MOVE_USER = "messenger.move.user";
@@ -28,12 +29,7 @@ class Permission extends SpatiePermission
 
     const LOG_WATCH = "log.watch";
 
-
-
-
-
     /**
-     * Get title for show
      * @param string $name
      * @return string
      */
@@ -43,6 +39,7 @@ class Permission extends SpatiePermission
             self::MESSENGER_BLOCK_USER => "Block user",
             self::MESSENGER_SMS_SEND => "Send sms",
             self::MESSENGER_CREATE_USER => "Create users",
+            self::MESSENGER_EDIT_USER => "Edit user",
             self::MESSENGER_CREATE_STRUCTURE => "Create structure",
             self::MESSENGER_EDIT_STRUCTURE => "Edit structure",
             self::MESSENGER_MOVE_USER => "Move users",
@@ -68,5 +65,14 @@ class Permission extends SpatiePermission
         }
 
         return $permissions[$name];
+    }
+
+
+    public function roles()
+    {
+        return $this->belongsToMany(
+            config('laravel-permission.models.role'),
+            config('laravel-permission.table_names.role_has_permissions')
+        )->withPivot('approved');
     }
 }

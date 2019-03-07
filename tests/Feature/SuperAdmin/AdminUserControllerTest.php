@@ -172,4 +172,37 @@ class AdminUserControllerTest extends TestCase
         $response->assertStatus(422);
     }
 
+
+    public function testBlock_StatusTrue() {
+        $user = Auth::user();
+        $url  = route("blockAdminUser", ["id" => $user->id]);
+        $response = $this->postWrapper($url, ["blocked" => 0]);
+        $response->assertStatus(200);
+        $content = $response->getContent();
+        $result = json_decode($content);
+        $this->assertTrue($result->status);
+    }
+
+
+    public function dataProvider_testBlock_NotValidData_422Error() {
+        return [
+          "more-1" => [11],
+          "less-0" => [-1],
+          "null" => [null],
+          "symbols" => ["ddd"]
+        ];
+    }
+
+    /**
+     * @dataProvider  dataProvider_testBlock_NotValidData_422Error
+     */
+    public function testBlock_NotValidData_422Error($blocked) {
+        $user = Auth::user();
+        $url  = route("blockAdminUser", ["id" => $user->id]);
+        $response = $this->postWrapper($url, ["blocked" => $blocked]);
+        $response->assertStatus(422);
+    }
+
+
+
 }

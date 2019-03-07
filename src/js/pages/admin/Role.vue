@@ -25,14 +25,14 @@
                                 <div class="form-group"  :class="{'has-error': errors.has('role')}">
                                     <label for="role" class="col-sm-2 control-label">Роль</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="role" name="role" v-model="role.name" v-validate="{ required: true, min:3, regex: /^[a-zA-Z]{1,}$/ }" placeholder="Название (Только Латинские буквы)"  :disabled="!hasPermission(permissions.ADMIN_EDIT_ROLE)">
+                                        <input type="text" class="form-control" id="role" name="role" v-model="role.name" v-validate="{ required: true, min:3, regex: /^[a-zA-Z]{1,}$/ }" placeholder="Название (Только Латинские буквы)"  :disabled="disabled">
                                         <span v-show="errors.has('role')" class="help-block">{{errors.first('role')}}</span>
                                     </div>
                                 </div>
                                 <div class="form-group"  :class="{'has-error': errors.has('description')}">
                                     <label for="role" class="col-sm-2 control-label">Описание</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="description" name="description" v-model="role.description"  v-validate="'max:100'" placeholder="Описание">
+                                        <input type="text" class="form-control" id="description" name="description" v-model="role.description"  v-validate="'max:100'" placeholder="Описание" :disabled="disabled">
                                         <span v-show="errors.has('description')" class="help-block">{{errors.first('description')}}</span>
                                     </div>
                                 </div>
@@ -54,11 +54,11 @@
                                                 <tr><td colspan="3" class="section_name">{{section.text}}</td></tr>
                                                 <tr v-for="permission in section.children">
                                                     <td class="form-group">
-                                                        <input type="checkbox"  v-model="selectedPermissions" @change="changeAttributes(permission.id)" :value="permission.id">
+                                                        <input type="checkbox"  v-model="selectedPermissions" @change="changeAttributes(permission.id)" :value="permission.id"  :disabled="disabled">
                                                     </td>
                                                     <td>{{permission.text}}</td>
                                                     <td style="text-align: center">
-                                                        <input type="checkbox"  v-model="selectedAttributes" :value="permission.id" :disabled="isDisabled(permission.id)">
+                                                        <input v-if="permission.attributes.is_approved == 1" type="checkbox"  v-model="selectedAttributes" :value="permission.id" :disabled="isDisabled(permission.id)">
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -76,7 +76,7 @@
                                 </ok-action-inform>
 
                             </div>
-                            <div class="box-footer overlay-wrapper" v-if="hasPermission(permissions.ADMIN_EDIT_ROLE)">
+                            <div class="box-footer overlay-wrapper" v-if="!disabled">
                                 <button type="submit" class="btn btn-info pull-right">Изменить</button>
                                 <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
                             </div>
@@ -127,7 +127,8 @@
                 error: '',
                 role: {
                     "id": "",
-                    "name": ""
+                    "name": "",
+                    "is_editable": 1
                  },
                 tree: {
                     data: [],
@@ -139,14 +140,16 @@
             }
         },
         computed: {
-            ...mapGetters(["hasPermission"])
+            ...mapGetters(["hasPermission"]),
+            disabled: function () {
+                return !this.hasPermission(this.permissions.ADMIN_EDIT_ROLE) || this.role.is_editable == 0
+            }
         },
         methods: {
             initTree: function(data) {
                 this.tree.data = data.tree;
 
                 let self  = this;
-
                 data.tree.forEach(function(record) {
                     record.children.forEach(function(permission) {
 

@@ -66,6 +66,12 @@
                             sortField: 'name',
                         },
                         {
+                            name: 'description',
+                            title: "Описание",
+                            sortField: 'description',
+                        },
+
+                        {
                             name: "id",
                             visible: false
                         }

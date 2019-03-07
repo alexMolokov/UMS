@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChangeProfileRequest extends FormRequest
+class BlockRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,7 @@ class ChangeProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstname' =>  'nullable|min:2',
-            'lastname' =>  'nullable|min:2',
-            'position' =>  'nullable|min:3',
-            'email' => 'nullable|email'
+            "blocked"  => "required|in:0,1"
         ];
     }
 }

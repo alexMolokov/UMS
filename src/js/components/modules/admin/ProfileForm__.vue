@@ -1,23 +1,29 @@
 <template>
-  <div>
-                    <div class="box-header">
-                        <block-form v-if="loaded" :userid="user.id" :blocked="user.blocked"></block-form>
+  <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Данные пользователя</h3>
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
                     <form class="form-horizontal" @submit.prevent="validate">
                         <div class="box-body">
+                            <div class="form-group">
+                                <label for="login" class="col-sm-2 control-label">Логин</label>
+                                <div class="col-sm-10">
+                                    <input :disabled="disabled" type="text" class="form-control" id="login"  :value="user.login" readonly>
+                                </div>
+                            </div>
                             <div class="form-group" :class="{'has-error': errors.has('lastname')}">
                                 <label for="lastname" class="col-sm-2 control-label">Фамилия</label>
                                 <div class="col-sm-10">
-                                    <input :disabled="disabled" type="text" class="form-control" id="lastname" name="lastname" placeholder="Фамилия" v-model="user.lastname"  v-validate="'min:2'">
+                                    <input :disabled="disabled" type="text" class="form-control" id="lastname" name="lastname" placeholder="Фамилия" v-model="user.lastname"  v-validate="'min:3'">
                                     <span v-show="errors.has('lastname')" class="help-block">{{errors.first('lastname')}}</span>
                                 </div>
                             </div>
                             <div class="form-group"  :class="{'has-error': errors.has('firstname')}">
                                 <label for="firstname" class="col-sm-2 control-label">Имя</label>
                                 <div class="col-sm-10">
-                                    <input :disabled="disabled" type="text" class="form-control" id="firstname" name="firstname" placeholder="Имя" v-model="user.firstname"  v-validate="'min:2'">
+                                    <input :disabled="disabled" type="text" class="form-control" id="firstname" name="firstname" placeholder="Имя" v-model="user.firstname"  v-validate="'min:3'">
                                     <span v-show="errors.has('firstname')" class="help-block">{{errors.first('firstname')}}</span>
                                 </div>
                             </div>
@@ -36,6 +42,26 @@
                                     <span v-show="errors.has('email')" class="help-block">{{errors.first('email')}}</span>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Роли</label>
+                                <div class="col-sm-10">
+                                    <select id="select2" class="form-control select2" multiple="multiple" data-placeholder="Выберите роль" style="width: 100%;" :disabled="disabled">
+                                        <option v-if="loaded" v-for="role in getRoles" :value="role.id" :selected="hasRoles(role.id)">{{role.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="firstname" class="col-sm-2 control-label">Блокирован</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" style="width: auto;" v-model="user.blocked" :disabled="disabled">
+                                        <option value="1">Дa</option>
+                                        <option value="0">Нет</option>
+                                    </select>
+                                </div>
+                            </div>
+
 
                             <error-inform :err="err" :state="state"></error-inform>
                             <ok-action-inform :state="state">
@@ -60,12 +86,11 @@
     import hasPermission from '../../../mixins/has-permission.vue';
     import ErrorInform  from '../../../mixins/error-inform.vue';
     import OkActionInform  from '../../../mixins/ok-action-inform.vue';
-    import BlockForm  from './BlockForm.vue';
     import {mapGetters, mapMutations } from 'vuex'
 
 
     export default {
-        components: {ErrorInform, OkActionInform, BlockForm},
+        components: {ErrorInform, OkActionInform},
         name: 'profile-user-form',
         mixins: [ajaxform, hasPermission],
         computed: {
@@ -84,7 +109,6 @@
                     if(this.user[key] != "undefined" && data[key] !== null) this.user[key] = data[key];
                 }
                 this.loaded = true;
-                this.$emit('profile-loaded', this.user);
 
             }, {}, (data) => {
 
@@ -92,6 +116,9 @@
 
             this.$store.dispatch("roles/setRoles");
 
+        },
+        mounted() {
+            window.$("#select2").select2();
         },
         data(){
             return {
@@ -104,18 +131,31 @@
                     "firstname": "",
                     "lastname": "",
                     "position": "",
-                    "blocked": 0
+                    "blocked": "0"
                 },
              }
         },
         methods: {
+
+            hasRoles: function(id){
+              return (typeof this.user.roles[id] != "undefined")
+            },
+
             validate: function()
             {
+                let roles = (window.$('#select2').select2('data'));
+                let userRoles = this.user.roles = [];
+                roles.forEach(function(role) {
+                    userRoles.push(role.text);
+                })
+
                 let data = {
-                    "email": this.user.email,
-                    "firstname": this.user.firstname,
-                    "lastname": this.user.lastname,
-                    "position": this.user.position
+                    "email": this.user.email.trim(),
+                    "firstname": this.user.firstname.trim(),
+                    "lastname": this.user.lastname.trim(),
+                    "position": this.user.position.trim(),
+                    "blocked": this.user.blocked,
+                    "roles": userRoles
                 };
 
 

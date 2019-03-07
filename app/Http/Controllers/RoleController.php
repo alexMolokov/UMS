@@ -6,10 +6,9 @@ use App\Http\Requests\Role\ListRoleRequest;
 use App\Http\Requests\Role\RoleRequest;
 
 use App\ListModels;
-use Illuminate\Http\Request;
 use Auth;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use App\Role;
+use App\Permission;
 
 use App\PermissionsGroup;
 use Response;
@@ -27,54 +26,56 @@ class RoleController extends Controller
     }
 
     /**
-     * Get info about role - name , can_deleted, permissions - []
      * @param $id int
      * @return mixed
      */
-    public function getRole($id)
+    public function get($id)
     {
-        $role = $this->_getRole($id);
+        $role = $this->getRole($id);
 
         $result = $role->toArray();
-        $result['permissions'] = [];
-        $permissions = $role->permissions()->get();
-        foreach($permissions as $permission)
-           $result['permissions'][] = $permission->id;
-        $result["tree"] =  $this->_getPermissionsTree($result['permissions']);
+        $this->appendPermissionsToResult($role, $result);
+        $this->appendTreeToResult($result);
 
         return response()->success($result);
     }
 
-
-
-    public function updateRole(RoleRequest $request, $id)
+    private function appendPermissionsToResult($role, &$result = [])
     {
-        $params = $request->only(["name", "permissions"]);
+        $result['permissions'] = [];
+        $permissions = $role->permissions()->get();
 
-        $role = $this->_getRole($id);
-        $role->update([
-            "name" => $params["name"]
-        ]);
-
-        $permissionsIds = [];
-        foreach($params["permissions"] as $permission)
-        {
-            $permissionsIds[] = $permission["id"];
+        foreach($permissions as $permission){
+            $result['permissions'][$permission->id] = $permission->pivot->approved;
         }
+    }
 
-        $permissions = Permission::find($permissionsIds);
+    private function appendTreeToResult(&$result = [])
+    {
+        $result["tree"] =  $this->_getPermissionsTree($result['permissions']);
+    }
 
+    public function update(RoleRequest $request, $id)
+    {
+        $params = $request->only(["name", "description", "permissions"]);
 
+        $role = $this->getRole($id);
+        if(!$role->is_editable)
+            abort(403, __("Forbidden") . ".");
 
-        $role->syncPermissions($permissions);
-
+        $role->update([
+            "name" => $params["name"],
+            "description" => $params["description"]
+        ]);
+        $role->removeAllPermissions();
+        $role->setPermissions($params["permissions"]);
 
         return response()->success();
     }
 
-    public function deleteRole($id)
+    public function delete($id)
     {
-        $role = $this->_getRole($id);
+        $role = $this->getRole($id);
         if(!$role->can_deleted)
         {
             return response()->json(['error' => 'Forbidden.'], 403);
@@ -85,7 +86,7 @@ class RoleController extends Controller
     public function listRole(ListRoleRequest $request){
 
         $listModels = new ListModels("roles",
-            ['name', 'id'],
+            ['name', 'id', 'description'],
             ['name']
         );
 
@@ -96,7 +97,7 @@ class RoleController extends Controller
 
     public function listRoles() {
         $listModels = new ListModels("roles",
-            ['name', 'id'],
+            ['name', 'id', "description"],
             ['name']
         );
 
@@ -118,6 +119,7 @@ class RoleController extends Controller
     private  function _getPermissionsTree($checked = [])
     {
         $tree = [];
+        $keys = array_keys($checked);
         $permissionsGroups = PermissionsGroup::with('permissions')->get();
         foreach($permissionsGroups as $permissionsGroup){
 
@@ -133,10 +135,13 @@ class RoleController extends Controller
             foreach($permissionsGroup->permissions as $permission) {
                 $group["children"][] = [
                     "text" => __($permission->title),
-                    "attributes" => ["approved" => true],
+                    "attributes" => [
+                        "approved" => (isset($checked[$permission->id]))? $checked[$permission->id] : false,
+                        "is_approved" => $permission->is_approved
+                    ],
                     "id" => $permission->id,
                     "data" => ["name" => $permission->name, "selectable" => true],
-                    "state" => ["checked" => in_array($permission->id, $checked)]
+                    "state" => ["checked" => in_array($permission->id, $keys)],
                 ];
 
             }
@@ -149,7 +154,7 @@ class RoleController extends Controller
     }
 
 
-    private function _getRole($id) {
+    private function getRole($id) {
         $role = Role::find($id);
         if(!$role) abort(404, __("Role not found") . ".");
 

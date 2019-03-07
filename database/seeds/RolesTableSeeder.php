@@ -15,16 +15,23 @@ class RolesTableSeeder extends Seeder
     {
         Role::create([
             "name" => "superAdmin",
-            "can_deleted" => '0'
-        ]);
-
-
-        $role = Role::create([
-            "name" => "departmentAdmin"
+            "is_editable" => '0',
+            "description" => "Администратор Системы"
         ]);
 
         Role::create([
-            "name" => "organizationAdmin"
+            "name" => "operatorAdmin",
+            "description" => "Администратор Оператора"
+        ]);
+
+        Role::create([
+            "name" => "departmentAdmin",
+            "description" => "Администратор Департамента"
+        ]);
+
+        Role::create([
+            "name" => "organizationAdmin",
+            "description" => "Администратор Организации"
         ]);
 
     }

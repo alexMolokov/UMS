@@ -24,7 +24,9 @@ return [
          * `Spatie\Permission\Contracts\Role` contract.
          */
 
-        'role' => Spatie\Permission\Models\Role::class,
+        'role' =>  App\Role::class,
+
+        'organization_unit' =>  App\OrganizationUnit\OrganizationUnit::class,
 
     ],
 
@@ -76,6 +78,8 @@ return [
          */
 
         'role_has_permissions' => 'role_has_permissions',
+
+        'organization_units' => 'organization_units'
     ],
 
     'foreign_keys' => [

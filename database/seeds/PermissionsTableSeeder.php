@@ -83,49 +83,65 @@ class PermissionsTableSeeder extends Seeder
         Permission::create([
             "name" => Permission::MESSENGER_WATCH_USER,
             "title" => Permission::getTitle(Permission::MESSENGER_WATCH_USER),
-            "group_id" => $messengerGroup["id"]
-        ]);
-
-        Permission::create([
-            "name" => Permission::MESSENGER_BLOCK_USER,
-            "title" => Permission::getTitle(Permission::MESSENGER_BLOCK_USER),
-            "group_id" => $messengerGroup["id"]
-        ]);
-
-        Permission::create([
-            "name" => Permission::MESSENGER_SMS_SEND,
-            "title" => Permission::getTitle(Permission::MESSENGER_SMS_SEND),
-            "group_id" => $messengerGroup["id"]
+            "group_id" => $messengerGroup["id"],
+            "is_approved" => 0
         ]);
 
         Permission::create([
             "name" => Permission::MESSENGER_CREATE_USER,
             "title" => Permission::getTitle(Permission::MESSENGER_CREATE_USER),
-            "group_id" => $messengerGroup["id"]
+            "group_id" => $messengerGroup["id"],
+            "is_approved" => 1
         ]);
 
         Permission::create([
-            "name" => Permission::MESSENGER_CREATE_STRUCTURE,
-            "title" => Permission::getTitle(Permission::MESSENGER_CREATE_STRUCTURE),
-            "group_id" => $messengerGroup["id"]
+            "name" => Permission::MESSENGER_EDIT_USER,
+            "title" => Permission::getTitle(Permission::MESSENGER_EDIT_USER),
+            "group_id" => $messengerGroup["id"],
+            "is_approved" => 1
         ]);
 
         Permission::create([
-            "name" => Permission::MESSENGER_EDIT_STRUCTURE,
-            "title" => Permission::getTitle(Permission::MESSENGER_EDIT_STRUCTURE),
-            "group_id" => $messengerGroup["id"]
+            "name" => Permission::MESSENGER_BLOCK_USER,
+            "title" => Permission::getTitle(Permission::MESSENGER_BLOCK_USER),
+            "group_id" => $messengerGroup["id"],
+            "is_approved" => 1
         ]);
 
         Permission::create([
             "name" => Permission::MESSENGER_MOVE_USER,
             "title" => Permission::getTitle(Permission::MESSENGER_MOVE_USER),
-            "group_id" => $messengerGroup["id"]
+            "group_id" => $messengerGroup["id"],
+            "is_approved" => 1
         ]);
 
         Permission::create([
             "name" => Permission::MESSENGER_COPY_USER,
             "title" => Permission::getTitle(Permission::MESSENGER_COPY_USER),
-            "group_id" => $messengerGroup["id"]
+            "group_id" => $messengerGroup["id"],
+            "is_approved" => 1
+        ]);
+
+
+        Permission::create([
+            "name" => Permission::MESSENGER_CREATE_STRUCTURE,
+            "title" => Permission::getTitle(Permission::MESSENGER_CREATE_STRUCTURE),
+            "group_id" => $messengerGroup["id"],
+            "is_approved" => 1
+        ]);
+
+        Permission::create([
+            "name" => Permission::MESSENGER_EDIT_STRUCTURE,
+            "title" => Permission::getTitle(Permission::MESSENGER_EDIT_STRUCTURE),
+            "group_id" => $messengerGroup["id"],
+            "is_approved" => 1
+        ]);
+
+        Permission::create([
+            "name" => Permission::MESSENGER_SMS_SEND,
+            "title" => Permission::getTitle(Permission::MESSENGER_SMS_SEND),
+            "group_id" => $messengerGroup["id"],
+            "is_approved" => 0
         ]);
 
     }
