@@ -51,8 +51,8 @@ class ListModels
 
         if(isset($data["filter"]))
         {
-            foreach ($this->filters as $filter) {
-                $request->orWhere($filter, 'like', $data["filter"] . '%');
+            foreach ($data["filter"] as $key => $value) {
+                $request->where($key, 'like', $value . '%');
             }
         }
 

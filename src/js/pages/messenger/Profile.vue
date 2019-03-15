@@ -9,22 +9,45 @@
             </ol>
         </section>
 
-        <!-- Main content -->
         <section class="content">
-            <!-- Default box -->
-            <div class="row">
-                <div class="col-lg-6 col-md-12">
-                    <profile-form/>
+
+            <div class="box box-header ">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="box-title">Логин: {{user.login}}</h3>
+                    </div>
                 </div>
-                <div class="col-lg-6 col-md-12">
-                    <change-password-form/>
+            </div>
+
+            <div class="box box-body">
+                <div class="row">
+                    <div class="col-sm-10 col-lg-6 col-xs-12">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Личные данные</a></li>
+                                <li><a href="#tab_3" data-toggle="tab">Пароль</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1">
+                                    <profile-form @profile-loaded="setProfile"/>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="tab_3">
+                                    <change-password-form/>
+                                </div>
+                                <!-- /.tab-pane -->
+                            </div>
+                            <!-- /.tab-content -->
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- /.box -->
 
         </section>
-        <!-- /.content -->
+
+
     </div>
 </template>
 
@@ -38,11 +61,13 @@
         name: 'profile',
         data(){
             return {
-
+                user: {}
             }
         },
         methods: {
-
+            setProfile(user) {
+                this.user = user;
+            }
 
         },
         locales: {

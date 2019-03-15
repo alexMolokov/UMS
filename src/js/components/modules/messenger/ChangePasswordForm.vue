@@ -1,9 +1,5 @@
 <template>
- <div class="box box-info" v-if="hasPermission(permissions.MESSENGER_EDIT_USER)">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Изменить пароль</h3>
-                        </div>
-                        <!-- /.box-header -->
+ <div  v-if="hasPermission(permissions.MESSENGER_EDIT_USER)">
                         <!-- form start -->
                         <form class="form-horizontal" @submit.prevent="validate">
                             <div class="box-body">

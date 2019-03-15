@@ -1,20 +1,21 @@
 <template>
     <div class="box-body">
-                    <div class="dataTables_wrapper">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-12">
-
-                                <div class="row" style="margin-bottom: 20px">
+       <div class="row" style="margin-bottom: 20px">
                                     <div class="col-xs-12">
                                         <div class="pull-left filter-bar">
-                                            <filter-bar :searchPlaceHolder="table.searchPlaceHolder"></filter-bar>
+                                            <filter-bar></filter-bar>
                                         </div>
+
                                         <div class="pull-right create-button" v-if="table.buttons.create">
                                             <button type="button" class="btn btn-block btn-primary" @click="onCreate">Создать</button>
                                         </div>
+
+                                        <slot name="add-buttons"></slot>
+
+
                                     </div>
                                 </div>
-                                <div class="row">
+       <div class="row">
                                     <div class="col-xs-12">
                                         <vuetable ref="vuetable" http-method="post"
                                                   :api-url="table.apiUrl"
@@ -44,9 +45,7 @@
                                         </vuetable>
                                     </div>
                                 </div>
-
-
-                                <div class="row">
+       <div class="row">
                                     <div class="col-xs-12">
                                         <div class="pull-left pagination">
                                             <vuetable-pagination-info ref="paginationInfo" :info-template="infoTemplate"></vuetable-pagination-info>
@@ -56,11 +55,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
+   </div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -140,8 +135,8 @@
             LoginMessenger
           },
         mounted() {
-            this.$events.$on('filter-set', eventData => this.onFilterSet(eventData))
-            this.$events.$on('filter-reset', e => this.onFilterReset())
+            this.$events.$on('filter-reset', e => this.onFilterReset());
+            this.$events.$on('search-start', e => this.onStartSearch());
         },
         methods: {
             onCreate: function() {
@@ -160,15 +155,12 @@
             onChangePage (page) {
                 this.$refs.vuetable.changePage(page)
             },
-            onFilterSet (filterText) {
-                this.table.moreParams = {
-                    'filter': filterText
-                }
+            onFilterReset () {
+                this.$refs.vuetable.clearAllFilter();
                 Vue.nextTick( () => this.$refs.vuetable.refresh())
             },
-            onFilterReset () {
-                this.table.moreParams = {}
-                Vue.nextTick( () => this.$refs.vuetable.refresh())
+            onStartSearch(){
+                this.$refs.vuetable.refresh()
             }
         },
         locales: {

@@ -1,8 +1,5 @@
 <template>
- <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Изменить пароль</h3>
-                        </div>
+ <div>
                         <!-- /.box-header -->
                         <!-- form start -->
                         <form class="form-horizontal" @submit.prevent="validate">

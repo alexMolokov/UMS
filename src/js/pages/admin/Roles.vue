@@ -24,8 +24,12 @@
                     </div>
                 </div>
                 <form-create-role v-if="show.formCreateRoleShow"  @close="show.formCreateRoleShow = false" @form:create-role="create"></form-create-role>
-                <gapp-table :tableProperties="table" @gapptable:create="show.formCreateRoleShow = true" :tableDataAdd="tableDataAdd"></gapp-table>
 
+                <div class="row">
+                    <div class="col-lg-8 col-md-12">
+                        <gapp-table :tableProperties="table" @gapptable:create="show.formCreateRoleShow = true" :tableDataAdd="tableDataAdd"></gapp-table>
+                    </div>
+                </div>
             </div>
 
         </section>
@@ -64,6 +68,9 @@
                             name: '__slot:role',
                             title: "Название",
                             sortField: 'name',
+                            filtered: true,
+                            filtername: "name"
+
                         },
                         {
                             name: 'description',

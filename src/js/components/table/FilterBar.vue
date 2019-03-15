@@ -1,29 +1,22 @@
 <template>
      <div class="input-group">
-        <input type="text" v-model="filterText" class="form-control" @keyup.enter="doFilter" :placeholder="searchPlaceHolder">
-        <span class="input-group-btn">
-                            <button class="btn btn-primary" @click="doFilter" v-translate>Поиск</button>
-                            <button class="btn btn-primary" @click="resetFilter" v-translate>Очистить</button>
-                          </span>
+         <button class="btn btn-primary" @click="doSearch" v-translate>Поиск</button>
+         <button class="btn btn-primary" @click="resetFilter" v-translate>Очистить</button>
      </div>
 </template>
 
 <script>
     export default {
-        props: {
-          "searchPlaceHolder": {type: String, default: ""}
-        },
         data () {
             return {
-                filterText: ''
+
             }
         },
         methods: {
-            doFilter () {
-                this.$events.fire('filter-set', this.filterText)
+            doSearch(){
+                this.$events.fire('search-start');
             },
             resetFilter () {
-                this.filterText = ''  // clear the text in text input
                 this.$events.fire('filter-reset')
             }
         }
@@ -34,6 +27,12 @@
 
     .inline-block {
         display: inline-block;
+    }
+
+    .filter-bar {
+        button {
+            margin-right: 15px;
+        }
     }
 
 

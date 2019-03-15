@@ -17,6 +17,7 @@ class UserProfileHandler extends MessengerHandler
     {
         $data = $request->only('firstname', 'lastname', 'middlename', 'nickname', "login");
 
+
         $response = $this->service->setUserProfile($data["login"], [
             "firstName" => $data["firstname"],
             "lastName" => $data["lastname"],

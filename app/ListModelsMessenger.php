@@ -34,7 +34,7 @@ class ListModelsMessenger
 
     public function getPaginate(Request $request)
     {
-        $data = $request->only('page', 'per_page', 'sort', "filter");
+        $data = $request->only('page', 'per_page', 'sort', "filter", "ou_id");
         $data = $this->_get($data);
 
         $response = $this->service->find($data["filter"], $data);
@@ -47,20 +47,37 @@ class ListModelsMessenger
 
     private function _get($data = [])
     {
-        $request =  [
+        $request = $this->initServerRequest($data);
+        $request = $this->addFilters($request, $data);
+        $request = $this->addSort($request, $data);
+
+        return $request;
+    }
+
+    private function initServerRequest($data) {
+        return  [
             "page" =>  $data["page"] - 1,
             "count" => $data["per_page"],
+            "ou_id" => $data["ou_id"],
             "sort" => "login",
             "asc" => true,
             "filter" => []
         ];
+    }
 
-        if(isset($data["filter"]))
+    private function addFilters($request, $data) {
+        $filters =  $data["filter"];
+        if(is_array($filters))
         {
-            foreach ($this->filters as $filter) {
-                $request["filter"][$filter] = $data["filter"] . "*" ;
+            foreach ($filters as $filter => $value) {
+                //$request["filter"][$filter] = $value . "*" ;
+                $request["filter"][$filter] = $value;
             }
         }
+        return $request;
+    }
+
+    private function addSort($request, $data) {
         $sort = data_get($data, "sort", $this->defaultSort);
         if($sort)
         {

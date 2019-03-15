@@ -55,10 +55,22 @@ class AdminUserController extends Controller
     }
 
     public function setRoles(Request $request, $id) {
-        $roles = $request->input("roles");
         $user =  $this->_getUser($id);
-        $user->syncRoles($roles);
+
+        $this->syncRoles($request, $user);
+        $this->syncUnits($request, $user);
+
         return response()->success([]);
+    }
+
+    private function syncRoles(Request $request, $user){
+        $roles = $request->input("roles");
+        $user->syncRoles($roles);
+    }
+
+    private function syncUnits(Request $request, $user){
+        $units = $request->input("units");
+        $user->organizationUnits()->sync($units);
     }
 
     public function getRoles($id){

@@ -110,5 +110,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth']], function ()
     Route::match(["post"],'/update/profile', 'UserController@updateProfile')->name("messengerUpdateProfile");
     Route::match(["post"],'/change/password', 'UserController@changePassword')->name("messengerChangePassword");
     Route::match(["post"],'/create', 'UserController@createUser')->name("messengerCreateUser");
+    Route::match(["post"],'/create/csv', 'UserController@createFromCsv')->name("messengerCreateFromCsv");
 });
 

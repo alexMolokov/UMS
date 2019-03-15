@@ -1,18 +1,9 @@
 <template>
-  <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Данные пользователя</h3>
-                    </div>
-                    <!-- /.box-header -->
+  <div>
+                   <!-- /.box-header -->
                     <!-- form start -->
                     <form class="form-horizontal" @submit.prevent="validate">
                         <div class="box-body">
-                            <div class="form-group">
-                                <label for="login" class="col-sm-2 control-label">Логин</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="login"  :value="user.login" readonly>
-                                </div>
-                            </div>
                             <div class="form-group" :class="{'has-error': errors.has('lastname')}">
                                 <label for="lastname" class="col-sm-2 control-label">Фамилия</label>
                                 <div class="col-sm-10">
@@ -92,10 +83,10 @@
             {
 
                 let data = {
-                    "email": this.user.email.trim(),
-                    "firstname": this.user.firstname.trim(),
-                    "lastname": this.user.lastname.trim(),
-                    "position": this.user.position.trim()
+                    "email": this.user.email,
+                    "firstname": this.user.firstname,
+                    "lastname": this.user.lastname,
+                    "position": this.user.position
                 };
 
                 let store =  this.$store;

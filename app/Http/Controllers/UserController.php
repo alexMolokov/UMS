@@ -33,11 +33,11 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
          $emailHandler = new EmailHandler($this->service);
-         $blockHandler = new BlockHandler($this->service);
          $UserProfileHandler = new UserProfileHandler($this->service);
 
-        $emailHandler->setNext($blockHandler)->setNext($UserProfileHandler);
+        $emailHandler->setNext($UserProfileHandler);
         $response = $emailHandler->handle($request);
+
 
         if($response->getStatus())
         {
@@ -45,6 +45,19 @@ class UserController extends Controller
         }
 
         return response()->error(__("Can't update profile"));
+    }
+
+
+    public function block(Request $request)
+    {
+        $blockHandler = new BlockHandler($this->service);
+        $response = $blockHandler->handle($request);
+        if($response->getStatus())
+        {
+            return response()->success();
+        }
+
+        return response()->error(__("Can't block user"));
     }
 
     public function listUser(Request $request) {
@@ -88,6 +101,10 @@ class UserController extends Controller
         }
 
         return response()->error(__($response->getDescription()));
+    }
+
+    public function createFromCsv(Request $request){
+        return response()->success(["message" => __("Users has been saved")]);
     }
 
     protected function setEncryptServerIUserInterface()

@@ -29,6 +29,7 @@ export default {
   },
   methods: {
       closeErrors: function() {
+          this.$emit("error-inform:closed")
           this.err =  {validation:[], common: []}
       }
   }

@@ -6,9 +6,13 @@
                   <button type="submit" class="btn  btn-danger pull-right" v-if="isBlocked">Блокирован</button>
                   <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
              </div>
+            <div class="clearfix"></div>
       </form>
 
-      <error-inform :err="err" :state="state"></error-inform>
+      <div style="margin-top: 10px">
+        <error-inform :err="err" :state="state"></error-inform>
+      </div>
+
    </div>
 </template>
 
@@ -25,7 +29,7 @@
         name: 'block-user-form',
         mixins: [ajaxform, hasPermission],
         props: {
-            "userid": [Number],
+            "userid": [String],
             "blocked": [Number]
         },
         computed: {
@@ -55,11 +59,12 @@
                 let blocked =  (this.user.blocked == 0)? 1 : 0
 
                 let data = {
-                    "blocked": blocked
+                    "blocked": blocked,
+                    "login": this.$props.userid
                 };
 
                 let self = this;
-                this.send("/admin/user/" + this.$props.userid + "/block", data,
+                this.send("/user/block", data,
                     function(data) {
                         self.user.blocked = (self.user.blocked == 0)?  1: 0
                     }

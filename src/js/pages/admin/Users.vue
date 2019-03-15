@@ -25,7 +25,13 @@
                 </div>
 
                 <form-create-login v-if="show.formCreateUserShow"  @close="show.formCreateUserShow = false" @form:create-login="create"></form-create-login>
-                <gapp-table :tableProperties="table" @gapptable:create="show.formCreateUserShow = true" :tableDataAdd="tableDataAdd"></gapp-table>
+
+
+                <div class="row">
+                    <div class="col-lg-8 col-md-12">
+                        <gapp-table :tableProperties="table" @gapptable:create="show.formCreateUserShow = true" :tableDataAdd="tableDataAdd"></gapp-table>
+                    </div>
+                </div>
 
             </div>
 
@@ -66,31 +72,37 @@
                             name: '__slot:login',
                             title: "Логин",
                             sortField: 'login',
-                            filtered: true
+                            filtered: true,
+                            filtername: 'login'
                         },
                         {
                             name: "lastname",
                             title: this.t("Фамилия"),
                             sortField: 'lastname',
-                            filtered: true
+                            filtered: true,
+                            filtername: 'lastname'
                         },
                         {
                             name: "firstname",
                             title: this.t("Имя"),
                             sortField: 'firstname',
-                            filtered: true
+                            filtered: false,
+
                         },
                         {
                             name: "email",
                             title: "Email",
                             sortField: 'email',
-                            filtered: true
+
+                            filtered: true,
+                            filtername: 'email'
+
                         },
                         {
                             name: "position",
                             title: this.t("Должность"),
                             sortField: 'position',
-                            filtered: true
+                            filtered: false
                         },
                         {
                             name: "blocked",

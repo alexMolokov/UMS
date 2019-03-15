@@ -1,18 +1,11 @@
 <template>
-  <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Данные пользователя</h3>
-                    </div>
-                    <!-- /.box-header -->
+  <div>
+                  <div class="box-header">
+                      <block-form v-if="loaded" :userid="user.id" :blocked="user.blocked"></block-form>
+                  </div>
                     <!-- form start -->
                     <form class="form-horizontal" @submit.prevent="validate">
                         <div class="box-body">
-                            <div class="form-group">
-                                <label for="login" class="col-sm-2 control-label">Логин</label>
-                                <div class="col-sm-10">
-                                    <input :disabled="disabled" type="text" class="form-control" id="login"  :value="user.login" readonly>
-                                </div>
-                            </div>
                             <div class="form-group" :class="{'has-error': errors.has('lastname')}">
                                 <label for="lastname" class="col-sm-2 control-label">Фамилия</label>
                                 <div class="col-sm-10">
@@ -53,16 +46,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="firstname" class="col-sm-2 control-label">Блокирован</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control" style="width: auto;" v-model="user.blocked" :disabled="disabled">
-                                        <option value="1">Дa</option>
-                                        <option value="0">Нет</option>
-                                    </select>
-                                </div>
-                            </div>
-
 
                             <error-inform :err="err" :state="state"></error-inform>
                             <ok-action-inform :state="state">
@@ -87,11 +70,12 @@
     import hasPermission from '../../../mixins/has-permission.vue';
     import ErrorInform  from '../../../mixins/error-inform.vue';
     import OkActionInform  from '../../../mixins/ok-action-inform.vue';
+    import BlockForm  from './BlockForm.vue';
     import {mapGetters, mapMutations } from 'vuex'
 
 
     export default {
-        components: {ErrorInform, OkActionInform},
+        components: {ErrorInform, OkActionInform, BlockForm},
         name: 'profile-messenger-user-form',
         mixins: [ajaxform, hasPermission],
         computed: {
@@ -113,10 +97,12 @@
                 this.loaded = true;
 
                 if(this.user.blocked) {
-                    this.user.blocked = "1";
+                    this.user.blocked = 1;
                 } else {
-                    this.user.blocked = "0";
+                    this.user.blocked = 0;
                 }
+
+                this.$emit('profile-loaded', this.user);
 
             }, {}, (data) => {
 

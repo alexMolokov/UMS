@@ -1,17 +1,17 @@
 webpackJsonp([5],{
 
-/***/ 226:
+/***/ 229:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_Sidebar_vue__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_Sidebar_vue__ = __webpack_require__(230);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_Sidebar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__partials_Sidebar_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_Header_vue__ = __webpack_require__(230);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_Header_vue__ = __webpack_require__(233);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_Header_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__partials_Header_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_Footer_vue__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_Footer_vue__ = __webpack_require__(236);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_Footer_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__partials_Footer_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__partials_ControlSidebar_vue__ = __webpack_require__(236);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__partials_ControlSidebar_vue__ = __webpack_require__(239);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__partials_ControlSidebar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__partials_ControlSidebar_vue__);
 //
 //
@@ -48,15 +48,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 227:
+/***/ 230:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(228)
+var __vue_script__ = __webpack_require__(231)
 /* template */
-var __vue_template__ = __webpack_require__(229)
+var __vue_template__ = __webpack_require__(232)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -96,7 +96,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 228:
+/***/ 231:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -189,7 +189,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 
-/***/ 229:
+/***/ 232:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -343,15 +343,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 230:
+/***/ 233:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(231)
+var __vue_script__ = __webpack_require__(234)
 /* template */
-var __vue_template__ = __webpack_require__(232)
+var __vue_template__ = __webpack_require__(235)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -391,13 +391,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 231:
+/***/ 234:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ajax_form_vue__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ajax_form_vue__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ajax_form_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__mixins_ajax_form_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -477,7 +477,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 
-/***/ 232:
+/***/ 235:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -618,15 +618,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 233:
+/***/ 236:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(234)
+var __vue_script__ = __webpack_require__(237)
 /* template */
-var __vue_template__ = __webpack_require__(235)
+var __vue_template__ = __webpack_require__(238)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -666,7 +666,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 234:
+/***/ 237:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -693,7 +693,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 235:
+/***/ 238:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -729,15 +729,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 236:
+/***/ 239:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(237)
+var __vue_script__ = __webpack_require__(240)
 /* template */
-var __vue_template__ = __webpack_require__(238)
+var __vue_template__ = __webpack_require__(241)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -777,7 +777,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 237:
+/***/ 240:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -808,187 +808,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ControlSidebar',
   mounted: function mounted() {
-    $.AdminLTE.controlSidebar.activate({});
+    // $.AdminLTE.controlSidebar.activate({});
   }
 });
 
 /***/ }),
 
-/***/ 238:
+/***/ 241:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1027,290 +857,12 @@ var staticRenderFns = [
           _c(
             "div",
             {
-              staticClass: "tab-pane",
-              attrs: { id: "control-sidebar-home-tab" }
-            },
-            [
-              _c("h3", { staticClass: "control-sidebar-heading" }, [
-                _vm._v("Recent Activity")
-              ]),
-              _vm._v(" "),
-              _c("ul", { staticClass: "control-sidebar-menu" }, [
-                _c("li", [
-                  _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                    _c("i", {
-                      staticClass: "menu-icon fa fa-birthday-cake bg-red"
-                    }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "menu-info" }, [
-                      _c("h4", { staticClass: "control-sidebar-subheading" }, [
-                        _vm._v("Langdon's Birthday")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", [_vm._v("Will be 23 on April 24th")])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                    _c("i", { staticClass: "menu-icon fa fa-user bg-yellow" }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "menu-info" }, [
-                      _c("h4", { staticClass: "control-sidebar-subheading" }, [
-                        _vm._v("Frodo Updated His Profile")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", [_vm._v("New phone +1(800)555-1234")])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                    _c("i", {
-                      staticClass: "menu-icon fa fa-envelope-o bg-light-blue"
-                    }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "menu-info" }, [
-                      _c("h4", { staticClass: "control-sidebar-subheading" }, [
-                        _vm._v("Nora Joined Mailing List")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", [_vm._v("nora@example.com")])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                    _c("i", {
-                      staticClass: "menu-icon fa fa-file-code-o bg-green"
-                    }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "menu-info" }, [
-                      _c("h4", { staticClass: "control-sidebar-subheading" }, [
-                        _vm._v("Cron Job 254 Executed")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", [_vm._v("Execution time 5 seconds")])
-                    ])
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("h3", { staticClass: "control-sidebar-heading" }, [
-                _vm._v("Tasks Progress")
-              ]),
-              _vm._v(" "),
-              _c("ul", { staticClass: "control-sidebar-menu" }, [
-                _c("li", [
-                  _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                    _c("h4", { staticClass: "control-sidebar-subheading" }, [
-                      _vm._v(
-                        "\n                Custom Template Design\n                "
-                      ),
-                      _c(
-                        "span",
-                        { staticClass: "label label-danger pull-right" },
-                        [_vm._v("70%")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "progress progress-xxs" }, [
-                      _c("div", {
-                        staticClass: "progress-bar progress-bar-danger",
-                        staticStyle: { width: "70%" }
-                      })
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                    _c("h4", { staticClass: "control-sidebar-subheading" }, [
-                      _vm._v(
-                        "\n                Update Resume\n                "
-                      ),
-                      _c(
-                        "span",
-                        { staticClass: "label label-success pull-right" },
-                        [_vm._v("95%")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "progress progress-xxs" }, [
-                      _c("div", {
-                        staticClass: "progress-bar progress-bar-success",
-                        staticStyle: { width: "95%" }
-                      })
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                    _c("h4", { staticClass: "control-sidebar-subheading" }, [
-                      _vm._v(
-                        "\n                Laravel Integration\n                "
-                      ),
-                      _c(
-                        "span",
-                        { staticClass: "label label-warning pull-right" },
-                        [_vm._v("50%")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "progress progress-xxs" }, [
-                      _c("div", {
-                        staticClass: "progress-bar progress-bar-warning",
-                        staticStyle: { width: "50%" }
-                      })
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                    _c("h4", { staticClass: "control-sidebar-subheading" }, [
-                      _vm._v(
-                        "\n                Back End Framework\n                "
-                      ),
-                      _c(
-                        "span",
-                        { staticClass: "label label-primary pull-right" },
-                        [_vm._v("68%")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "progress progress-xxs" }, [
-                      _c("div", {
-                        staticClass: "progress-bar progress-bar-primary",
-                        staticStyle: { width: "68%" }
-                      })
-                    ])
-                  ])
-                ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "tab-pane",
-              attrs: { id: "control-sidebar-stats-tab" }
-            },
-            [_vm._v("Stats Tab Content")]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "tab-pane",
+              staticClass: "tab-pane active",
               attrs: { id: "control-sidebar-settings-tab" }
             },
             [
-              _c("form", { attrs: { method: "post" } }, [
-                _c("h3", { staticClass: "control-sidebar-heading" }, [
-                  _vm._v("General Settings")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-sidebar-subheading" }, [
-                    _vm._v(
-                      "\n              Report panel usage\n              "
-                    ),
-                    _c("input", {
-                      staticClass: "pull-right",
-                      attrs: { type: "checkbox", checked: "" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      "\n              Some information about this general settings option\n            "
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-sidebar-subheading" }, [
-                    _vm._v(
-                      "\n              Allow mail redirect\n              "
-                    ),
-                    _c("input", {
-                      staticClass: "pull-right",
-                      attrs: { type: "checkbox", checked: "" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      "\n              Other sets of options are available\n            "
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-sidebar-subheading" }, [
-                    _vm._v(
-                      "\n              Expose author name in posts\n              "
-                    ),
-                    _c("input", {
-                      staticClass: "pull-right",
-                      attrs: { type: "checkbox", checked: "" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      "\n              Allow the user to show his name in blog posts\n            "
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("h3", { staticClass: "control-sidebar-heading" }, [
-                  _vm._v("Chat Settings")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-sidebar-subheading" }, [
-                    _vm._v("\n              Show me as online\n              "),
-                    _c("input", {
-                      staticClass: "pull-right",
-                      attrs: { type: "checkbox", checked: "" }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-sidebar-subheading" }, [
-                    _vm._v(
-                      "\n              Turn off notifications\n              "
-                    ),
-                    _c("input", {
-                      staticClass: "pull-right",
-                      attrs: { type: "checkbox" }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-sidebar-subheading" }, [
-                    _vm._v(
-                      "\n              Delete chat history\n              "
-                    ),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "text-red pull-right",
-                        attrs: { href: "javascript:void(0)" }
-                      },
-                      [_c("i", { staticClass: "fa fa-trash-o" })]
-                    )
-                  ])
-                ])
+              _c("h4", { staticClass: "control-sidebar-heading" }, [
+                _vm._v("Skins")
               ])
             ]
           )
@@ -1332,7 +884,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 239:
+/***/ 242:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1373,9 +925,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(226)
+var __vue_script__ = __webpack_require__(229)
 /* template */
-var __vue_template__ = __webpack_require__(239)
+var __vue_template__ = __webpack_require__(242)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
