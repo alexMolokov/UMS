@@ -12,6 +12,7 @@ use App\Http\Requests\Admin\BlockRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\ListModels;
+use App\OrganizationUnit\OrganizationUnit;
 
 class AdminUserController extends Controller
 {
@@ -58,6 +59,9 @@ class AdminUserController extends Controller
         $user =  $this->_getUser($id);
 
         $this->syncRoles($request, $user);
+
+
+
         $this->syncUnits($request, $user);
 
         return response()->success([]);
@@ -70,6 +74,12 @@ class AdminUserController extends Controller
 
     private function syncUnits(Request $request, $user){
         $units = $request->input("units");
+
+        foreach($units as $unit) {
+            OrganizationUnit::firstOrCreate(['id' => $unit]);
+        }
+
+
         $user->organizationUnits()->sync($units);
     }
 

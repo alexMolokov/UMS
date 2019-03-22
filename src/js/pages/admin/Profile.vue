@@ -26,8 +26,8 @@
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Личные данные</a></li>
-                                    <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false" @click="RolesFormShow = true">Роли</a></li>
-                                    <li><a href="#tab_3" data-toggle="tab">Пароль</a></li>
+                                    <li v-if="hasPermission(this.permissions.ADMIN_EDIT_USER)"><a href="#tab_2" data-toggle="tab" aria-expanded="false" @click="RolesFormShow = true">Роли</a></li>
+                                    <li v-if="hasPermission(this.permissions.ADMIN_EDIT_USER)"><a href="#tab_3" data-toggle="tab">Пароль</a></li>
                                     <li><a href="#tab_4" data-toggle="tab">Срок действия</a></li>
                                 </ul>
                                 <div class="tab-content">
@@ -35,11 +35,11 @@
                                         <profile-form @profile-loaded="setProfile"/>
                                     </div>
                                     <!-- /.tab-pane -->
-                                    <div class="tab-pane" id="tab_2">
+                                    <div class="tab-pane" id="tab_2" v-if="hasPermission(this.permissions.ADMIN_EDIT_USER)">
                                         <roles-form v-if="RolesFormShow"></roles-form>
                                     </div>
                                     <!-- /.tab-pane -->
-                                    <div class="tab-pane" id="tab_3">
+                                    <div class="tab-pane" id="tab_3" v-if="hasPermission(this.permissions.ADMIN_EDIT_USER)">
                                         <change-password-form/>
                                     </div>
 
@@ -67,10 +67,12 @@
     import ProfileForm  from '../../components/modules/admin/ProfileForm.vue';
     import RolesForm  from '../../components/modules/admin/RolesForm.vue';
     import dateFromForm  from '../../components/modules/admin/dateFromForm.vue';
+    import hasPermission from '../../mixins/has-permission.vue';
 
     export default {
         components: {ChangePasswordForm, ProfileForm, RolesForm, dateFromForm},
         name: 'profile',
+        mixins: [hasPermission],
         data(){
             return {
                 RolesFormShow: false,

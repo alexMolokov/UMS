@@ -8,6 +8,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="box-body">
+                                <div class="form-group"  :class="{'has-error': errors.has('login')}">
+                                        <label for="login" class="col-sm-2 control-label">Логин</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="login" name="login" v-model="user.login"  v-validate="'required|min:5'" placeholder="Логин">
+                                            <span v-show="errors.has('login')" class="help-block">{{errors.first('login')}}</span>
+                                        </div>
+                                    </div>
                                 <div class="form-group" :class="{'has-error': errors.has('lastName')}">
                                     <label for="lastName" class="col-sm-2 control-label">Фамилия</label>
                                     <div class="col-sm-10">
@@ -36,6 +43,19 @@
                                         <span v-show="errors.has('email')" class="help-block">{{errors.first('email')}}</span>
                                     </div>
                                 </div>
+
+                                    <div class="form-group" :class="{'has-error': errors.has('password')}">
+                                        <label for="password" class="col-sm-2 control-label">Пароль</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <input :type="typeInput" placeholder="Пароль" class="form-control" id="password" name="password"  v-model="user.password" v-validate="{ rules: {required:true, min:6}}">                 <div class="input-group-addon">
+                                                <a class="fa fa-eye" :class="(typeInput == 'password')? 'fa-eye': 'fa-eye-slash'" @click.prevent.stop="togglePassword()"></a>
+                                            </div>
+                                            </div>
+                                            <span v-show="errors.has('password')" class="help-block">{{errors.first('password')}}</span>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -66,10 +86,16 @@
                 type: [Object, Function],
                 default () {
                     return {
+                        "login": "",
+                        "password": "",
                         "email": "",
                         "firstName": "",
                         "lastName": "",
                         "middleName": "",
+
+
+
+
                     }
                 }
             },
@@ -81,13 +107,17 @@
                 return {
                     id: "edit-user-load-file",
                     error: '',
-                    user: this.$props.data
+                    user: this.$props.data,
+                    typeInput: "password"
                 }
             },
             locales: {
                 uz: {}
             },
             methods: {
+                togglePassword(){
+                    this.typeInput = (this.typeInput == "password")? "text": "password"
+                },
                 close: function()
                 {
                     this.$emit('close');
@@ -97,7 +127,6 @@
 
                     this.$validator.validateAll().then((result) => {
 
-                        console.log(result);
                         if(result){
                             this.$emit('form:edited-user', this.user);
                             this.$emit('close');

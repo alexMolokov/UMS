@@ -17,7 +17,7 @@
               <li v-if="hasPermission(permissions.ADMIN_WATCH_USER)">
                 <router-link :to="{name: 'admin-users'}"><i class="fa fa-circle-o"></i>Пользователи</router-link>
               </li>
-              <li>
+              <li  v-if="hasPermission(permissions.ADMIN_WATCH_ROLE)">
                 <router-link :to="{name: 'admin-roles'}"><i class="fa fa-circle-o"></i>Роли</router-link>
               </li>
             </ul>
@@ -31,14 +31,14 @@
             </span>
             </a>
             <ul class="treeview-menu">
-              <li>
+              <li v-if="hasPermission(permissions.MESSENGER_WATCH_USER)">
                 <router-link :to="{name: 'messenger-users'}">
                   <i class="fa fa-circle-o"></i> <span>Пользователи</span>
               </router-link>
               </li>
 
-              <li>
-                <router-link :to="{name: 'messenger-users'}">
+              <li v-if="hasPermission(permissions.MESSENGER_EDIT_STRUCTURE)">
+                <router-link :to="{name: 'messenger-structure'}">
                   <i class="fa fa-circle-o"></i> <span>Структура</span>
                 </router-link>
               </li>
@@ -50,7 +50,7 @@
               <i class="fa fa-map-o"></i> <span>Логи</span>
             </router-link>
           </li>
-          <li>
+          <li v-if="hasPermission(permissions.FEEDBACK)">
             <router-link to="/logs">
               <i class="fa fa-envelope"></i> <span>Обратная связь</span>
             </router-link>

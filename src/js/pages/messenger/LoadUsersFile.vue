@@ -44,7 +44,7 @@
 
                                     <div>
                                         <div>Файл в формате csv</div>
-                                        <div>Порядок полей: Фамилия, Имя, Отчество, Email</div>
+                                        <div>Порядок полей: Логин, Пароль, Фамилия, Имя, Отчество, Email</div>
                                         <div><a href="/examples/importUsers.csv" target="_blank">Пример файла</a></div>
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@
                                     <form-choose-ou  v-show="showForm.formChooseOu" @close="showForm.formChooseOu = false" @ou:selected-node="setOU"></form-choose-ou>
 
                                     <div class="row" style="margin-bottom: 20px">
-                                        <div class="col-xs-6"><p>Необходимо заполнить поля</p> <p>Фамилия, Имя, Email и Подразделение</p>
+                                        <div class="col-xs-6"><p>Необходимо заполнить поля</p> <p>Логин, Пароль, Фамилия, Имя, Email и Подразделение</p>
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="pull-right create-button">
@@ -171,6 +171,25 @@
                             width: "30px"
                          },
                         {
+                            name: 'login',
+                            title: "Логин",
+                            titleClass: 'text-center',
+                            dataClass: 'text-right',
+                            sortField: 'login',
+                            filtered: false,
+                            filtername: "login"
+                        },
+                        {
+                            name: 'password',
+                            title: "Пароль",
+                            titleClass: 'text-center',
+                            dataClass: 'text-right',
+                            sortField: 'password',
+                            filtered: false,
+                            filtername: "password"
+                        },
+
+                        {
                             name: '__slot:lastName',
                             title: "Фамилия",
                             titleClass: 'text-center',
@@ -222,6 +241,18 @@
                             filtered: false
                         },
                         {
+                            name: 'statusName',
+                            titleClass: 'text-center',
+                            dataClass: 'text-right',
+                            title: "Статус",
+                            filtered: false
+                        },
+                        {
+                            name: 'status',
+                            visible: false,
+                            filtered: false
+                        },
+                        {
                             name: 'ou',
                             visible: false
                         },
@@ -229,8 +260,6 @@
                             name: 'id',
                             visible: false
                         }
-
-
                     ],
                 },
                 users: [],
@@ -375,15 +404,19 @@
                 let i = 0;
                 let self = this;
                 data.forEach(function(item, index){
-                    let isValidEmail = self.$validator.rules["email"].validate(item[3])
+                    let isValidEmail = self.$validator.rules["email"].validate(item[5])
                     result.data.push({
                         "id": i,
-                        "lastName": item[0],
-                        "firstName": item[1],
-                        "middleName": item[2],
-                        "email": (isValidEmail)? item[3]: "",
+                        "login": item[0],
+                        "password": item[1],
+                        "lastName": item[2],
+                        "firstName": item[3],
+                        "middleName": item[4],
+                        "email": (isValidEmail)? item[5]: "",
                         "ou": [],
-                        "ouname": ""
+                        "ouname": "",
+                        "statusName": "",
+                        "status": ""
                     });
                     i++;
                 });
@@ -397,7 +430,7 @@
             },
             isFilled(user) {
 
-                return user.ouname != "" && user.lastName != "" && user.firstName != "" && user.email != "";
+                return user.ouname != "" && user.lastName != "" && user.firstName != "" && user.login != "" && user.password != "";
             },
             errorClosed(){
                 this.state = STATES.START;
@@ -421,7 +454,7 @@
                     {
                         this.state = STATES.ERROR;
                         this.err.common = [];
-                        this.err.common.push("Необходимо заполнить поля Фамилия, Имя, Email и Подразделение");
+                        this.err.common.push("Необходимо заполнить поля Логин, Пароль, Фамилия, Имя и Подразделение");
                         return;
                     }
                 }

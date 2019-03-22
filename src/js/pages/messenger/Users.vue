@@ -20,16 +20,29 @@
                     <div class="row" style="margin-bottom: 20px">
                         <div class="col-xs-12">
                             <form-create-login v-if="showForm.formCreateUserShow"  @close="showForm.formCreateUserShow = false" @form:create-login="create"></form-create-login>
+                            <form-user-action v-if="showForm.formUserActionShow"  @close="showForm.formUserActionShow = false" :action="userAction.type" :checked-users="userAction.chooseUsers" @form:copy-move-users-ok="copyMoveUsersOk"></form-user-action>
                             <gapp-table
                                     v-if="tree.loaded"
                                     :tableProperties="table"
                                     @gapptable:create="showForm.formCreateUserShow = true"
+                                    @gapptable:checkbox-toggled="checkboxToggled"
+                                    @gapptable:checkbox-toggled-all="checkboxToggledAll"
                                     :tableDataAdd="tableDataAdd"
+
                                     ref="messengerUsers">
                                         <template slot="add-buttons">
-                                            <div class="pull-right create-button" v-if="table.buttons.create" style="margin-right: 20px">
+                                            <div class="pull-right create-button" v-if="hasPermission(permissions.MESSENGER_EDIT_USER)" style="margin-right: 20px">
                                                 <router-link :to="{ name: 'messenger-load-users-file' }" class="btn btn-block btn-primary">Загрузить из csv</router-link>
                                             </div>
+
+                                            <div class="pull-right" style="margin-right: 20px" v-if="hasPermission(permissions.MESSENGER_COPY_USER)">
+                                                <a href="#" class="btn btn-block btn-primary" v-translate @click.prevent="setAction('copy')" :disabled="!isUserSelected">Копировать</a>
+                                            </div>
+                                            <div class="pull-right" style="margin-right: 20px" v-if="hasPermission(permissions.MESSENGER_MOVE_USER)">
+                                                <a href="#" class="btn btn-block btn-primary" v-translate @click.prevent="setAction('move')" :disabled="!isUserSelected">Переместить</a>
+                                            </div>
+
+
                                         </template>
                             </gapp-table>
                         </div>
@@ -47,13 +60,15 @@
     import hasPermission from '../../mixins/has-permission.vue';
     import { mapState, mapGetters, mapMutations } from 'vuex'
     import FormCreateLogin from "../../components/window/messenger/formCreateLogin.vue";
+    import FormUserAction from "../../components/window/messenger/formUserAction.vue";
     import {PERMISSIONS} from "../../mixins/permissions";
     import GappTable from "../../components/table/GappTable.vue";
-    import VJstree from 'vue-jstree'
+    import VJstree from "vue-jstree/src/tree.vue";
+    import loadTree from '../../mixins/load-tree';
 
     export default {
         name: 'messenger-users',
-        mixins: [ajaxform, hasPermission],
+        mixins: [ajaxform, hasPermission, loadTree],
         data() {
             return {
                 table: {
@@ -72,6 +87,12 @@
                             dataClass: 'right aligned',
                             filtered: false
                         },
+                        {
+                            name: '__checkbox',
+                            titleClass: 'center aligned',
+                            dataClass: 'center aligned',
+                        },
+
                         {
                             name: '__slot:loginMessenger',
                             title: "Логин",
@@ -141,32 +162,86 @@
                     }
                 },
                 tableDataAdd: [],
-                tree: {
-                    data: [],
-                    loaded: false,
-                    allItems: new Map(),
-                    selectedNode: {}
-                },
                 showForm: {
-                    formCreateUserShow: false
+                    formCreateUserShow: false,
+                    formUserActionShow: false
+                },
+
+                userAction: {
+                    type: "",
+                    chooseUsersMap: new Map(),
+                    chooseUsers:[],
+                    count: 0
                 }
             }
         },
         mounted(){
-            this.table.buttons.create = this.hasPermission(PERMISSIONS.MESSENGER_CREATE_USER);
+            this.table.buttons.create = this.hasPermission(PERMISSIONS.MESSENGER_EDIT_USER);
             this.initDraggableWindow();
 
 
         },
         components: {
             FormCreateLogin,
+            FormUserAction,
             GappTable,
             VJstree
     },
         computed: {
-            ...mapGetters(["hasPermission"])
+            ...mapGetters(["hasPermission"]),
+            isUserSelected() {
+                return this.userAction.chooseUsers.length > 0
+            }
         },
         methods: {
+            getUserMap(){
+                return this.userAction.chooseUsersMap;
+            },
+            copyMoveUsersOk(){
+
+                this.$refs["messengerUsers"].checkboxUnSelect();
+                this.userAction.chooseUsersMap = new Map();
+                this.userAction.chooseUsers = [];
+                this.$refs["messengerUsers"].reload();
+            },
+            checkboxToggled: function(data) {
+                let item = data.item;
+                let map =  this.getUserMap();
+                if(data.isChecked){
+                    map.set(item.id, item);
+                } else {
+                    map.delete(item.id);
+                }
+                this.setUsersForVueTable();
+            },
+            checkboxToggledAll: function(data){
+                let map =  this.getUserMap();
+                if(data.isChecked) {
+                    data.items.forEach(function(item){
+                        map.set(item.id, item);
+                    });
+                } else {
+                    data.items.forEach(function(item){
+                        map.delete(item.id);
+                    });
+                }
+                this.setUsersForVueTable();
+            },
+            setAction(action) {
+                this.userAction.type = action;
+                this.showForm.formUserActionShow = true;
+            },
+            setUsersForVueTable() {
+                let map =  this.userAction.chooseUsersMap;
+                let keys = map.keys();
+                let result = [];
+
+                for(let key of keys) {
+                    result.push(map.get(key));
+                }
+
+                this.userAction.chooseUsers = result;
+            },
             create(obj) {
                 let data = {};
                 for (let prop in obj) {
@@ -211,11 +286,11 @@
                     isHandlerDragging = false;
                 });
             },
-            loadTree: function (oriNode, resolve) {
+         /*   loadTree: function (oriNode, resolve) {
                 let id = null;
 
                 if(typeof oriNode !== "undefined"){
-                    id = oriNode.data.value ? oriNode.data.value : null;
+                    id = (typeof oriNode.data.value != "undefined") ? oriNode.data.value.id : null;
                 }
 
                 this.uploadInfo('/admin/tree/children', {"id": id}, (data) => {
@@ -223,10 +298,12 @@
 
                     let self = this;
 
-                    data.forEach(function(item, index){
+                    if(data.length == 0) {
+                        oriNode.data.isLeaf = true;
+                        oriNode.data.icon = "fa fa-sticky-note-o";
+                    }
 
-                        item.added = false;
-                        item.nowAdded = false;
+                    data.forEach(function(item, index){
 
                         self.tree.allItems.set(item.id, item);
 
@@ -252,7 +329,7 @@
                     this.tree.loaded = true;
 
                 }, {}, (data) => { });
-            },
+            },*/
             itemClick (node) {
                 let model =  node.model;
                 let value = model.value
@@ -300,9 +377,9 @@
             padding: 10px;
 
             &.user-table {
-                flex: 1 1 1200px;
+                /*flex: 1 1 1200px;*/
 
-                @media (max-width: 1200px) {
+               /* @media (max-width: 1200px) {
                     flex: 1 1 1000px;
                 }
 
@@ -312,7 +389,7 @@
 
                 @media (max-width: 800px) {
                     flex: 1 1 400px;
-                }
+                }*/
 
 
 
@@ -343,13 +420,11 @@
             }
             &.tree {
                 height: calc(100vh - 145px);
+                min-width: 250px;
+                //flex: 1 1 150px;
 
-                flex: 1 1 150px;
-
-                .tree-wholerow-ul {
-                    .tree-wholerow {
-                        z-index: 0;
-                    }
+                .tree-selected {
+                    background: #e1e1e1 !important;
                 }
 
             }

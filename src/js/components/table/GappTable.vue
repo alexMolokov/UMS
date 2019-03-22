@@ -28,7 +28,8 @@
                                                   :sort-order="table.sortOrder"
                                                   :append-params="table.moreParams"
                                                   @vuetable:pagination-data="onPaginationData"
-
+                                                  @vuetable:checkbox-toggled="checkboxToggled"
+                                                  @vuetable:checkbox-toggled-all="checkboxToggledAll"
                                         >
                                             <template slot="login" slot-scope="props" v-if="isRender('login')">
                                                 <router-link :to="{name: 'admin-profile-id', params: { id: props.rowData.id }}">{{props.rowData.login}}</router-link>
@@ -139,6 +140,18 @@
             this.$events.$on('search-start', e => this.onStartSearch());
         },
         methods: {
+            checkboxToggled: function(isChecked, dataItem) {
+                this.$emit("gapptable:checkbox-toggled", {"isChecked": isChecked, "item": dataItem});
+            },
+            checkboxToggledAll: function(isChecked, selectedTo) {
+                this.$emit("gapptable:checkbox-toggled-all", {"isChecked": isChecked, "items": selectedTo});
+            },
+            reload: function() {
+                this.$refs["vuetable"].reload();
+            },
+            checkboxUnSelect: function() {
+                this.$refs["vuetable"].unselectAll();
+            },
             onCreate: function() {
                 this.$emit("gapptable:create", {});
             },
@@ -160,7 +173,7 @@
                 Vue.nextTick( () => this.$refs.vuetable.refresh())
             },
             onStartSearch(){
-                this.$refs.vuetable.refresh()
+                Vue.nextTick( () => this.$refs.vuetable.refresh())
             }
         },
         locales: {

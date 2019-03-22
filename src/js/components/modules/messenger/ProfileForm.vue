@@ -57,7 +57,7 @@
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer overlay-wrapper"  v-if="hasPermission(permissions.MESSENGER_EDIT_USER)">
-                            <button type="submit" class="btn btn-info pull-right">Изменить</button>
+                            <button type="submit" class="btn btn-primary pull-right">Изменить</button>
                             <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
                         </div>
                         <!-- /.box-footer -->

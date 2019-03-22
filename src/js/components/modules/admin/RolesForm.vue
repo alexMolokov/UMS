@@ -14,7 +14,7 @@
                             <div class="form-group">
 
                                 <div class="col-sm-3">
-                                    <div style="text-align: right"><label class="control-label">Юниты</label></div>
+                                    <div style="text-align: right"><label class="control-label">Подразделения</label></div>
 
                                 </div>
 
@@ -23,7 +23,7 @@
                                     <div  v-if="loaded" v-for="section in user.sections" style="padding-top: 7px">
                                         <span  v-if="loaded" v-for="item in section">\{{item.name}}</span><span @click.prevent="deleteItem(section)" class="fa fa-trash-o" style="cursor: pointer; color: red; display: inline-block; margin-left: 10px;"></span>
                                     </div>
-                                    <div style="margin-top: 10px;">
+                                    <div style="margin-top: 10px;"  v-if="hasPermission(permissions.ADMIN_EDIT_USER)">
                                         <div v-if="!tree.loaded"><a href="#" @click.prevent="tree.loaded = true">Добавить</a></div>
                                         <div style="overflow: auto; width: 100%; height: 300px; border: 1px solid rgb(210, 214, 222); position: relative" v-if="tree.loaded" >
                                             <v-jstree :data="tree.data" :async="loadTree" show-checkbox multiple allow-batch whole-row  @item-click="itemClick" ref="jsTree"></v-jstree>
@@ -45,7 +45,7 @@
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer overlay-wrapper"  v-if="hasPermission(permissions.ADMIN_EDIT_USER)">
-                            <button type="submit" class="btn btn-info pull-right">Изменить</button>
+                            <button type="submit" class="btn btn-primary pull-right">Изменить</button>
                             <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
                         </div>
                         <!-- /.box-footer -->
@@ -59,13 +59,14 @@
     import ErrorInform  from '../../../mixins/error-inform.vue';
     import OkActionInform  from '../../../mixins/ok-action-inform.vue';
     import {mapGetters, mapMutations } from 'vuex'
-    import VJstree from 'vue-jstree'
+    import VJstree from "vue-jstree/src/tree.vue";
+    import loadTree from '../../../mixins/load-tree';
 
 
     export default {
         components: {ErrorInform, OkActionInform, VJstree },
         name: 'role-user-form',
-        mixins: [ajaxform, hasPermission],
+        mixins: [ajaxform, hasPermission, loadTree],
         computed: {
             ...mapGetters('roles',['getRoles']),
             disabled(){
@@ -74,6 +75,7 @@
 
         },
         created(){
+            console.log("roles-form");
             this.user.id = this.$route.params.id;
             let path =  '/admin/user/' + this.user.id + '/getRoles';
 
@@ -102,14 +104,8 @@
                     "id": "",
                     "roles": [],
                     'sections': []
-                },
-                tree: {
-                    data: [],
-                    loaded: false,
-                    selectedItems: new Map(),
-                    allItems: new Map(),
-                 }
-             }
+                }
+              }
         },
         methods: {
             hasRoles(id){
@@ -123,7 +119,7 @@
 
                     let section = [{"id": item.id, "name": item.name}];
                     let el = item;
-                    while(el.parentId !== null){
+                    while(!(el.parentId == null || el.parentId == "")){
                         el = this.tree.allItems.get(el.parentId);
                         section.unshift({"id": el.id, "name": el.name})
                     }
@@ -162,41 +158,6 @@
                 }
 
             },
-
-            loadTree: function (oriNode, resolve) {
-                this.tree.loaded = true;
-                let id = null;
-
-                if(typeof oriNode !== "undefined"){
-                    id = oriNode.data.value ? oriNode.data.value : null;
-                }
-
-                this.uploadInfo('/admin/tree/children', {"id": id}, (data) => {
-                    let result = [];
-
-                    let self = this;
-                    data.forEach(function(item){
-
-                        item.added = false;
-                        item.nowAdded = false;
-
-                        self.tree.allItems.set(item.id, item);
-
-                        let isLeaf = !item.hasChild;
-                        result.push({
-                            "text": item.name,
-                            "value": item,
-                            "isLeaf": isLeaf,
-                            "icon": (isLeaf)? "fa fa-sticky-note-o": "fa fa-folder"
-                        })
-                    });
-
-
-                    resolve(result);
-
-                }, {}, (data) => { });
-            },
-
 
 
 

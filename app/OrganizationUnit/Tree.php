@@ -11,7 +11,14 @@ namespace App\OrganizationUnit;
 
 interface Tree
 {
-    public function getChildren();
-    public function getPath();
+    /**
+     * @param string | null $id
+     * @return array
+     */
+    public function getChildren($id) : array ;
+
+    public function getPath(string $id): array ;
+
+    public  function get(array $ids = []): array;
 
 }

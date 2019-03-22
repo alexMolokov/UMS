@@ -60,7 +60,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'permissions'
 
     Route::post('/tree/children', 'OrganizationUnitController@getChildren')
         ->name('getOrganizationUnitChildren')
-        ->defaults("permission", Permission::ADMIN_EDIT_USER);
+        ->defaults("permission", [Permission::ADMIN_EDIT_USER, Permission::MESSENGER_WATCH_USER]);
 
     Route::post('/user/tree/paths', 'OrganizationUnitController@getPaths')
         ->name('getUserOrganizationUnitPaths')
@@ -105,11 +105,14 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth']], function ()
     Route::post('/unblock', 'UserController@block')->name("block_user");
     Route::post('/sms/send', 'UserController@sendSms')->name("send_sms");
     Route::post('/push/send', 'UserController@sendPush')->name("send_push");
-    Route::match(["get", "post"],'/list', 'UserController@listUser')->name("messengerListUser");
+    Route::match(["post"],'/list', 'UserController@listUser')->name("messengerListUser");
+    Route::match(["post"],'/ou/has', 'UserController@hasUser')->name("messengerOuHasUser");
     Route::match(["post"],'/get', 'UserController@getUser')->name("messengerGetUser");
     Route::match(["post"],'/update/profile', 'UserController@updateProfile')->name("messengerUpdateProfile");
     Route::match(["post"],'/change/password', 'UserController@changePassword')->name("messengerChangePassword");
     Route::match(["post"],'/create', 'UserController@createUser')->name("messengerCreateUser");
     Route::match(["post"],'/create/csv', 'UserController@createFromCsv')->name("messengerCreateFromCsv");
+    Route::match(["post"],'/copy', 'OrganizationUnitController@copyUsers')->name("messengerCopyUsers");
+    Route::match(["post"],'/move', 'OrganizationUnitController@moveUsers')->name("messengerMoveUsers");
 });
 

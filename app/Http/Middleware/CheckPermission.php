@@ -27,7 +27,9 @@ class CheckPermission
             return $next($request);
         }
 
-        if($user->hasPermissionTo($permission))
+        if(is_string($permission)) $permission = [$permission];
+
+        if($user->hasAnyPermission($permission))
         {
             return $next($request);
         }

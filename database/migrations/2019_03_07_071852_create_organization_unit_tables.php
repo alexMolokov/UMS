@@ -19,9 +19,6 @@ class CreateOrganizationUnitTables extends Migration
     {
         Schema::create(self::TABLE_OU, function (Blueprint $table) {
             $table->uuid('id');
-            $table->string('name', 100);
-            $table->uuid('parent_id')->nullable();
-            $table->boolean('has_child')->default(false);
             $table->timestamps();
             $table->primary('id');
         });

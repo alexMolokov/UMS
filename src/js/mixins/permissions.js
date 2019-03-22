@@ -1,9 +1,10 @@
 export const PERMISSIONS = {
     MESSENGER_WATCH_USER:"messenger.watch.user",
-    MESSENGER_CREATE_USER:"messenger.create.user",
-    MESSENGER_EDIT_USER:"messenger.create.user",
+    MESSENGER_EDIT_USER:"messenger.edit.user",
     MESSENGER_BLOCK_USER: "messenger.block.user",
-    MESSENGER_SMS_SEND: "messenger.sms.send",
+    MESSENGER_EDIT_STRUCTURE: "messenger.edit.structure",
+    MESSENGER_MOVE_USER: "messenger.move.user",
+    MESSENGER_COPY_USER: "messenger.copy.user",
 
     ADMIN_WATCH_USER: "admin.watch.user",
     ADMIN_CREATE_USER: "admin.create.user",
@@ -14,5 +15,9 @@ export const PERMISSIONS = {
     ADMIN_EDIT_ROLE : "admin.edit.role",
     ADMIN_DELETE_ROLE : "admin.delete.role",
 
-    LOG_WATCH: "log.watch"
+    LOG_WATCH: "log.watch",
+
+    FEEDBACK: "feedback"
 }
+
+

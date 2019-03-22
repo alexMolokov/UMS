@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
 use App\OrganizationUnit\OrganizationUnit;
+use App\Role;
 
 class User extends Authenticatable
 {
@@ -43,6 +44,10 @@ class User extends Authenticatable
            OrganizationUnit::class,
            'user_organization_unit'
         );
+    }
+
+    public function isSuperAdmin() {
+        return $this->hasRole(Role::SUPER_ADMIN);
     }
 
 }

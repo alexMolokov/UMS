@@ -72,6 +72,13 @@ class UserController extends Controller
 
     }
 
+    public function hasUser(Request $request){
+        $request->merge(['page' => 1, 'per_page' => 1, 'sort' => "login.asc", "filter" => new \stdClass()]);
+        $result =  $this->listUser($request)->getData();
+        return response()->success(["has" => count($result->data) > 0]);
+
+    }
+
     public function changePassword(Request $request){
         $login =  $request->input("login");
         $password =  $request->input("newPassword");
@@ -104,12 +111,37 @@ class UserController extends Controller
     }
 
     public function createFromCsv(Request $request){
-        return response()->success(["message" => __("Users has been saved")]);
+        $result = [];
+        $users = $request->input("users");
+
+        foreach($users as $user){
+            $messengerUser = new MessengerUser([
+                "firstName" => $user["firstName"],
+                "lastName" => $user["lastName"],
+                "middleName" => $user["middleName"],
+                "email" =>  $user["email"],
+                "login" =>  $user["login"],
+                "password" => $user["password"],
+                "ou" => $user["ou"][0]
+            ]);
+
+            $response = $this->service->add($messengerUser);
+            $result[$user["id"]] = [
+                "status" => $response->getStatus(),
+                "statusName" => $response->getDescription()
+            ];
+        }
+
+        return response()->success($result);
+
     }
+
 
     protected function setEncryptServerIUserInterface()
     {
         $this->service = resolve("EncryptServer\Interfaces\IUserInterface");
     }
+
+
 }
 

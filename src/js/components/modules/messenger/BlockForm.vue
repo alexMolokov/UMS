@@ -1,8 +1,8 @@
 <template>
-  <div  v-if="hasPermission(permissions.ADMIN_EDIT_USER)">
+  <div  v-if="hasPermission(permissions.MESSENGER_BLOCK_USER)">
       <form @submit.prevent="validate">
             <div class="overlay-wrapper pull-right" style="position: relative">
-                  <button type="submit" class="btn btn-info pull-right" v-if="!isBlocked">Активный</button>
+                  <button type="submit" class="btn btn-primary pull-right" v-if="!isBlocked">Активный</button>
                   <button type="submit" class="btn  btn-danger pull-right" v-if="isBlocked">Блокирован</button>
                   <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
              </div>

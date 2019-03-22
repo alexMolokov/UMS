@@ -11,7 +11,7 @@ export default {
      }
   },
   computed: {
-      ...mapGetters(["hasPermission"])
+      ...mapGetters(["hasPermission", "hasAnyPermission"])
   }
 }
 </script>   

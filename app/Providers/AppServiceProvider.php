@@ -64,6 +64,14 @@ class AppServiceProvider extends ServiceProvider
            );
         });
 
+        $this->app->singleton("EncryptServer\Interfaces\IOrganizationUnit", function($app)
+        {
+            $config = config("encrypt-server");
+            return new \EncryptServer\OrganizationUnitFacade(
+                new \EncryptServer\Utils\ProtobufClientAdmin($config)
+            );
+        });
+
 
     }
 }

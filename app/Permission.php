@@ -8,13 +8,13 @@ class Permission extends SpatiePermission
 {
     const MESSENGER_WATCH_USER = "messenger.watch.user";
     const MESSENGER_BLOCK_USER = "messenger.block.user";
-    const MESSENGER_CREATE_USER = "messenger.create.user";
+    //const MESSENGER_CREATE_USER = "messenger.create.user";
     const MESSENGER_EDIT_USER = "messenger.edit.user";
-    const MESSENGER_CREATE_STRUCTURE = "messenger.create.structure";
+    //const MESSENGER_CREATE_STRUCTURE = "messenger.create.structure";
     const MESSENGER_EDIT_STRUCTURE = "messenger.edit.structure";
     const MESSENGER_MOVE_USER = "messenger.move.user";
     const MESSENGER_COPY_USER = "messenger.copy.user";
-    const MESSENGER_SMS_SEND = "messenger.sms.send";
+    //const MESSENGER_SMS_SEND = "messenger.sms.send";
 
     const FEEDBACK = "feedback";
 
@@ -37,10 +37,10 @@ class Permission extends SpatiePermission
         $permissions = [
             self::MESSENGER_WATCH_USER => "Watch user",
             self::MESSENGER_BLOCK_USER => "Block user",
-            self::MESSENGER_SMS_SEND => "Send sms",
-            self::MESSENGER_CREATE_USER => "Create users",
+            //self::MESSENGER_SMS_SEND => "Send sms",
+            //self::MESSENGER_CREATE_USER => "Create users",
             self::MESSENGER_EDIT_USER => "Edit user",
-            self::MESSENGER_CREATE_STRUCTURE => "Create structure",
+            //self::MESSENGER_CREATE_STRUCTURE => "Create structure",
             self::MESSENGER_EDIT_STRUCTURE => "Edit structure",
             self::MESSENGER_MOVE_USER => "Move users",
             self::MESSENGER_COPY_USER => "Copy users",

@@ -11,54 +11,64 @@
 namespace App\OrganizationUnit;
 use App\OrganizationUnit\OrganizationUnit;
 
+use App\User;
+use EncryptServer\OrganizationUnitFacade;
 
 class MessengerTree implements Tree
 {
-    private $id;
+     private $facade;
 
-    public function __construct($id = null)
+
+    public function __construct($facade)
     {
-        $this->id = $id;
+        $this->facade = $facade;
     }
 
-    public function getChildren()
+    public function getChildren($id) : array
     {
-        if(is_null($this->id))
-        {
-            $collection = OrganizationUnit::whereNull("parent_id")->get();
-        }  else {
-            $collection =  OrganizationUnit::where("parent_id", "=", $this->id)->get();
-        }
-
-
-
         $result = [];
-        foreach($collection as $key => $unit) {
+
+        $children = $this->facade->getChildren($id);
+
+        foreach($children as $child) {
             $result[] = [
-                "id" => (string) $unit->getOriginal('id'),
-                "name" => $unit->name,
-                "parentId" => $unit->parent_id,
-                "hasChild" => (boolean) $unit->has_child
+                "id" => $child->getGuid(),
+                "name" => $child->getName(),
+                "parentId" => $child->getParent(),
+                "hasChild" => true
             ];
         }
 
+        return  $result;
+    }
+
+
+    public  function get(array $ids = []) : array
+    {
+        $result = [];
+
+        foreach($ids as $id){
+            $item = $this->facade->get($id);
+            $result[] = [
+                "id" => $item->getGuid(),
+                "name" => $item->getName(),
+                "parentId" => $item->getParent(),
+                "hasChild" => true
+            ];
+        }
 
         return $result;
     }
 
 
-    public function getPath()
+    public function getPath(string $id) : array
     {
         $result = [];
-        $organization = OrganizationUnit::find($this->id);
-        $result[] = ["name" => $organization->name, "id" => $this->id];
+        $path =  $this->facade->getPath($id);
 
-        $id = $organization->parent_id;
-        while($id != null)
+        foreach($path as $item)
         {
-            $organization = OrganizationUnit::find($id);
-            array_unshift($result,["name" => $organization->name, "id" => $id]);
-            $id =  $organization->parent_id;
+            $result[] = ["name" => $item->getName(), "id" => $item->getGuid()];
         }
 
         return $result;
