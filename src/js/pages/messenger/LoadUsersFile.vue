@@ -13,7 +13,7 @@
             <div class="box box-body">
                 <div class="row">
                     <div class="col-sm-12 col-lg-10">
-                        <div class="nav-tabs-custom" v-if="!isFinish">
+                        <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs nav-master">
                                 <li :class="{ active: isActive(1), done: isDone(1)}">
                                     <a href="#" @click.prevent="preventClick()">
@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <!-- /.tab-pane -->
-                                <div class="tab-pane" :class="{ active: isActive(2)}">
+                                <div class="tab-pane" :class="{ active: isActive(2) || isActive(3)}">
                                     <form-edit-user-load-file :data="cloneObject(userData)" v-if="showForm.formEditUserLoadFile" @close="showForm.formEditUserLoadFile = false" @form:edited-user="editedUser">
 
                                     </form-edit-user-load-file>
@@ -87,6 +87,13 @@
                                                 <a href="#" @click.prevent="deleteAction(props.rowIndex)"><i class="fa fa-trash-o" style="color: red"></i></a>
                                             </div>
                                         </template>
+
+                                         <template slot="statusName" slot-scope="props">
+                                                    <span v-if="props.rowData.status" style="color: green">{{props.rowData.statusName}}</span>
+                                                    <span v-else style="color:red">{{props.rowData.statusName}}</span>
+
+                                         </template>
+
                                     </vuetable>
                                         </div>
                                     </div>
@@ -95,10 +102,20 @@
 
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            <div class="overlay-wrapper pull-right" style="position: relative">
+                                            <div class="pull-left" v-if="isFinish">
+                                                <strong>Добавлено {{countAdded}} пользователей из {{users.data.length}}</strong>
+                                            </div>
+                                            <div class="overlay-wrapper pull-right" style="position: relative" v-if="!isAllAdded">
                                                 <button type="button" class="btn btn-block btn-primary" @click.prevent="validate">Сохранить</button>
                                                 <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
                                             </div>
+                                        </div>
+                                        <div class="col-xs-12" v-if="isAllAdded" style="margin-top: 10px;">
+                                            <ok-action-inform :state="state">
+                                                <div slot="ok-message">
+                                                    <div  v-translate>Пользователи были успешно добавлены</div>
+                                                </div>
+                                            </ok-action-inform>
                                         </div>
                                     </div>
 
@@ -106,9 +123,6 @@
                                 <!-- /.tab-pane -->
                             </div>
                             <!-- /.tab-content -->
-                        </div>
-                        <div class="alert alert-success alert-dismissible" v-if="isFinish">
-                               {{okMessage}}
                         </div>
                     </div>
                 </div>
@@ -130,6 +144,8 @@
     import FormEditUserLoadFile from "../../components/window/messenger/formEditUserLoadFile.vue";
     import FormChooseOu from "../../components/window/messenger/formChooseOU.vue";
     import errorInform from '../../mixins/error-inform.vue';
+    import OkActionInform  from '../../mixins/ok-action-inform.vue';
+
     import ajaxform from '../../mixins/ajax-form.vue';
     import {STATES} from "../../mixins/states";
 
@@ -139,7 +155,8 @@
             Papa,
             Vuetable,
             FormChooseOu,
-            errorInform
+            errorInform,
+            OkActionInform
         },
         name: 'load-users-file',
         mixins: [ajaxform],
@@ -241,7 +258,7 @@
                             filtered: false
                         },
                         {
-                            name: 'statusName',
+                            name: '__slot:statusName',
                             titleClass: 'text-center',
                             dataClass: 'text-right',
                             title: "Статус",
@@ -269,6 +286,7 @@
                     start: 1,
                     finish: 3
                 },
+                countAdded: 0,
 
                 files: [],
                 fileLoaded: false,
@@ -278,7 +296,6 @@
                     formChooseOu: false
                 },
                 userData: {},
-                okMessage: "",
 
 
                 error: {
@@ -297,6 +314,10 @@
             },
             isFinish(){
                 return this.step.current == this.step.finish;
+            },
+            isAllAdded(){
+                if(typeof this.users.data == "undefined") return false;
+                return this.countAdded == this.users.data.length
             }
         },
         methods: {
@@ -446,6 +467,7 @@
                 this.$validator.errors.clear();
 
                 let len = this.users.data.length;
+                let users = [];
                 for(let i = 0; i< len; i++)
                 {
                     let user = this.users.data[i];
@@ -457,14 +479,37 @@
                         this.err.common.push("Необходимо заполнить поля Логин, Пароль, Фамилия, Имя и Подразделение");
                         return;
                     }
+                    if(!user.status) users.push(user);
                 }
 
                 let self = this;
-                this.send("/user/create/csv", {users: this.users.data}, (response) => {
-                        self.step.current = self.step.finish;
-                        self.okMessage = response.message;
+                this.send("/user/create/csv", {users: users, "lang": this.$store.state.lang}, (response) => {
+
+                    self.countAdded = 0;
+                    self.users.data.forEach(function(user) {
+                      let login = user.login;
+
+                      if(typeof response[login] != "undefined"){
+                          user.status = response[login].status;
+                          user.statusName = self.$translate.text(response[login].statusName);
+                      }
+
+                      if(user.status) self.countAdded++;
+
+                    })
+
+
+                    let table = self.getTableReference();
+                    table.setData(this.users)
+
+                    if(this.isAllAdded) {
+                        this.state = STATES.ANSWER;
+                    }
+
+
+                     self.step.current = self.step.finish;
                 }, () => {
-                    alert("bad");
+                    console.log("bad");
                 });
 
 
@@ -472,6 +517,10 @@
 
         },
         locales: {
+            ru: {
+              "EMAIL_EXISTS": "Email существует",
+              "LOGIN_EXISTS": "Логин существует"
+            },
             uz: {
 
             }

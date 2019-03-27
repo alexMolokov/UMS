@@ -126,9 +126,11 @@ class UserController extends Controller
             ]);
 
             $response = $this->service->add($messengerUser);
-            $result[$user["id"]] = [
+            $login = $user["login"];
+            $result[$login] = [
+                "id" => $user["id"],
                 "status" => $response->getStatus(),
-                "statusName" => $response->getDescription()
+                "statusName" => __($response->getDescription())
             ];
         }
 

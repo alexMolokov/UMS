@@ -48,6 +48,54 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ 117:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(139)
+/* template */
+var __vue_template__ = __webpack_require__(140)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/js/mixins/ok-action-inform.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-03ad89df", Component.options)
+  } else {
+    hotAPI.reload("data-v-03ad89df", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ 118:
 /***/ (function(module, exports) {
 
@@ -145,13 +193,24 @@ module.exports = Component.exports
                 data: [],
                 loaded: false,
                 allItems: new Map(),
-                selectedNode: {},
+                selectedNode: {
+                    "name": "",
+                    "model": {},
+                    "node": {}
+                },
                 selectedItems: new Map()
             }
         };
     },
 
     methods: {
+        setEmptySelectedNode: function setEmptySelectedNode() {
+            var sNode = this.tree.selectedNode;
+            sNode.name = "";
+            sNode.model = {};
+            sNode.node = {};
+        },
+
         loadTree: function loadTree(oriNode, resolve) {
             var _this = this;
 
@@ -179,6 +238,7 @@ module.exports = Component.exports
                 data.forEach(function (item, index) {
 
                     var obj = {
+                        "id": item.id,
                         "text": item.name,
                         "value": item
                     };
@@ -202,6 +262,87 @@ module.exports = Component.exports
         }
     }
 });
+
+/***/ }),
+
+/***/ 139:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__states__ = __webpack_require__(16);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'ok-action-inform',
+    props: {
+        state: { type: Number, default: __WEBPACK_IMPORTED_MODULE_0__states__["a" /* STATES */].START }
+    },
+    data: function data() {
+        return {
+            STATES: __WEBPACK_IMPORTED_MODULE_0__states__["a" /* STATES */]
+        };
+    },
+
+    methods: {
+        close: function close() {
+            this.$emit('close');
+        }
+    }
+});
+
+/***/ }),
+
+/***/ 140:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.state == _vm.STATES.ANSWER
+    ? _c(
+        "div",
+        { staticClass: "alert alert-success alert-dismissible" },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "close",
+              attrs: {
+                type: "button",
+                "data-dismiss": "alert",
+                "aria-hidden": "true"
+              }
+            },
+            [_vm._v("×")]
+          ),
+          _vm._v(" "),
+          _vm._t("ok-message")
+        ],
+        2
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-03ad89df", module.exports)
+  }
+}
 
 /***/ }),
 
@@ -1249,9 +1390,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_permissions__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mixins_draggable_window__ = __webpack_require__(316);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__mixins_states__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_jstree_src_tree_vue__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_jstree_src_tree_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_vue_jstree_src_tree_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__mixins_load_tree__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__mixins_ok_action_inform_vue__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__mixins_ok_action_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__mixins_ok_action_inform_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_jstree_src_tree_vue__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_jstree_src_tree_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_vue_jstree_src_tree_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__mixins_load_tree__ = __webpack_require__(138);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -1313,6 +1456,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -1328,39 +1479,39 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'messenger-users',
-    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue___default.a, __WEBPACK_IMPORTED_MODULE_2__mixins_has_permission_vue___default.a, __WEBPACK_IMPORTED_MODULE_5__mixins_draggable_window__["a" /* default */], __WEBPACK_IMPORTED_MODULE_8__mixins_load_tree__["a" /* default */]],
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue___default.a, __WEBPACK_IMPORTED_MODULE_2__mixins_has_permission_vue___default.a, __WEBPACK_IMPORTED_MODULE_5__mixins_draggable_window__["a" /* default */], __WEBPACK_IMPORTED_MODULE_9__mixins_load_tree__["a" /* default */]],
     data: function data() {
         return {
-            /* tree: {
-                 data: [],
-                 loaded: false,
-                 allItems: new Map(),
-                 selectedNode: {
-                     "name": "",
-                     "model": {},
-                     "node": {}
-                 },
-             },*/
             actions: {
                 "delete": new Map(),
                 "add": new Map(),
                 "rename": new Map()
-            }
+            },
+            saved: false,
+            okMessage: ""
 
         };
     },
-    mounted: function mounted() {},
 
     components: {
-        VJstree: __WEBPACK_IMPORTED_MODULE_7_vue_jstree_src_tree_vue___default.a,
-        errorInform: __WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue___default.a
+        VJstree: __WEBPACK_IMPORTED_MODULE_8_vue_jstree_src_tree_vue___default.a,
+        errorInform: __WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue___default.a,
+        OkActionInform: __WEBPACK_IMPORTED_MODULE_7__mixins_ok_action_inform_vue___default.a
     },
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(["hasPermission"]), {
         changeDisabled: function changeDisabled() {
             return this.tree.selectedNode.name == "";
+        },
+        isSaved: function isSaved() {
+            return this.saved;
         }
     }),
     methods: {
+        reloadPage: function reloadPage() {
+            console.log(this.$router.currentRoute);
+            this.$router.push(this.$router.currentRoute.path);
+            //this.$router.go(this.$router.currentRoute)
+        },
         itemClick: function itemClick(node) {
             this.setSelectedNode(node);
         },
@@ -1368,6 +1519,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.tree.selectedNode.model = node.model;
             this.tree.selectedNode.name = node.model.text;
             this.tree.selectedNode.node = node;
+
+            console.log(this.tree.selectedNode);
         },
         changeName: function changeName() {
             this.tree.selectedNode.model.text = this.tree.selectedNode.name;
@@ -1375,21 +1528,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.saveForRename(this.tree.selectedNode.model);
         },
         saveForRename: function saveForRename(model) {
-            if (this.actions.add.get(model.id)) {
-                this.actions.add.set(model.id, model.value);
-            } else {
-                this.actions.rename.set(model.id, model.value);
+            if (this.isExistsTree(model)) {
+                this.actions.rename.set(model.id, model);
             }
         },
         saveForDelete: function saveForDelete(model) {
-            this.actions.rename.delete(model.id);
 
-            if (this.actions.add.get(model.id)) {
-                this.actions.add.delete(model.id);
-            } else {
-                if (typeof model.value.id != "undefined") {
-                    this.actions.delete.set(model.id, model.value);
-                }
+            if (this.isExistsTree(model)) {
+                this.actions.rename.delete(model.id);
+                this.actions.delete.set(model.id, model);
             }
         },
         addItem: function addItem() {
@@ -1397,17 +1544,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             if (model.id !== undefined) {
                 var newItem = model.addChild({
                     text: "Новое подразделение",
+                    opened: true,
                     value: {
                         name: "Новое подразделение",
-                        hasUsers: false
+                        hasUsers: false,
+                        parentId: model.id
                     },
                     isLeaf: true,
                     icon: "fa fa-sticky-note-o"
                 });
-                this.actions.add.set(newItem.id, newItem.value);
+
+                if (this.isExistsTree(model)) {
+                    this.actions.add.set(newItem.id, newItem);
+                }
+
                 model.isLeaf = false;
                 model.icon = "fa fa-folder";
             }
+        },
+        isExistsTree: function isExistsTree(model) {
+            if (Number.isInteger(model.id)) {
+                return false;
+            }
+            return true;
         },
         removeItemWrapper: function removeItemWrapper() {
             var _this = this;
@@ -1446,10 +1605,141 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     parent.model.icon = "fa fa-sticky-note-o";
                     parent.model.isLeaf = true;
                 }
+                this.setEmptySelectedNode();
             }
         },
+        getRemoveItems: function getRemoveItems() {
+            var result = [];
+            var self = this;
+
+            var keys = self.actions["delete"].keys();
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var key = _step.value;
+
+                    var item = self.actions["delete"].get(key);
+                    result.push(item.id);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            return result;
+        },
+        getRenameItems: function getRenameItems() {
+            var result = {};
+            var self = this;
+            var keys = self.actions["rename"].keys();
+
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = keys[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var key = _step2.value;
+
+                    var item = self.actions["rename"].get(key);
+                    result[item.id] = item.text;
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+
+            return result;
+        },
+        getAddItems: function getAddItems() {
+            var result = [];
+            var keys = this.actions["add"].keys();
+
+            var _iteratorNormalCompletion3 = true;
+            var _didIteratorError3 = false;
+            var _iteratorError3 = undefined;
+
+            try {
+                for (var _iterator3 = keys[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                    var key = _step3.value;
+
+                    var item = this.actions["add"].get(key);
+                    result.push({
+                        "name": item.text,
+                        "parentId": item.value.parentId,
+                        "children": this.addRecursion(item)
+                    });
+                }
+            } catch (err) {
+                _didIteratorError3 = true;
+                _iteratorError3 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                        _iterator3.return();
+                    }
+                } finally {
+                    if (_didIteratorError3) {
+                        throw _iteratorError3;
+                    }
+                }
+            }
+
+            return result;
+        },
+        addRecursion: function addRecursion(item) {
+            var children = [];
+
+            for (var i = 0; i < item.children.length; i++) {
+                children.push({
+                    "name": item.children[i].text,
+                    "children": this.addRecursion(item.children[i])
+                });
+            }
+
+            return children;
+        },
         save: function save() {
-            console.log(this.actions);
+
+            var data = {
+                "rename": this.getRenameItems(),
+                "add": this.getAddItems(),
+                "remove": this.getRemoveItems()
+            };
+
+            var self = this;
+
+            this.send("/ou/structure/save", data, function (data) {
+                self.state = __WEBPACK_IMPORTED_MODULE_6__mixins_states__["a" /* STATES */].ANSWER;
+                self.saved = true;
+                self.okMessage = "Структура подразделений была изменена";
+
+                console.log(self.okMessage);
+            });
         },
         closeErrorInform: function closeErrorInform() {
             this.state = __WEBPACK_IMPORTED_MODULE_6__mixins_states__["a" /* STATES */].START;
@@ -1535,6 +1825,23 @@ var render = function() {
             staticStyle: { position: "relative" }
           },
           [
+            _c("i", {
+              staticClass: "fa fa-refresh",
+              staticStyle: {
+                position: "absolute",
+                top: "5px",
+                right: "0",
+                cursor: "pointer"
+              },
+              attrs: { "aria-hidden": "true" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.reloadPage($event)
+                }
+              }
+            }),
+            _vm._v(" "),
             _c("v-jstree", {
               ref: "jsTree",
               attrs: {
@@ -1561,43 +1868,47 @@ var render = function() {
                             _vm._s(_.model.text) +
                             "\n                            "
                         ),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "structure-action",
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.addItem(_.vm, _.model, $event)
-                              }
-                            }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "fa fa-plus-square",
-                              staticStyle: { color: "green" }
-                            })
-                          ]
-                        ),
+                        _.model.opened
+                          ? _c(
+                              "a",
+                              {
+                                staticClass: "structure-action",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.addItem(_.vm, _.model, $event)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-plus-square",
+                                  staticStyle: { color: "green" }
+                                })
+                              ]
+                            )
+                          : _vm._e(),
                         _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "structure-action",
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.removeItemWrapper(_.vm, _.model, $event)
-                              }
-                            }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "fa fa-trash-o",
-                              staticStyle: { color: "red" }
-                            })
-                          ]
-                        )
+                        _.model.opened
+                          ? _c(
+                              "a",
+                              {
+                                staticClass: "structure-action",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.removeItemWrapper(_.vm, _.model, $event)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-trash-o",
+                                  staticStyle: { color: "red" }
+                                })
+                              ]
+                            )
+                          : _vm._e()
                       ])
                     ]
                   }
@@ -1605,42 +1916,44 @@ var render = function() {
               ])
             }),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticStyle: {
-                  position: "absolute",
-                  bottom: "10px",
-                  left: "0",
-                  width: "100%",
-                  "text-align": "center"
-                }
-              },
-              [
-                _c("div", { staticClass: "overlay-wrapper" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.save($event)
-                        }
-                      }
-                    },
-                    [_vm._v("Сохранить")]
-                  ),
-                  _vm._v(" "),
-                  _vm.submitting
-                    ? _c("div", { staticClass: "overlay" }, [
-                        _c("i", { staticClass: "fa fa-refresh fa-spin" })
-                      ])
-                    : _vm._e()
-                ])
-              ]
-            )
+            !_vm.isSaved
+              ? _c(
+                  "div",
+                  {
+                    staticStyle: {
+                      position: "absolute",
+                      bottom: "10px",
+                      left: "0",
+                      width: "100%",
+                      "text-align": "center"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "overlay-wrapper" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.save($event)
+                            }
+                          }
+                        },
+                        [_vm._v("Сохранить")]
+                      ),
+                      _vm._v(" "),
+                      _vm.submitting
+                        ? _c("div", { staticClass: "overlay" }, [
+                            _c("i", { staticClass: "fa fa-refresh fa-spin" })
+                          ])
+                        : _vm._e()
+                    ])
+                  ]
+                )
+              : _vm._e()
           ],
           1
         ),
@@ -1704,47 +2017,60 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticStyle: { display: "flex", "margin-bottom": "20px" }
-                    },
-                    [
-                      _c(
+                  !_vm.isSaved
+                    ? _c(
                         "div",
                         {
                           staticStyle: {
-                            flex: "1 1 auto",
-                            "text-align": "right"
+                            display: "flex",
+                            "margin-bottom": "20px"
                           }
                         },
                         [
                           _c(
-                            "a",
+                            "div",
                             {
-                              staticClass: "btn btn-primary",
-                              attrs: {
-                                href: "#",
-                                disabled: _vm.changeDisabled
-                              },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.changeName($event)
-                                }
+                              staticStyle: {
+                                flex: "1 1 auto",
+                                "text-align": "right"
                               }
                             },
-                            [_vm._v("Изменить")]
+                            [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-primary",
+                                  attrs: {
+                                    href: "#",
+                                    disabled: _vm.changeDisabled
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.changeName($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Изменить")]
+                              )
+                            ]
                           )
                         ]
                       )
-                    ]
-                  ),
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("error-inform", {
                     attrs: { err: _vm.err, state: _vm.state },
                     on: { "error-inform:closed": _vm.closeErrorInform }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("ok-action-inform", { attrs: { state: _vm.state } }, [
+                    _c(
+                      "div",
+                      { attrs: { slot: "ok-message" }, slot: "ok-message" },
+                      [_c("div", [_vm._v(_vm._s(_vm.okMessage))])]
+                    )
+                  ])
                 ],
                 1
               )

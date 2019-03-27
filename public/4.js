@@ -193,13 +193,24 @@ module.exports = Component.exports
                 data: [],
                 loaded: false,
                 allItems: new Map(),
-                selectedNode: {},
+                selectedNode: {
+                    "name": "",
+                    "model": {},
+                    "node": {}
+                },
                 selectedItems: new Map()
             }
         };
     },
 
     methods: {
+        setEmptySelectedNode: function setEmptySelectedNode() {
+            var sNode = this.tree.selectedNode;
+            sNode.name = "";
+            sNode.model = {};
+            sNode.node = {};
+        },
+
         loadTree: function loadTree(oriNode, resolve) {
             var _this = this;
 
@@ -227,6 +238,7 @@ module.exports = Component.exports
                 data.forEach(function (item, index) {
 
                     var obj = {
+                        "id": item.id,
                         "text": item.name,
                         "value": item
                     };

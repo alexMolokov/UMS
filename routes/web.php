@@ -116,3 +116,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth']], function ()
     Route::match(["post"],'/move', 'OrganizationUnitController@moveUsers')->name("messengerMoveUsers");
 });
 
+Route::group(['prefix' => 'ou', 'middleware' => ['web', 'auth']], function ()
+{
+    Route::match(["post"],'/structure/save', 'OrganizationUnitController@saveStructure')->name("messengerMoveUsers");
+});

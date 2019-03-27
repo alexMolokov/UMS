@@ -12,17 +12,18 @@
         <section class="content">
             <div class="messenger-users-wrapper box">
                 <div class="panel-box tree structure" style="position: relative">
+                    <i class="fa fa-refresh" aria-hidden="true" style="position: absolute; top:5px; right: 0; cursor: pointer"  @click.prevent="reloadPage"></i>
                     <v-jstree :data="tree.data" :async="loadTree"allow-batch whole-row  ref="jsTree"  @item-click="itemClick">
                         <template slot-scope="_">
                             <div>
                                 <i :class="_.vm.themeIconClasses" role="presentation" v-if="!_.model.loading"></i>
                                 {{_.model.text}}
-                                <a class="structure-action" @click.prevent="addItem(_.vm, _.model, $event)"><i style="color: green" class="fa fa-plus-square"></i></a>
-                                <a class="structure-action" @click.prevent="removeItemWrapper(_.vm, _.model, $event)"><i style="color: red" class="fa fa-trash-o"></i></a>
+                                <a v-if="_.model.opened" class="structure-action" @click.prevent="addItem(_.vm, _.model, $event)"><i style="color: green" class="fa fa-plus-square"></i></a>
+                                <a v-if="_.model.opened" class="structure-action" @click.prevent="removeItemWrapper(_.vm, _.model, $event)"><i style="color: red" class="fa fa-trash-o"></i></a>
                             </div>
                         </template>
                     </v-jstree>
-                    <div style="position: absolute; bottom: 10px; left: 0; width: 100%; text-align: center;">
+                    <div style="position: absolute; bottom: 10px; left: 0; width: 100%; text-align: center;" v-if="!isSaved">
                         <div class="overlay-wrapper">
                             <a href="#" @click.prevent="save" class="btn btn-primary">Сохранить</a>
                             <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
@@ -41,11 +42,17 @@
                                 </div>
                             </div>
 
-                            <div style="display: flex; margin-bottom: 20px;">
+                            <div style="display: flex; margin-bottom: 20px;" v-if="!isSaved">
                                 <div style="flex: 1 1 auto; text-align: right"><a href="#" @click.prevent="changeName" class="btn btn-primary" :disabled="changeDisabled">Изменить</a></div>
                             </div>
 
                             <error-inform :err="err" :state="state" @error-inform:closed="closeErrorInform"></error-inform>
+
+                            <ok-action-inform :state="state">
+                                <div slot="ok-message">
+                                    <div>{{okMessage}}</div>
+                                </div>
+                            </ok-action-inform>
 
                         </div>
                     </div>
@@ -65,6 +72,7 @@
     import {PERMISSIONS} from "../../mixins/permissions";
     import draggableWindow from '../../mixins/draggable-window';
     import {STATES} from "../../mixins/states";
+    import OkActionInform  from '../../mixins/ok-action-inform.vue';
 
     //import VJstree from 'vue-jstree'
     import VJstree from "vue-jstree/src/tree.vue";
@@ -75,39 +83,36 @@
         mixins: [ajaxform, hasPermission, draggableWindow, loadTree],
         data() {
             return {
-               /* tree: {
-                    data: [],
-                    loaded: false,
-                    allItems: new Map(),
-                    selectedNode: {
-                        "name": "",
-                        "model": {},
-                        "node": {}
-                    },
-                },*/
                 actions: {
                     "delete": new Map(),
                     "add": new Map(),
                     "rename": new Map()
-                }
+                },
+                saved: false,
+                okMessage: ""
 
             }
         },
-        mounted(){
-
-
-        },
         components: {
             VJstree,
-            errorInform
+            errorInform,
+            OkActionInform
         },
         computed: {
             ...mapGetters(["hasPermission"]),
             changeDisabled(){
                 return this.tree.selectedNode.name == ""
+            },
+            isSaved(){
+                return this.saved;
             }
         },
         methods: {
+            reloadPage(){
+                console.log(this.$router.currentRoute);
+                this.$router.push(this.$router.currentRoute.path);
+                //this.$router.go(this.$router.currentRoute)
+            },
 
             itemClick (node) {
                 this.setSelectedNode(node)
@@ -116,6 +121,8 @@
                 this.tree.selectedNode.model = node.model;
                 this.tree.selectedNode.name = node.model.text;
                 this.tree.selectedNode.node = node;
+
+                console.log(this.tree.selectedNode);
             },
             changeName(){
                 this.tree.selectedNode.model.text  = this.tree.selectedNode.name;
@@ -123,26 +130,17 @@
                 this.saveForRename(this.tree.selectedNode.model)
             },
             saveForRename(model){
-              if(this.actions.add.get(model.id))
-              {
-                  this.actions.add.set(model.id, model.value)
-              } else {
-                  this.actions.rename.set(model.id, model.value);
+              if(this.isExistsTree(model)) {
+                  this.actions.rename.set(model.id, model);
               }
             },
             saveForDelete(model){
-                this.actions.rename.delete(model.id);
 
-                if(this.actions.add.get(model.id))
-                {
-                    this.actions.add.delete(model.id);
-
-                } else {
-                    if(typeof model.value.id != "undefined") {
-                        this.actions.delete.set(model.id, model.value);
-                    }
-
+                if(this.isExistsTree(model)) {
+                    this.actions.rename.delete(model.id);
+                    this.actions.delete.set(model.id, model);
                 }
+
 
             },
 
@@ -151,18 +149,31 @@
                     if (model.id !== undefined) {
                         let newItem = model.addChild({
                             text: "Новое подразделение",
+                            opened: true,
                             value: {
                               name: "Новое подразделение",
-                              hasUsers: false
+                              hasUsers: false,
+                              parentId: model.id
                             },
                             isLeaf: true,
                             icon: "fa fa-sticky-note-o"
                         })
-                        this.actions.add.set(newItem.id, newItem.value);
+
+                        if(this.isExistsTree(model)) {
+                            this.actions.add.set(newItem.id, newItem);
+                        }
+
                         model.isLeaf = false;
                         model.icon =  "fa fa-folder";
                     }
             },
+            isExistsTree(model){
+                if(Number.isInteger(model.id)){
+                    return false;
+                }
+                return true;
+            },
+
             removeItemWrapper() {
                 let node = this.tree.selectedNode.node;
 
@@ -201,13 +212,86 @@
                         parent.model.isLeaf = true;
 
                     }
+                    this.setEmptySelectedNode();
 
 
                 }
 
             },
+
+            getRemoveItems() {
+              let result = [];
+              let self = this;
+
+              let keys = self.actions["delete"].keys();
+
+              for (let key of keys) {
+                  let item = self.actions["delete"].get(key);
+                  result.push(item.id);
+              }
+
+              return result;
+            },
+            getRenameItems() {
+                let result = {};
+                let self = this;
+                let keys = self.actions["rename"].keys();
+
+                for (let key of keys) {
+                    let item = self.actions["rename"].get(key);
+                    result[item.id] = item.text;
+                }
+
+                return result;
+            },
+            getAddItems(){
+                let result = [];
+                let keys = this.actions["add"].keys();
+
+                 for (let key of keys) {
+                    let item = this.actions["add"].get(key);
+                    result.push({
+                        "name": item.text,
+                        "parentId": item.value.parentId,
+                        "children" : this.addRecursion(item)
+                    });
+                }
+
+                return result;
+            },
+
+            addRecursion(item){
+                let children = [];
+
+                for(let i = 0; i< item.children.length; i++) {
+                    children.push({
+                            "name": item.children[i].text,
+                            "children": this.addRecursion(item.children[i])
+                    })
+                }
+
+                return children;
+            },
+
             save(){
-                console.log(this.actions)
+
+                let data = {
+                    "rename": this.getRenameItems(),
+                    "add":  this.getAddItems(),
+                    "remove": this.getRemoveItems()
+                };
+
+                let self = this;
+
+                this.send("/ou/structure/save", data,
+                    function(data) {
+                        self.state = STATES.ANSWER;
+                        self.saved = true;
+                        self.okMessage = "Структура подразделений была изменена"
+
+                        console.log(self.okMessage)
+                    }
+                );
             },
             closeErrorInform(){
                 this.state = STATES.START;

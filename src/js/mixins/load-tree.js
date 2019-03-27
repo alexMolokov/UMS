@@ -5,12 +5,23 @@ export default {
                 data: [],
                 loaded: false,
                 allItems: new Map(),
-                selectedNode: {},
+                selectedNode: {
+                    "name": "",
+                    "model": {},
+                    "node": {}
+                    },
                 selectedItems: new Map()
             }
         }
     },
     methods: {
+        setEmptySelectedNode(){
+          let sNode = this.tree.selectedNode;
+          sNode.name = "";
+          sNode.model = {};
+          sNode.node = {};
+
+        },
         loadTree: function (oriNode, resolve) {
 
             let getId = function(oriNode) {
@@ -38,6 +49,7 @@ export default {
                 data.forEach(function(item, index){
 
                     let obj = {
+                        "id": item.id,
                         "text": item.name,
                         "value": item,
                     };
