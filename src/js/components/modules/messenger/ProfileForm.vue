@@ -16,7 +16,7 @@
                             <div class="form-group"  :class="{'has-error': errors.has('firstname')}">
                                 <label for="firstname" class="col-sm-2 control-label">Имя</label>
                                 <div class="col-sm-10">
-                                    <input :disabled="disabled" type="text" class="form-control" id="firstname" name="firstname" placeholder="Имя" v-model="user.firstName"  v-validate="'min:3'">
+                                    <input :disabled="disabled" type="text" class="form-control" id="firstname" name="firstname" placeholder="Имя" v-model="user.firstName"  v-validate="'required|min:3'">
                                     <span v-show="errors.has('firstname')" class="help-block">{{errors.first('firstname')}}</span>
                                 </div>
                             </div>
@@ -46,13 +46,23 @@
                                 </div>
                             </div>
 
+                            <div  v-if="!hasOrderId">
+                                <error-inform :err="err" :state="state"></error-inform>
+                                <ok-action-inform :state="state">
+                                    <div slot="ok-message">
+                                        <div  v-translate>Профиль был изменен.</div>
+                                    </div>
+                                </ok-action-inform>
+                            </div>
 
-                            <error-inform :err="err" :state="state"></error-inform>
-                            <ok-action-inform :state="state">
-                                <div slot="ok-message">
-                                    <div  v-translate>Профиль был изменен.</div>
-                                </div>
-                            </ok-action-inform>
+                            <div style="margin-top: 10px" v-if="hasOrderId">
+                                <ok-action-inform :state="state">
+                                    <div slot="ok-message">
+                                        <div>Ваша заявка на изменение профиля пользователя принята.</div>
+                                        <h4>Номер заявки {{order.id}}</h4>
+                                    </div>
+                                </ok-action-inform>
+                            </div>
 
                         </div>
                         <!-- /.box-body -->
@@ -67,17 +77,19 @@
 
 <script>
     import ajaxform from '../../../mixins/ajax-form.vue';
+    import acceptAction from '../../../mixins/accept-action.vue';
     import hasPermission from '../../../mixins/has-permission.vue';
     import ErrorInform  from '../../../mixins/error-inform.vue';
     import OkActionInform  from '../../../mixins/ok-action-inform.vue';
     import BlockForm  from './BlockForm.vue';
+    import {ACCEPT_ACTION_HANDLER} from "../../../mixins/accept-action-handler";
     import {mapGetters, mapMutations } from 'vuex'
 
 
     export default {
         components: {ErrorInform, OkActionInform, BlockForm},
         name: 'profile-messenger-user-form',
-        mixins: [ajaxform, hasPermission],
+        mixins: [ajaxform, hasPermission, acceptAction],
         computed: {
             disabled(){
                 return !this.hasPermission(this.permissions.MESSENGER_EDIT_USER);
@@ -138,14 +150,17 @@
                     "lastname": this.user.lastName,
                     "middlename": this.user.middleName,
                     "nickname": this.user.nickName,
-                    "blocked": (this.user.blocked == '1'),
                     "login": this.user.id
                 };
 
-
+                let self = this;
                 this.send("/user/update/profile", data,
                     function(data) {
-                       //console.log("updated");
+                        ACCEPT_ACTION_HANDLER.handle(
+                            self,
+                            () => {},
+                            data
+                        );
                     }
                 );
 

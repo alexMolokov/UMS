@@ -36,6 +36,7 @@ class ListModels
         $data['per_page'] = request('per_page', $default = 10);
 
         $request = $this->_get($data);
+
         return  $request->paginate($data['per_page']);
     }
 

@@ -7,11 +7,11 @@
  */
 
 namespace App\Http\Middleware\Messenger;
-use App\Interfaces\Handler as Handler;
+use App\Interfaces\MessengerHandler;
 use Illuminate\Http\Request;
 
 
-abstract class AbstractHandler implements Handler
+abstract class AbstractHandler implements MessengerHandler
 {
     /**
      * @var Handler
@@ -22,16 +22,16 @@ abstract class AbstractHandler implements Handler
      * @param Handler $handler
      * @return Handler
      */
-    public function setNext(Handler $handler)
+    public function setNext(MessengerHandler $handler)
     {
         $this->nextHandler = $handler;
         return $handler;
     }
 
-    public function handle(Request $request)
+    public function handle(\stdClass $obj)
     {
         if ($this->nextHandler) {
-            return $this->nextHandler->handle($request);
+            return $this->nextHandler->handle($obj);
         }
 
         return new \EncryptServer\Response\SuccessResponse();

@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\Messenger\MessengerException;
 use App\Http\Middleware\Messenger\BlockHandler;
 use App\Http\Middleware\Messenger\EmailHandler;
 use App\Http\Middleware\Messenger\UserProfileHandler;
 use App\Http\Requests\Messenger\CreateUserRequest;
 use App\ListModelsMessenger;
+use App\Order\ActionFactory;
+use App\Order\Order;
+use App\Order\OrderExecutor;
 use Illuminate\Http\Request;
 use \EncryptServer\Models\User as MessengerUser;
 
@@ -32,33 +36,31 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
-         $emailHandler = new EmailHandler($this->service);
-         $UserProfileHandler = new UserProfileHandler($this->service);
+        $request->merge(["action" => ActionFactory::CHANGE_PROFILE]);
+        $action = ActionFactory::create($request);
+        $order = $action->handle($request->input("order_id"));
+        return response()->success([
+            "id" => $order->id,
+            "order_state_id" => $order->order_state_id
+        ]);
 
-        $emailHandler->setNext($UserProfileHandler);
-        $response = $emailHandler->handle($request);
-
-
-        if($response->getStatus())
-        {
-            return response()->success();
-        }
-
-        return response()->error(__("Can't update profile"));
     }
 
 
     public function block(Request $request)
     {
-        $blockHandler = new BlockHandler($this->service);
-        $response = $blockHandler->handle($request);
-        if($response->getStatus())
-        {
-            return response()->success();
-        }
+       $request->merge(["action" => ActionFactory::BLOCK]);
+       $action = ActionFactory::create($request);
 
-        return response()->error(__("Can't block user"));
+       $order = $action->handle($request->input("order_id"));
+
+       return response()->success([
+               "id" => $order->id,
+               "order_state_id" => $order->order_state_id
+       ]);
+
     }
+
 
     public function listUser(Request $request) {
 

@@ -27,6 +27,7 @@
                                                   :http-method="'post'"
                                                   :sort-order="table.sortOrder"
                                                   :append-params="table.moreParams"
+                                                  :noDataTemplate="table.noDataTemplate"
                                                   @vuetable:pagination-data="onPaginationData"
                                                   @vuetable:checkbox-toggled="checkboxToggled"
                                                   @vuetable:checkbox-toggled-all="checkboxToggledAll"
@@ -43,13 +44,22 @@
                                                 <router-link :to="{name: 'messenger-profile-id', params: { id: props.rowData.login }}">{{props.rowData.login}}</router-link>
                                             </template>
 
+                                            <template slot="assignedOrderId" slot-scope="props">
+                                                <router-link :to="{name: 'order-assigned-id', params: { id: props.rowData.id }}">{{props.rowData.id}}</router-link>
+                                            </template>
+
+                                            <template slot="myOrderId" slot-scope="props">
+                                                <router-link :to="{name: 'order-my-id', params: { id: props.rowData.id }}">{{props.rowData.id}}</router-link>
+                                            </template>
+
+
                                         </vuetable>
                                     </div>
                                 </div>
        <div class="row">
                                     <div class="col-xs-12">
                                         <div class="pull-left pagination">
-                                            <vuetable-pagination-info ref="paginationInfo" :info-template="infoTemplate"></vuetable-pagination-info>
+                                            <vuetable-pagination-info ref="paginationInfo" :info-template="infoTemplate" :no-data-template="noDataPaginationTemplate"></vuetable-pagination-info>
                                         </div>
                                         <div class="pull-right">
                                             <vuetable-pagination :css="cssPagination.pagination" ref="pagination" @vuetable-pagination:change-page="onChangePage"></vuetable-pagination>
@@ -101,6 +111,7 @@
         data() {
             return {
                 table: Object.assign({
+                    noDataTemplate: "Данные отсутствуют",
                     trackBy: 'id',
                     sortOrder: [{}],
                     rowClass: function(dataItem, index){ return ""},
@@ -123,6 +134,7 @@
                     }
                 },this.tableProperties),
                 infoTemplate: 'Показано с {from} по {to} из {total}',
+                "noDataPaginationTemplate": "",
                 cssPagination: CssConfig
 
 

@@ -13,23 +13,27 @@ class OrderTableSeeder extends Seeder
     public function run()
     {
         State::create([
-            "id" => State::FRESH,
-            "name" => State::getName(State::FRESH),
-        ]);
-
-        State::create([
             "id" => State::APPROVE,
             "name" => State::getName(State::APPROVE),
+            "title" => State::getName(State::APPROVE),
         ]);
 
         State::create([
             "id" => State::CANCEL,
             "name" => State::getName(State::CANCEL),
+            "title" => State::getName(State::CANCEL),
         ]);
 
         State::create([
-            "id" => State::FRESH,
-            "name" => State::getName(State::FRESH),
+            "id" => State::REJECT,
+            "name" => State::getName(State::REJECT),
+            "title" => State::getName(State::REJECT),
+        ]);
+
+        State::create([
+            "id" => State::DONE,
+            "name" => State::getName(State::DONE),
+            "title" => State::getName(State::DONE),
         ]);
 
 

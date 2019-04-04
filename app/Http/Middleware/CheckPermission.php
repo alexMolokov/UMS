@@ -20,17 +20,26 @@ class CheckPermission
 
         /** Illuminate\Routing\Route $route */
         $route = $request->route();
-        $permission = $route->defaults["permission"];
+        $permissions = $route->defaults["permission"];
 
-        if(is_null($permission) || $user->hasRole('superAdmin'))
+        if(is_null($permissions) || $user->hasRole('superAdmin'))
         {
+            $request->merge(["is_approved" => false]);
             return $next($request);
         }
 
-        if(is_string($permission)) $permission = [$permission];
+        if(is_string($permissions)) $permissions = [$permissions];
 
-        if($user->hasAnyPermission($permission))
+
+        if($user->hasAnyPermission($permissions))
         {
+            if($p = $user->getPermission($permissions[0])) {
+                if($p->getOriginal("pivot_approved")) {
+                    $request->merge(["is_approved" => $p->is_approved]);
+                }
+            }
+
+
             return $next($request);
         }
 

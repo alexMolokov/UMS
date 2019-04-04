@@ -13,19 +13,18 @@ use Illuminate\Http\Request;
 
 class UserProfileHandler extends MessengerHandler
 {
-    public function handle(Request $request)
+    public function handle(\stdClass $obj)
     {
-        $data = $request->only('firstname', 'lastname', 'middlename', 'nickname', "login");
 
 
-        $response = $this->service->setUserProfile($data["login"], [
-            "firstName" => $data["firstname"],
-            "lastName" => $data["lastname"],
-            "middleName" => $data["middlename"],
-            "nickName" => $data["nickname"]
+        $response = $this->service->setUserProfile($obj->login, [
+            "firstName" => $obj->firstname,
+            "lastName" => $obj->lastname,
+            "middleName" => $obj->middlename,
+            "nickName" => $obj->nickname
         ]);
 
-        if($response->getStatus()) return parent::handle($request);
+        if($response->getStatus()) return parent::handle($obj);
         return $response;
     }
 }

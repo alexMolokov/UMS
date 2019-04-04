@@ -9,17 +9,13 @@
 namespace App\Http\Middleware\Messenger;
 
 
-use Illuminate\Http\Request;
-
 class EmailHandler extends MessengerHandler
 {
-    public function handle(Request $request)
+    public function handle(\stdClass $obj)
     {
-        $login = $request->input("login");
-        $email = $request->input("email");
-        $response = $this->service->setEmail($login, $email);
+        $response = $this->service->setEmail($obj->login, $obj->email);
 
-        if($response->getStatus()) return parent::handle($request);
+        if($response->getStatus()) return parent::handle($obj);
         return $response;
     }
 }

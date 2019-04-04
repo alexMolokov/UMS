@@ -79,8 +79,29 @@ const routes = [
                 name: 'messenger-load-users-file',
                 component: (resolve) => { require(['./pages/messenger/LoadUsersFile'], resolve)},
                 meta: {permission: PERMISSIONS.MESSENGER_EDIT_USER}
-            }
+            },
+            {
+                path: '/order/my',
+                name: 'order-my',
+                component: (resolve) => { require(['./pages/order/My'], resolve)},
+            },
+            {
+                path: '/order/assigned',
+                name: 'order-assigned',
+                component: (resolve) => { require(['./pages/order/Assigned'], resolve)},
+            },
 
+            {
+                path: '/order/assigned/:id',
+                name: 'order-assigned-id',
+                component: (resolve) => { require(['./pages/order/AssignedOrder'], resolve)},
+            },
+
+            {
+                path: '/order/my/:id',
+                name: 'order-my-id',
+                component: (resolve) => { require(['./pages/order/MyOrder'], resolve)},
+            }
         ]
     }
 ]

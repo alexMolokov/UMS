@@ -6,6 +6,11 @@ use Illuminate\Support\ServiceProvider;
 use Response;
 use Illuminate\Support\Facades\Validator;
 use DB;
+use Monolog\Logger;
+use Monolog\Handler\GelfHandler;
+use Gelf\Publisher;
+use Gelf\Transport\UdpTransport;
+
 
 
 class AppServiceProvider extends ServiceProvider
@@ -42,11 +47,11 @@ class AppServiceProvider extends ServiceProvider
 
         });
 
-        //DB::listen(function ($query) {
+        DB::listen(function ($query) {
             //echo  $query->sql . "\r\n";
-            // $query->bindings
-            // $query->time
-        //});
+             //$query->bindings
+             //$query->time
+        });
     }
 
     /**
@@ -71,6 +76,33 @@ class AppServiceProvider extends ServiceProvider
                 new \EncryptServer\Utils\ProtobufClientAdmin($config)
             );
         });
+
+        $this->app->singleton("Psr\Log\LoggerInterface\Action", function($app)
+        {
+            $config = config("log-service");
+
+
+            $appName = env("APP_NAME");
+            $logger = new Logger($appName);
+
+            $publisher = new Publisher( new UdpTransport(
+                                $config["host"],
+                                $config["port"]
+                                 )
+            );
+
+            $logger->pushHandler(
+                new GelfHandler($publisher , Logger::INFO, false)
+            );
+
+            return $logger;
+
+        });
+
+
+
+
+
 
 
     }

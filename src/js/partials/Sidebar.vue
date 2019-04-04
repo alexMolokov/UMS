@@ -45,11 +45,36 @@
             </ul>
 
           </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-envelope"></i>
+              <span>Заявки</span>
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+              <li>
+                <router-link :to="{name: 'order-my'}">
+                  <i class="fa fa-circle-o"></i> <span>Мои заявки</span>
+                </router-link>
+              </li>
+
+              <li>
+                <router-link :to="{name: 'order-assigned'}">
+                  <i class="fa fa-circle-o"></i> <span>На Одобрение</span>
+                </router-link>
+              </li>
+            </ul>
+
+          </li>
+
           <li  v-if="hasPermission(permissions.LOG_WATCH)">
             <router-link to="/logs">
               <i class="fa fa-map-o"></i> <span>Логи</span>
             </router-link>
           </li>
+
           <li v-if="hasPermission(permissions.FEEDBACK)">
             <router-link to="/logs">
               <i class="fa fa-envelope"></i> <span>Обратная связь</span>

@@ -19,6 +19,7 @@
         "php": ">=7.0",
         "encrypt-server/php-encrypt-messenger": "@dev",
         "gapp/play-mobile-broker": "1.0.0",
+        "graylog2/gelf-php": "^1.6",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "predis/predis": "^1.1",
@@ -59,7 +60,7 @@
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
         ],
-        "serve": "php -S 0.0.0.0:8081 -t public"
+        "serve": "php -S 0.0.0.0:5083 -t public"
     },
     "config": {
         "preferred-install": "dist",

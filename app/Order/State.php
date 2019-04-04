@@ -13,11 +13,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class State extends Model
 {
-    const FRESH = 1;
+    const NEW = 1;
     const APPROVE = 2;
     const CANCEL = 3;
     const REJECT = 4;
     const DONE = 5;
+
+    protected $table = "order_states";
+    public $timestamps = false;
 
     /**
      * @param $stateId
@@ -26,10 +29,10 @@ class State extends Model
      */
     public static function getName($stateId) {
         $states = [
-            self::FRESH=> "New",
+            self::NEW=> "New",
             self::APPROVE => "Approve",
-            self::CANCEL => "Cancel",
-            self::REJECT => "Reject",
+            self::CANCEL => "Cancelled",
+            self::REJECT => "Rejected",
             self::DONE => "Done"
         ];
 

@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Messenger\MessengerException;
+use App\Traits\Observervable;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -9,6 +11,7 @@ use Illuminate\Database\QueryException;
 
 class Handler extends ExceptionHandler
 {
+
     /**
      * A list of the exception types that should not be reported.
      *
@@ -46,11 +49,10 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
 
-
-        /*if($exception instanceof QueryException)
+        if($exception instanceof MessengerException)
         {
-            return response()->error(__("Service Temporarily Unavailable") . ". " . __("Please try later") . ".", []);
-        }*/
+            return response()->error(__($exception->getMessage()));
+        }
 
 
         return parent::render($request, $exception);

@@ -50,4 +50,10 @@ class User extends Authenticatable
         return $this->hasRole(Role::SUPER_ADMIN);
     }
 
+    public function getPermission($permissionName){
+
+        $permission = app(Permission::class)->findByName($permissionName);
+        return $this->getAllPermissions()->find($permission->id);
+    }
+
 }

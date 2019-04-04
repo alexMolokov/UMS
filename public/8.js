@@ -1,14 +1,125 @@
 webpackJsonp([8],{
 
-/***/ 117:
+/***/ 102:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__states__ = __webpack_require__(15);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'error-inform',
+    props: {
+        state: { type: Number, default: __WEBPACK_IMPORTED_MODULE_0__states__["a" /* STATES */].START },
+        err: { type: Object, default: function _default() {
+                return { validation: [], common: [] };
+            } }
+    },
+    data: function data() {
+        return {};
+    },
+
+    computed: {
+        showError: function showError() {
+            return (this.err.validation.length > 0 || this.err.common.length > 0) && this.state == __WEBPACK_IMPORTED_MODULE_0__states__["a" /* STATES */].ERROR;
+        }
+    },
+    methods: {
+        closeErrors: function closeErrors() {
+            this.$emit("error-inform:closed");
+            this.err = { validation: [], common: [] };
+        }
+    }
+});
+
+/***/ }),
+
+/***/ 103:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.showError
+    ? _c(
+        "div",
+        { staticClass: "alert alert-danger fade in alert-dismissible" },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "close",
+              attrs: {
+                type: "button",
+                "data-dismiss": "alert",
+                "aria-hidden": "true"
+              },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.closeErrors($event)
+                }
+              }
+            },
+            [_vm._v("×")]
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.err.validation, function(er) {
+            return _c("div", { staticClass: "top-10" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(er.name) +
+                  " - " +
+                  _vm._s(er.description) +
+                  "\n                "
+              )
+            ])
+          }),
+          _vm._v(" "),
+          _vm._l(_vm.err.common, function(er) {
+            return _c("div", { staticClass: "top-10" }, [
+              _c("div", { staticClass: "top-10" }, [_vm._v(_vm._s(er))])
+            ])
+          })
+        ],
+        2
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5d373c7e", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 104:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(139)
+var __vue_script__ = __webpack_require__(135)
 /* template */
-var __vue_template__ = __webpack_require__(140)
+var __vue_template__ = __webpack_require__(136)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -82,12 +193,60 @@ module.exports = function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ 139:
+/***/ 119:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(227)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/js/mixins/has-permission.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-40bdeedc", Component.options)
+  } else {
+    hotAPI.reload("data-v-40bdeedc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 135:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__states__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__states__ = __webpack_require__(15);
 //
 //
 //
@@ -120,7 +279,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 140:
+/***/ 136:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -163,37 +322,185 @@ if (false) {
 
 /***/ }),
 
-/***/ 235:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ 193:
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/*!
- * LiquorTree v0.2.49
- * (c) 2019 amsik
- * Released under the MIT License.
- */
-var NodeContent={name:"node-content",props:["node"],render:function(e){var t=this,n=this.node,r=this.node.tree.vm;if(n.isEditing){var o=n.text;return this.$nextTick(function(e){t.$refs.editCtrl.focus()}),e("input",{domProps:{value:n.text,type:"text"},class:"tree-input",on:{input:function(e){o=e.target.value},blur:function(){n.stopEditing(o)},keyup:function(e){13===e.keyCode&&n.stopEditing(o)},mouseup:function(e){e.stopPropagation()}},ref:"editCtrl"})}return r.$scopedSlots.default?r.$scopedSlots.default({node:this.node}):e("span",{domProps:{innerHTML:n.text}})}};!function(){if("undefined"!=typeof document){var e=document.head||document.getElementsByTagName("head")[0],t=document.createElement("style"),n=' .tree-node { white-space: nowrap; display: flex; flex-direction: column; position: relative; box-sizing: border-box; } .tree-content { display: flex; align-items: center; padding: 3px; cursor: pointer; width: 100%; box-sizing: border-box; } .tree-node:not(.selected) > .tree-content:hover { background: #f6f8fb; } .tree-node.selected > .tree-content { background-color: #e7eef7; } .tree-node.disabled > .tree-content:hover { background: inherit; } .tree-arrow { flex-shrink: 0; height: 30px; cursor: pointer; margin-left: 30px; width: 0; } .tree-arrow.has-child { margin-left: 0; width: 30px; position: relative; } .tree-arrow.has-child:after { border: 1.5px solid #494646; position: absolute; border-left: 0; border-top: 0; left: 9px; top: 50%; height: 9px; width: 9px; transform: rotate(-45deg) translateY(-50%) translateX(0); transition: transform .25s; transform-origin: center; } .tree-arrow.expanded.has-child:after { transform: rotate(45deg) translateY(-50%) translateX(-5px); } .tree-checkbox { flex-shrink: 0; position: relative; width: 30px; height: 30px; box-sizing: border-box; border: 1px solid #dadada; border-radius: 2px; background: #fff; transition: border-color .25s, background-color .25s; } .tree-checkbox:after, .tree-arrow:after { position: absolute; display: block; content: ""; } .tree-checkbox.checked, .tree-checkbox.indeterminate { background-color: #3a99fc; border-color: #218eff; } .tree-checkbox.checked:after { box-sizing: content-box; border: 1.5px solid #fff; /* probably width would be rounded in most cases */ border-left: 0; border-top: 0; left: 9px; top: 3px; height: 15px; width: 8px; transform: rotate(45deg) scaleY(0); transition: transform .25s; transform-origin: center; } .tree-checkbox.checked:after { transform: rotate(45deg) scaleY(1); } .tree-checkbox.indeterminate:after { background-color: #fff; top: 50%; left: 20%; right: 20%; height: 2px; } .tree-anchor { flex-grow: 2; outline: none; display: flex; text-decoration: none; color: #343434; vertical-align: top; margin-left: 3px; line-height: 24px; padding: 3px 6px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } .tree-node.selected > .tree-content > .tree-anchor { outline: none; } .tree-node.disabled > .tree-content > .tree-anchor { color: #989191; background: #fff; opacity: .6; cursor: default; outline: none; } .tree-input { display: block; width: 100%; height: 24px; line-height: 24px; outline: none; border: 1px solid #3498db; padding: 0 4px; } .l-fade-enter-active, .l-fade-leave-active { transition: opacity .3s, transform .3s; transform: translateX(0); } .l-fade-enter, .l-fade-leave-to { opacity: 0; transform: translateX(-2em); } .tree--small .tree-anchor { line-height: 19px; } .tree--small .tree-checkbox { width: 23px; height: 23px; } .tree--small .tree-arrow { height: 23px; } .tree--small .tree-checkbox.checked:after { left: 7px; top: 3px; height: 11px; width: 5px; } .tree-node.has-child.loading > .tree-content > .tree-arrow, .tree-node.has-child.loading > .tree-content > .tree-arrow:after { border-radius: 50%; width: 15px; height: 15px; border: 0; } .tree-node.has-child.loading > .tree-content > .tree-arrow { font-size: 3px; position: relative; border-top: 1.1em solid rgba(45,45,45, 0.2); border-right: 1.1em solid rgba(45,45,45, 0.2); border-bottom: 1.1em solid rgba(45,45,45, 0.2); border-left: 1.1em solid #2d2d2d; -webkit-transform: translateZ(0); -ms-transform: translateZ(0); transform: translateZ(0); left: 5px; -webkit-animation: loading 1.1s infinite linear; animation: loading 1.1s infinite linear; margin-right: 8px; } @-webkit-keyframes loading { 0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } } @keyframes loading { 0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } } ';t.type="text/css",t.styleSheet?t.styleSheet.cssText=n:t.appendChild(document.createTextNode(n)),e.appendChild(t)}}();var TreeNode={render:function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("li",{staticClass:"tree-node",class:e.nodeClass,attrs:{"data-id":e.node.id},on:{mousedown:function(t){return t.stopPropagation(),e.handleMouseDown(t)}}},[n("div",{staticClass:"tree-content",style:["ltr"==e.options.direction?{"padding-left":e.padding}:{"padding-right":e.padding}],on:{mouseup:function(t){return t.stopPropagation(),e.select(t)}}},[n("i",{staticClass:"tree-arrow",class:{expanded:e.node.states.expanded,"has-child":e.node.children.length||e.node.isBatch},on:{mouseup:function(t){return t.stopPropagation(),e.toggleExpand(t)}}}),e._v(" "),e.options.checkbox?n("i",{staticClass:"tree-checkbox",class:{checked:e.node.states.checked,indeterminate:e.node.states.indeterminate},on:{mouseup:function(t){return t.stopPropagation(),e.check(t)}}}):e._e(),e._v(" "),n("span",{ref:"anchor",staticClass:"tree-anchor",attrs:{tabindex:"-1"},on:{focus:e.onNodeFocus,dblclick:function(t){e.tree.$emit("node:dblclick",e.node)}}},[n("node-content",{attrs:{node:e.node}})],1)]),e._v(" "),n("transition",{attrs:{name:"l-fade"}},[e.hasChildren()&&e.node.states.expanded?n("ul",{staticClass:"tree-children"},e._l(e.node.children,function(t){return t&&t.visible()?n("node",{key:t.id,attrs:{node:t,options:e.options}}):e._e()})):e._e()])],1)},staticRenderFns:[],name:"Node",inject:["tree"],props:["node","options"],components:{NodeContent:NodeContent},data:function(){return this.node.vm=this,{loading:!1}},computed:{padding:function(){return this.node.depth*(this.options.paddingLeft?this.options.paddingLeft:this.options.nodeIndent)+"px"},nodeClass:function(){var e=this.node.states,t=this.hasChildren(),n={"has-child":t,expanded:t&&e.expanded,selected:e.selected,disabled:e.disabled,matched:e.matched,dragging:e.dragging,loading:this.loading};return this.options.checkbox&&(n.checked=e.checked,n.indeterminate=e.indeterminate),n}},methods:{onNodeFocus:function(){this.tree.activeElement=this.node},focus:function(){this.$refs.anchor.focus(),this.node.select()},check:function(){this.node.checked()?this.node.uncheck():this.node.check()},select:function(e){void 0===e&&(e=evnt);var t=e.ctrlKey,n=this.options,r=this.tree,o=this.node;if(!n.editing||!o.isEditing){if(n.editing&&o.editable())return this.startEditing();if(n.checkbox&&n.checkOnSelect)return!n.parentSelect&&this.hasChildren()?this.toggleExpand():this.check(t);!n.parentSelect&&this.hasChildren()&&this.toggleExpand(),n.multiple?o.selected()?t?o.unselect():1!=this.tree.selectedNodes.length&&(r.unselectAll(),o.select()):o.select(t):o.selected()&&t?o.unselect():o.select()}},toggleExpand:function(){this.hasChildren()&&this.node.toggleExpand()},hasChildren:function(){return this.node.hasChildren()},startEditing:function(){this.tree._editingNode&&this.tree._editingNode.stopEditing(),this.node.startEditing()},stopEditing:function(){this.node.stopEditing()},handleMouseDown:function(e){this.options.dnd&&this.tree.vm.startDragging(this.node,e)}}};!function(){if("undefined"!=typeof document){var e=document.head||document.getElementsByTagName("head")[0],t=document.createElement("style"),n=" .tree-dragnode { padding: 10px; border: 1px solid #e7eef7; position: fixed; border-radius: 8px; background: #fff; transform: translate(-50%, -110%); z-index: 10; } ";t.type="text/css",t.styleSheet?t.styleSheet.cssText=n:t.appendChild(document.createTextNode(n)),e.appendChild(t)}}();var DraggableNode={render:function(){var e=this.$createElement;return(this._self._c||e)("div",{staticClass:"tree-dragnode",style:this.style},[this._v(" "+this._s(this.target.node.text)+" ")])},staticRenderFns:[],name:"DragNode",props:["target"],computed:{style:function(){return void 0===this.target.top?"display: none":"top: "+this.target.top+"px; left: "+this.target.left+"px"}}};function recurseDown(e,t){var n;return Array.isArray(e)?e.map(function(e){return recurseDown(e,t)}):(!1!==(n=t(e))&&e.children&&e.children.length&&(n=recurseDown(e.children,t)),n)}function striptags(e){return!1==!!document?e:(striptags.__element||(striptags.__element=document.createElement("div")),striptags.__element.innerHTML=e,striptags.__element.innerText)}function finder(e){return function(t){return Object.keys(e).every(function(n){if("text"===n){var r=e[n],o=t[n];return o=striptags(o),isRegExp(r)?r.test(o):r===o}var i=e[n];return"state"===n&&(n="states"),Object.keys(i).every(function(e){return t[n][e]===i[e]})})}}function isRegExp(e){return e instanceof RegExp}function getAllChildren(e){var t=[];return e.forEach(function e(n){t.push(n),n.children&&n.children.forEach(e)}),t}function find(e,t,n){if(void 0===n&&(n=!0),!e||!e.length||!t)return null;if(n&&(e=getAllChildren(e)),"number"==typeof t)return e[t]||null;("string"==typeof t||t instanceof RegExp)&&(t={text:t}),"function"!=typeof t&&(t=finder(t));var r=e.filter(t);return r.length?r:null}function s4(){return Math.floor(65536*(1+Math.random())).toString(16).substring(1)}function uuidV4(){return s4()+s4()+"-"+s4()+"-"+s4()+"-"+s4()+"-"+s4()+s4()+s4()}function nodeIterator(e,t){for(var n=[],r=arguments.length-2;r-- >0;)n[r]=arguments[r+2];e.forEach(function(e){return e[t].apply(e,n)})}var Selection=function(e){function t(t,n){var r;void 0===n&&(n=[]),e.call(this),this.tree=t,(r=this).push.apply(r,n)}return e&&(t.__proto__=e),t.prototype=Object.create(e&&e.prototype),t.prototype.constructor=t,t.prototype.remove=function(){return nodeIterator(this,"remove"),this},t.prototype.expand=function(){return nodeIterator(this,"expand"),this},t.prototype.collapse=function(){return nodeIterator(this,"collapse"),this},t.prototype.select=function(e){return nodeIterator(this,"select",e),this},t.prototype.unselect=function(){return nodeIterator(this,"unselect"),this},t.prototype.check=function(){return this.tree.options.checkbox&&nodeIterator(this,"check"),this},t.prototype.uncheck=function(){return this.tree.options.checkbox&&nodeIterator(this,"uncheck"),this},t}(Array),Node=function(e,t){if(!t)throw new Error("Node can not be empty");if(this.id=t.id||uuidV4(),this.states=t.state||{},this.showChildren=!0,this.children=t.children||[],this.parent=t.parent||null,this.isBatch=t.isBatch||!1,this.isEditing=!1,this.data=Object.assign({},t.data||{},{text:t.text}),!e)throw new Error("Node must has a Tree context!");this.tree=e},prototypeAccessors={key:{configurable:!0},depth:{configurable:!0},text:{configurable:!0}};Node.prototype.$emit=function(e){for(var t,n=[],r=arguments.length-1;r-- >0;)n[r]=arguments[r+1];(t=this.tree).$emit.apply(t,["node:"+e,this].concat(n))},Node.prototype.getPath=function(){if(!this.parent)return[this];for(var e=[this],t=this;null!==(t=t.parent);)e.push(t);return e},prototypeAccessors.key.get=function(){return this.id+this.text},prototypeAccessors.depth.get=function(){var e=0,t=this.parent;if(!t||!1===this.showChildren)return e;do{e++}while(t=t.parent);return e},prototypeAccessors.text.get=function(){return this.data.text},prototypeAccessors.text.set=function(e){var t=this.text;t!==e&&(this.data.text=e,this.$emit("text:changed",e,t))},Node.prototype.state=function(e,t){return void 0===t?this.states[e]:(this.states[e]=t,this)},Node.prototype.recurseUp=function(e,t){if(void 0===t&&(t=this),t.parent)return!1!==e(t.parent)?this.recurseUp(e,t.parent):void 0},Node.prototype.recurseDown=function(e,t){!0!==t&&e(this),this.hasChildren()&&recurseDown(this.children,e)},Node.prototype.refreshIndeterminateState=function(){if(!this.tree.options.autoCheckChildren)return this;if(this.state("indeterminate",!1),this.hasChildren()){var e=this.children.length,t=0,n=0,r=0;this.children.forEach(function(e){e.checked()&&t++,e.disabled()&&r++,e.indeterminate()&&n++}),t>0&&t===e-r?this.checked()||(this.state("checked",!0),this.tree.check(this),this.$emit("checked")):(this.checked()&&(this.state("checked",!1),this.tree.uncheck(this),this.$emit("unchecked")),this.state("indeterminate",n>0||t>0&&t<e))}this.parent&&this.parent.refreshIndeterminateState()},Node.prototype.indeterminate=function(){return this.state("indeterminate")},Node.prototype.editable=function(){return!this.state("disabled")&&this.state("editable")},Node.prototype.selectable=function(){return!this.state("disabled")&&this.state("selectable")},Node.prototype.selected=function(){return this.state("selected")},Node.prototype.select=function(e){return!this.selectable()||this.selected()?this:(this.tree.select(this,e),this.state("selected",!0),this.$emit("selected"),this)},Node.prototype.unselect=function(){return this.selectable()&&this.selected()?(this.tree.unselect(this),this.state("selected",!1),this.$emit("unselected"),this):this},Node.prototype.checked=function(){return this.state("checked")},Node.prototype.check=function(){var e=this;return this.checked()||this.disabled()?this:this.indeterminate()?this.uncheck():(this.tree.options.autoCheckChildren?(this.recurseDown(function(t){t.state("indeterminate",!1),t.checked()||(e.tree.check(t),t.state("checked",!0),t.$emit("checked"))}),this.parent&&this.parent.refreshIndeterminateState()):(this.tree.check(this),this.state("checked",!0),this.$emit("checked")),this)},Node.prototype.uncheck=function(){var e=this;return!this.indeterminate()&&!this.checked()||this.disabled()?this:(this.tree.options.autoCheckChildren?(this.recurseDown(function(t){t.state("indeterminate",!1),t.checked()&&(e.tree.uncheck(t),t.state("checked",!1),t.$emit("unchecked"))}),this.parent&&this.parent.refreshIndeterminateState()):(this.tree.uncheck(this),this.state("checked",!1),this.$emit("unchecked")),this)},Node.prototype.show=function(){return this.visible()?this:(this.state("visible",!0),this.$emit("shown"),this)},Node.prototype.hide=function(){return this.hidden()?this:(this.state("visible",!1),this.$emit("hidden"),this)},Node.prototype.visible=function(){return this.state("visible")},Node.prototype.hidden=function(){return!this.state("visible")},Node.prototype.enable=function(){return this.enabled()?this:(this.tree.options.autoDisableChildren?(this.state("disabled",!1),this.$emit("enabled")):this.recurseDown(function(e){e.disabled()&&(e.state("disabled",!1),e.$emit("enabled"))}),this)},Node.prototype.enabled=function(){return!this.state("disabled")},Node.prototype.disable=function(){return this.disabled()?this:(this.tree.options.autoDisableChildren?this.recurseDown(function(e){e.enabled()&&(e.state("disabled",!0),e.$emit("disabled"))}):(this.state("disabled",!0),this.$emit("disabled")),this)},Node.prototype.disabled=function(){return this.state("disabled")},Node.prototype.expandTop=function(e){var t=this;this.recurseUp(function(n){n.state("expanded",!0),!0!==e&&t.$emit("expanded",n)})},Node.prototype.expand=function(){var e=this;return this.canExpand()?(this.isBatch?this.tree.loadChildren(this).then(function(t){e.state("expanded",!0),e.$emit("expanded")}):(this.state("expanded",!0),this.$emit("expanded")),this):this},Node.prototype.canExpand=function(){return this.collapsed()&&this.hasChildren()&&(!this.tree.autoDisableChildren||this.disabled())},Node.prototype.canCollapse=function(){return this.expanded()&&this.hasChildren()&&(!this.tree.autoDisableChildren||this.disabled())},Node.prototype.expanded=function(){return this.state("expanded")},Node.prototype.collapse=function(){return this.canCollapse()?(this.state("expanded",!1),this.$emit("collapsed"),this):this},Node.prototype.collapsed=function(){return!this.state("expanded")},Node.prototype.toggleExpand=function(){return this._toggleOpenedState()},Node.prototype.toggleCollapse=function(){return this._toggleOpenedState()},Node.prototype._toggleOpenedState=function(){return this.canCollapse()?this.collapse():this.canExpand()?this.expand():void 0},Node.prototype.isDropable=function(){return this.enabled()&&this.state("dropable")},Node.prototype.isDraggable=function(){return this.enabled()&&this.state("draggable")&&!this.isEditing},Node.prototype.startDragging=function(){return!(!this.isDraggable()||this.state("dragging"))&&((!this.isRoot()||1!==this.tree.model.length)&&(this.tree.options.store&&(this.tree.__silence=!0),this.select(),this.state("dragging",!0),this.$emit("dragging:start"),this.tree.__silence=!1,!0))},Node.prototype.finishDragging=function(e,t){if(e.isDropable()||"drag-on"!==t){var n=this.tree,r=this.clone(),o=this.parent;r.id=this.id,n.__silence=!0,"drag-on"===t?n.append(e,r):"drag-below"===t?n.after(e,r):"drag-above"===t&&n.before(e,r),this.remove(),e.refreshIndeterminateState(),o&&o.refreshIndeterminateState(),n.__silence=!1,r.state("dragging",!1),this.state("dragging",!1),this.$emit("dragging:finish"),r.state("selected")&&(n.selectedNodes.remove(this),n.selectedNodes.add(r),n.vm.$set(this.state,"selected",!1),n.vm.$set(r.state,"selected",!0)),this.tree.options.store&&this.tree.vm.$emit("LIQUOR_NOISE")}},Node.prototype.startEditing=function(){if(this.disabled())return!1;this.isEditing||(this.tree._editingNode=this,this.tree.activeElement=this,this.isEditing=!0,this.$emit("editing:start"))},Node.prototype.stopEditing=function(e){this.isEditing&&(this.isEditing=!1,this.tree._editingNode=null,this.tree.activeElement=null,e&&!1!==e&&this.text!==e&&(this.text=e),this.$emit("editing:stop",this.text===e))},Node.prototype.index=function(e){return this.tree.index(this,e)},Node.prototype.first=function(){return this.hasChildren()?this.children[0]:null},Node.prototype.last=function(){return this.hasChildren()?this.children[this.children.length-1]:null},Node.prototype.next=function(){return this.tree.nextNode(this)},Node.prototype.prev=function(){return this.tree.prevNode(this)},Node.prototype.insertAt=function(e,t){var n=this;if(void 0===t&&(t=this.children.length),e)return e=this.tree.objectToNode(e),Array.isArray(e)?(e.reverse().map(function(e){return n.insertAt(e,t)}),new Selection(this.tree,[].concat(e))):(e.parent=this,this.children.splice(t,0,e),e.disabled()&&e.hasChildren()&&e.recurseDown(function(e){e.state("disabled",!0)}),this.isBatch||this.$emit("added",e),e)},Node.prototype.addChild=function(e){return this.insertAt(e)},Node.prototype.append=function(e){return this.addChild(e)},Node.prototype.prepend=function(e){return this.insertAt(e,0)},Node.prototype.before=function(e){return this.tree.before(this,e)},Node.prototype.after=function(e){return this.tree.after(this,e)},Node.prototype.empty=function(){for(var e;e=this.children.pop();)e.remove();return this},Node.prototype.remove=function(){return this.tree.removeNode(this)},Node.prototype.removeChild=function(e){var t=this.find(e);return t?this.tree.removeNode(t):null},Node.prototype.find=function(e,t){return this.tree.isNode(e)?e:find(this.children,e,t)},Node.prototype.focus=function(){this.vm&&this.vm.focus()},Node.prototype.hasChildren=function(){return this.showChildren&&this.isBatch||this.children.length>0},Node.prototype.isRoot=function(){return null===this.parent},Node.prototype.clone=function(){return this.tree.objectToNode(this.toJSON())},Node.prototype.toJSON=function(){var e=this;return{text:this.text,data:this.data,state:this.states,children:this.children.map(function(t){return e.tree.objectToNode(t).toJSON()})}},Object.defineProperties(Node.prototype,prototypeAccessors);var nodeStates={selected:!1,selectable:!0,checked:!1,expanded:!1,disabled:!1,visible:!0,indeterminate:!1,matched:!1,editable:!0,dragging:!1,draggable:!0,dropable:!0};function merge(e){return void 0===e&&(e={}),Object.assign({},nodeStates,e)}function objectToNode(e,t){var n=null;if(t instanceof Node)return t;if("string"==typeof t)n=new Node(e,{text:t,state:merge(),id:uuidV4()});else{if(Array.isArray(t))return t.map(function(t){return objectToNode(e,t)});(n=new Node(e,t)).states=merge(n.states),n.id||(n.id=uuidV4()),n.children.length&&(n.children=n.children.map(function(t){return(t=objectToNode(e,t)).parent=n,t}))}return n}var List=function(e){function t(){e.apply(this,arguments)}return e&&(t.__proto__=e),t.prototype=Object.create(e&&e.prototype),t.prototype.constructor=t,t.prototype.empty=function(){return this.splice(0,this.length),this},t.prototype.has=function(e){return this.includes(e)},t.prototype.add=function(){for(var e,t=[],n=arguments.length;n--;)t[n]=arguments[n];return(e=this).push.apply(e,t),this},t.prototype.remove=function(e){var t=this.indexOf(e);return-1===t?this:(this.splice(t,1),this)},t.prototype.removeAll=function(e){for(;this.includes(e);)this.remove(e);return this},t.prototype.top=function(){return this[this.length-1]},t}(Array),defaultPropertyNames={id:"id",text:"text",children:"children",state:"state",data:"data",isBatch:"isBatch"};function convertNames(e,t){return{id:e[t.id],text:e[t.text],children:e[t.children],state:e[t.state],data:e[t.data],isBatch:e[t.isBatch]}}var TreeParser={parse:function(e,t,n){void 0===n&&(n={}),"string"==typeof e&&(e=JSON.parse(e)),Array.isArray(e)||(e=[e]);var r=Object.assign({},defaultPropertyNames,n);return e.map(function e(t){var n=convertNames(t,r);return n.children&&!Array.isArray(n.children)&&(n.children=[n.children]),n.children&&(n.children=n.children.map(e)),n}).map(function(e){return objectToNode(t,e)})}};function request(e){return new Promise(function(t,n){var r=new XMLHttpRequest;r.open("GET",e),r.setRequestHeader("Content-Type","application/json"),r.addEventListener("load",function(e){try{var o=JSON.parse(r.response);t(o)}catch(e){n(e)}}),r.send(null)})}function get(e){return request(e)}function createTemplate(e){return function(t){for(var n,r=/{([^}]+)}/,o=e;n=r.exec(o);)o=o.replace(n[0],t[n[1]]);return o}}function orderAsc(e,t){return e.text<t.text?-1:e.text>t.text?1:0}function orderDesc(e,t){return e.text<t.text?1:e.text>t.text?-1:0}function getCompareFunction(e){switch(e.toLowerCase()){case"asc":return orderAsc;case"desc":return orderDesc}}function sort(e,t){"string"==typeof t&&(t=getCompareFunction(t)),Array.isArray(e)&&"function"==typeof t&&e.sort(t)}function fetchDelay(e){return new Promise(function(t){setTimeout(t,e)})}var Tree=function(e){var t=this;this.vm=e,this.options=e.opts,this.activeElement=null;var n,r=this.options.fetchData;"string"==typeof r&&(this.options.fetchData=(n=createTemplate(r),function(e){return get(n(e)).catch(t.options.onFetchError)}))};Tree.prototype.$on=function(e){for(var t,n=[],r=arguments.length-1;r-- >0;)n[r]=arguments[r+1];(t=this.vm).$on.apply(t,[e].concat(n))},Tree.prototype.$once=function(e){for(var t,n=[],r=arguments.length-1;r-- >0;)n[r]=arguments[r+1];(t=this.vm).$once.apply(t,[e].concat(n))},Tree.prototype.$off=function(e){for(var t,n=[],r=arguments.length-1;r-- >0;)n[r]=arguments[r+1];(t=this.vm).$off.apply(t,[e].concat(n))},Tree.prototype.$emit=function(e){for(var t,n=[],r=arguments.length-1;r-- >0;)n[r]=arguments[r+1];this.__silence||((t=this.vm).$emit.apply(t,[e].concat(n)),this.options.store&&this.vm.$emit("LIQUOR_NOISE"))},Tree.prototype._sort=function(e,t,n){!1!==n&&this.recurseDown(e,function(e){e.hasChildren()&&sort(e.children,t)}),sort(e,t)},Tree.prototype.sortTree=function(e,t){this._sort(this.model,e,t)},Tree.prototype.sort=function(e,t,n){var r=this,o=this.find(e,!0);o&&t&&o.forEach(function(e){r._sort(e.children,t,n)})},Tree.prototype.clearFilter=function(){this.recurseDown(function(e){e.state("matched",!1),e.state("visible",!0),e.state("expanded",e.__expanded),e.__expanded=void 0,e.showChildren=!0}),this.vm.matches.length=0,this.vm.$emit("tree:filtered",[],"")},Tree.prototype.filter=function(e){if(!e)return this.clearFilter();var t=[],n=this.options.filter.matcher,r=this.options.filter,o=r.showChildren,i=r.plainList;return this.recurseDown(function(r){n(e,r)&&t.push(r),r.showChildren=!0,void 0===r.__expanded&&(r.__expanded=r.state("expanded")),r.state("visible",!1),r.state("matched",!1),r.state("expanded",!0)}),t.reverse().forEach(function(e){e.state("matched",!0),e.state("visible",!0),e.showChildren=!i,e.hasChildren()&&e.recurseDown(function(e){e.state("visible",!!o)},!0),e.recurseUp(function(e){e.state("visible",!0),e.state("expanded",!0)}),e.hasChildren()&&e.state("expanded",!1)}),this.vm.matches=t,this.vm.$emit("tree:filtered",t,e),t},Tree.prototype.selected=function(){return new(Function.prototype.bind.apply(Selection,[null].concat([this],this.selectedNodes)))},Tree.prototype.checked=function(){return this.options.checkbox?new(Function.prototype.bind.apply(Selection,[null].concat([this],this.checkedNodes))):null},Tree.prototype.loadChildren=function(e){var t=this;if(e){this.$emit("tree:data:fetch",e),this.options.minFetchDelay>0&&(e.vm.loading=!0);var n=this.fetch(e).then(function(n){e.append(n),e.isBatch=!1,t.options.autoCheckChildren&&e.checked()&&e.recurseDown(function(e){e.state("checked",!0)}),t.$emit("tree:data:received",e)});return Promise.all([fetchDelay(this.options.minFetchDelay),n]).then(function(t){return e.vm.loading=!1,n})}},Tree.prototype.fetch=function(e,t){var n=this,r=this.options.fetchData(e);return r.then||(r=get(r).catch(this.options.onFetchError)),!1===t?r:r.then(function(e){return n.parse(e,n.options.modelParse)}).catch(this.options.onFetchError)},Tree.prototype.fetchInitData=function(){return this.fetch({id:"root",name:"root"},!1)},Tree.prototype.setModel=function(e){var t=this;if(this.model=this.parse(e,this.options.modelParse),this.vm.model=this.model,this.selectedNodes=new List,this.checkedNodes=new List,recurseDown(this.model,function(e){e.tree=t,e.selected()&&t.selectedNodes.add(e),e.checked()&&(t.checkedNodes.add(e),e.parent&&e.parent.refreshIndeterminateState()),t.options.autoDisableChildren&&e.disabled()&&e.recurseDown(function(e){e.state("disabled",!0)})}),!this.options.multiple&&this.selectedNodes.length){var n=this.selectedNodes.top();this.selectedNodes.forEach(function(e){n!==e&&e.state("selected",!1)}),this.selectedNodes.empty().add(n)}this.options.checkOnSelect&&this.options.checkbox&&this.unselectAll()},Tree.prototype.recurseDown=function(e,t){return!t&&e&&(t=e,e=this.model),recurseDown(e,t)},Tree.prototype.select=function(e,t){var n=this.getNode(e);return!!n&&(this.options.multiple&&t?this.selectedNodes.add(n):(this.unselectAll(),this.selectedNodes.empty().add(n)),!0)},Tree.prototype.selectAll=function(){var e=this;return!!this.options.multiple&&(this.selectedNodes.empty(),this.recurseDown(function(t){e.selectedNodes.add(t.select(!0))}),!0)},Tree.prototype.unselect=function(e){var t=this.getNode(e);return!!t&&(this.selectedNodes.remove(t),!0)},Tree.prototype.unselectAll=function(){for(var e;e=this.selectedNodes.pop();)e.unselect();return!0},Tree.prototype.check=function(e){this.checkedNodes.add(e)},Tree.prototype.uncheck=function(e){this.checkedNodes.remove(e)},Tree.prototype.checkAll=function(){this.recurseDown(function(e){0===e.depth&&(e.indeterminate()&&e.state("indeterminate",!1),e.check())})},Tree.prototype.uncheckAll=function(){for(var e;e=this.checkedNodes.pop();)e.uncheck();return!0},Tree.prototype.expand=function(e){return!e.expanded()&&(e.expand(),!0)},Tree.prototype.collapse=function(e){return!e.collapsed()&&(e.collapse(),!0)},Tree.prototype.toggleExpand=function(e){return!!e.hasChildren()&&(e.toggleExpand(),!0)},Tree.prototype.toggleCollapse=function(e){return!!e.hasChildren()&&(e.toggleCollapse(),!0)},Tree.prototype.expandAll=function(){this.recurseDown(function(e){e.hasChildren()&&e.collapsed()&&e.expand()})},Tree.prototype.collapseAll=function(){this.recurseDown(function(e){e.hasChildren()&&e.expanded()&&e.collapse()})},Tree.prototype.index=function(e,t){var n=e.parent,r=(n=n?n.children:this.model).indexOf(e);return t?{index:r,target:n,node:n[r]}:r},Tree.prototype.nextNode=function(e){var t=this.index(e,!0);return t.target[t.index+1]||null},Tree.prototype.nextVisibleNode=function(e){if(e.hasChildren()&&e.expanded())return e.first();var t=this.nextNode(e);return!t&&e.parent?e.parent.next():t},Tree.prototype.prevNode=function(e){var t=this.index(e,!0);return t.target[t.index-1]||null},Tree.prototype.prevVisibleNode=function(e){var t=this.prevNode(e);return t?t.hasChildren()&&t.expanded()?t.last():t:e.parent},Tree.prototype.addToModel=function(e,t){var n=this;return void 0===t&&(t=this.model.length),e=this.objectToNode(e),this.model.splice(t,0,e),this.recurseDown(e,function(e){e.tree=n}),this.$emit("node:added",e),e},Tree.prototype.append=function(e,t){var n=this.find(e);return!!n&&n.append(t)},Tree.prototype.prepend=function(e,t){var n=this.find(e);return!!n&&n.prepend(t)},Tree.prototype.before=function(e,t){e=this.find(e);var n=this.index(e,!0),r=this.objectToNode(t);return!!~n.index&&(n.target.splice(n.index,0,r),r.parent=e.parent,this.$emit("node:added",r),r)},Tree.prototype.after=function(e,t){e=this.find(e);var n=this.index(e,!0),r=this.objectToNode(t);return!!~n.index&&(n.target.splice(n.index+1,0,r),r.parent=e.parent,this.$emit("node:added",r),r)},Tree.prototype.addNode=function(e){var t=this.model.length;return e=objectToNode(e),this.model.splice(t,0,e),this.$emit("node:added",e),e},Tree.prototype.remove=function(e,t){return this.removeNode(this.find(e,t))},Tree.prototype.removeNode=function(e){if(e instanceof Selection)return e.remove();if(!e)return!1;if(e.parent){var t=e.parent.children;~t.indexOf(e)&&t.splice(t.indexOf(e),1)}else~this.model.indexOf(e)&&this.model.splice(this.model.indexOf(e),1);e.parent&&e.parent.indeterminate()&&!e.parent.hasChildren()&&e.parent.state("indeterminate",!1),null!==this.activeElement&&e.id===this.activeElement.id&&(this.activeElement=null),e.parent=null,this.$emit("node:removed",e),this.selectedNodes.remove(e),this.checkedNodes.remove(e);var n=this.vm.matches;return n&&n.length&&n.includes(e)&&n.splice(n.indexOf(e),1),e},Tree.prototype.isNode=function(e){return e instanceof Node},Tree.prototype.find=function(e,t){if(this.isNode(e))return e;var n=find(this.model,e);return n&&n.length?new Selection(this,!0===t?n:[n[0]]):null},Tree.prototype.getNodeById=function(e){var t=null;return recurseDown(this.model,function(n){if(""+n.id===e)return t=n,!1}),t},Tree.prototype.getNode=function(e){return this.isNode(e)?e:null},Tree.prototype.objectToNode=function(e){return objectToNode(this,e)},Tree.prototype.parse=function(e,t){t||(t=this.options.propertyNames);try{return TreeParser.parse(e,this,t)}catch(e){return console.error(e),[]}};var keyCodes={ARROW_LEFT:37,ARROW_TOP:38,ARROW_RIGHT:39,ARROW_BOTTOM:40,SPACE:32,DELETE:46,ENTER:13,ESC:27},codesArr=[37,38,39,40,32];function focusUp(e,t){var n=e.prevVisibleNode(t);if(n)return n.disabled()?focusUp(e,n):void n.focus()}function focusdDown(e,t){var n=e.nextVisibleNode(t);if(n)return n.disabled()?focusdDown(e,n):void n.focus()}function checkNode(e,t){e.options.checkbox&&(t.checked()?t.uncheck():t.check())}function leftArrow(e,t){if(t.expanded())t.collapse();else{var n=t.parent;n&&n.focus()}}function rightArrow(e,t){if(t.collapsed())t.expand();else{var n=t.first();n&&n.focus()}}function deleteNode(e,t){var n=e.options.deletion;n&&("function"==typeof n?!0===n(t)&&t.remove():!0===n&&t.remove())}function initKeyboardNavigation(e){e.vm.$el.addEventListener("keydown",function(t){var n=t.keyCode,r=e.activeElement;if(e.isNode(r))if(r.isEditing)switch(n){case keyCodes.ESC:return r.stopEditing(!1)}else switch(codesArr.includes(n)&&(t.preventDefault(),t.stopPropagation()),n){case keyCodes.ARROW_LEFT:return leftArrow(e,r);case keyCodes.ARROW_RIGHT:return rightArrow(e,r);case keyCodes.ARROW_TOP:return focusUp(e,r);case keyCodes.ARROW_BOTTOM:return focusdDown(e,r);case keyCodes.SPACE:case keyCodes.ENTER:return checkNode(e,r);case keyCodes.DELETE:return deleteNode(e,r)}},!0)}function assert(e,t){if(!1===e)throw new Error(t)}function initEvents(e){var t=e.opts,n=t.multiple,r=t.checkbox,o=e.tree,i=function(t){var o=e.selected();r?e.$emit("input",{selected:n?o:o[0]||null,checked:e.checked()}):e.$emit("input",n?o:o[0]||null)};i(),o.$on("node:selected",i),o.$on("node:unselected",i),r&&(o.$on("node:checked",i),o.$on("node:unchecked",i)),o.$on("node:added",function(e,t){var n=t||e;r&&(n.state("checked")&&!o.checkedNodes.has(n)&&o.checkedNodes.add(n),n.refreshIndeterminateState()),n.state("selected")&&!o.selectedNodes.has(n)&&o.select(n),i()})}var TreeMixin={mounted:function(){var e,t=this,n=new Tree(this);this.tree=n,this._provided.tree=n,!this.data&&this.opts.fetchData?e=n.fetchInitData():this.data&&this.data.then?(e=this.data,this.loading=!0):e=Promise.resolve(this.data),e.then(function(e){e||(e=[]),t.opts.store?t.connectStore(t.opts.store):t.tree.setModel(e),t.loading&&(t.loading=!1),t.$emit("tree:mounted",t),initEvents(t)}),!1!==this.opts.keyboardNavigation&&initKeyboardNavigation(n)},methods:{connectStore:function(e){var t=this,n=e.store,r=e.mutations,o=e.getter,i=e.dispatcher;assert("function"==typeof o,"`getter` must be a function"),assert("function"==typeof i,"`dispatcher` must be a function"),void 0!==r&&assert(Array.isArray(r),"`mutations` must be an array"),n.subscribe(function(e,n){r?r.includes(e.type)&&t.tree.setModel(o()):t.tree.setModel(o())}),this.tree.setModel(o()),this.$on("LIQUOR_NOISE",function(){t.$nextTick(function(e){i(t.toJSON())})})},recurseDown:function(e){this.tree.recurseDown(e)},selected:function(){return this.tree.selected()},checked:function(){return this.tree.checked()},append:function(e,t){return t?this.tree.append(e,t):this.tree.addToModel(e,this.tree.model.length)},prepend:function(e,t){return t?this.tree.prepend(e,t):this.tree.addToModel(e,0)},addChild:function(e,t){return this.append(e,t)},remove:function(e,t){return this.tree.remove(e,t)},before:function(e,t){return t?this.tree.before(e,t):this.prepend(e)},after:function(e,t){return t?this.tree.after(e,t):this.append(e)},find:function(e,t){return this.tree.find(e,t)},findAll:function(e){return this.tree.find(e,!0)},expandAll:function(){return this.tree.expandAll()},collapseAll:function(){return this.tree.collapseAll()},sortTree:function(e,t){return this.tree.sortTree(e,t)},sort:function(){for(var e,t=[],n=arguments.length;n--;)t[n]=arguments[n];return(e=this.tree).sort.apply(e,t)},setModel:function(e){return this.tree.setModel(e)},getRootNode:function(){return 1===this.tree.model.length?this.tree.model[0]:this.tree.model},toJSON:function(){return JSON.parse(JSON.stringify(this.model))}}},DropPosition={ABOVE:"drag-above",BELOW:"drag-below",ON:"drag-on"};function isMovingStarted(e,t){return Math.abs(e.clientX-t[0])>5||Math.abs(e.clientY-t[1])>5}function composedPath(e){for(var t=e.target,n=[];t;){if(n.push(t),"HTML"===t.tagName)return n.push(document),n.push(window),n;t=t.parentElement}return n}function getPath(e){return e.path?e.path:e.composedPath?e.composedPath():composedPath(e)}function getSelectedNode(e){for(var t,n=0,r=getPath(e);n<r.length;n++)if(t=r[n].className||"",/tree-node/.test(t))return r[n];return null}function getDropDestination(e){var t=getSelectedNode(e);return t||null}function updateHelperClasses(e,t){if(e){var n=e.className;if(t)new RegExp(t).test(n)||(n+=" "+t);else{for(var r in DropPosition)n=n.replace(DropPosition[r],"");n.replace("dragging","")}e.className=n.replace(/\s+/g," ")}}function getDropPosition(e,t){var n=t.getBoundingClientRect(),r=n.height/3,o=DropPosition.ON;return n.top+r>=e.clientY?o=DropPosition.ABOVE:n.top+2*r<=e.clientY&&(o=DropPosition.BELOW),o}function callDndCb(e,t,n){if(t&&t[n]&&"function"==typeof t[n])return!1!==t[n].apply(t,e)}function clearDropClasses(e){for(var t in DropPosition)for(var n=e.querySelectorAll("."+DropPosition[t]),r=0;r<n.length;r++)updateHelperClasses(n[r])}var TreeDnd={methods:{onDragStart:function(e){e.preventDefault()},startDragging:function(e,t){e.isDraggable()&&!1!==callDndCb([e],this.tree.options.dnd,"onDragStart")&&(this.$$startDragPosition=[t.clientX,t.clientY],this.$$possibleDragNode=e,this.initDragListeners())},initDragListeners:function(){var e,t=this,n=function(){window.removeEventListener("mouseup",r,!0),window.removeEventListener("mousemove",o,!0)},r=function(r){(t.$$startDragPosition||r.stopPropagation(),t.draggableNode&&t.draggableNode.node.state("dragging",!1),t.$$dropDestination&&t.tree.isNode(t.$$dropDestination)&&t.$$dropDestination.vm)&&(updateHelperClasses(t.$$dropDestination.vm.$el,null),!1!==callDndCb([t.draggableNode.node,t.$$dropDestination],t.tree.options.dnd,"onDragFinish")&&(t.$$dropDestination.isDropable()||e!==DropPosition.ON)&&e&&t.draggableNode.node.finishDragging(t.$$dropDestination,e),t.$$dropDestination=null);t.$$possibleDragNode=null,t.$set(t,"draggableNode",null),n()},o=function(r){if(!t.$$startDragPosition||isMovingStarted(r,t.$$startDragPosition)){if(t.$$startDragPosition=null,t.$$possibleDragNode){if(!1===t.$$possibleDragNode.startDragging())return n(),void(t.$$possibleDragNode=null);t.$set(t,"draggableNode",{node:t.$$possibleDragNode,left:0,top:0}),t.$$possibleDragNode=null}t.draggableNode.left=r.clientX,t.draggableNode.top=r.clientY;var o=getDropDestination(r);if(clearDropClasses(t.$el),o){var i=o.getAttribute("data-id");if(t.draggableNode.node.id===i)return;if(t.$$dropDestination&&t.$$dropDestination.id===i||(t.$$dropDestination=t.tree.getNodeById(i)),t.$$dropDestination&&t.draggableNode.node)if(t.$$dropDestination.getPath().includes(t.draggableNode.node))return void(t.$$dropDestination=null);var s=callDndCb([t.draggableNode.node,t.$$dropDestination],t.tree.options.dnd,"onDragOn"),d=t.$$dropDestination.isDropable()&&!1!==s;e=getDropPosition(r,o),d||e!==DropPosition.ON||(e=null),updateHelperClasses(o,e)}}};window.addEventListener("mouseup",r,!0),window.addEventListener("mousemove",o,!0)}}};!function(){if("undefined"!=typeof document){var e=document.head||document.getElementsByTagName("head")[0],t=document.createElement("style"),n=" .tree { overflow: auto; } .tree-root, .tree-children { list-style: none; padding: 0; } .tree > .tree-root, .tree > .tree-filter-empty { padding: 3px; box-sizing: border-box; } .tree.tree--draggable .tree-node:not(.selected) > .tree-content:hover { background: transparent; } .drag-above, .drag-below, .drag-on { position: relative; z-index: 1; } .drag-on > .tree-content { background: #fafcff; outline: 1px solid #7baff2; } .drag-above > .tree-content::before, .drag-below > .tree-content::after { display: block; content: ''; position: absolute; height: 8px; left: 0; right: 0; z-index: 2; box-sizing: border-box; background-color: #3367d6; border: 3px solid #3367d6; background-clip: padding-box; border-bottom-color: transparent; border-top-color: transparent; border-radius: 0; } .drag-above > .tree-content::before { top: 0; transform: translateY(-50%); } .drag-below > .tree-content::after { bottom: 0; transform: translateY(50%); } ";t.type="text/css",t.styleSheet?t.styleSheet.cssText=n:t.appendChild(document.createTextNode(n)),e.appendChild(t)}}();var defaults={direction:"ltr",multiple:!0,checkbox:!1,checkOnSelect:!1,autoCheckChildren:!0,autoDisableChildren:!0,parentSelect:!1,keyboardNavigation:!0,nodeIndent:24,minFetchDelay:0,fetchData:null,propertyNames:null,deletion:!1,dnd:!1,editing:!1,onFetchError:function(e){throw e}},filterDefaults={emptyText:"Nothing found!",matcher:function(e,t){return new RegExp(e,"i").test(t.text)},plainList:!1,showChildren:!0},TreeRoot={render:function(){var e=this,t=e.$createElement,n=e._self._c||t;return n(e.tag,{tag:"component",class:{tree:!0,"tree-loading":this.loading,"tree--draggable":!!this.draggableNode},attrs:{role:"tree"}},[e.filter&&0==e.matches.length?[n("div",{staticClass:"tree-filter-empty"},[e._v(e._s(e.opts.filter.emptyText))])]:[n("ul",{staticClass:"tree-root",on:{dragstart:e.onDragStart}},[e.opts.filter.plainList&&e.matches.length>0?e._l(e.matches,function(t){return t.visible()?n("TreeNode",{key:t.id,attrs:{node:t,options:e.opts}}):e._e()}):e._l(e.model,function(t){return t&&t.visible()?n("TreeNode",{key:t.id,attrs:{node:t,options:e.opts}}):e._e()})],2)],e._v(" "),e.draggableNode?n("DraggableNode",{attrs:{target:e.draggableNode}}):e._e()],2)},staticRenderFns:[],name:"Tree",components:{TreeNode:TreeNode,DraggableNode:DraggableNode},mixins:[TreeMixin,TreeDnd],provide:function(e){return{tree:null}},props:{data:{},options:{type:Object,default:function(e){return{}}},filter:String,tag:{type:String,default:"div"}},watch:{filter:function(e){this.tree.filter(e)}},data:function(){var e=Object.assign({},defaults,this.options);return e.filter=Object.assign({},filterDefaults,e.filter),{model:null,tree:null,loading:!1,opts:e,matches:[],draggableNode:null}}},install=function(e){e.component(TreeRoot.name,TreeRoot)};TreeRoot.install=install,"undefined"!=typeof window&&window.Vue&&window.Vue.use(TreeRoot);/* harmony default export */ __webpack_exports__["a"] = (TreeRoot);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(228)
+}
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(230)
+/* template */
+var __vue_template__ = __webpack_require__(234)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/vue-jstree/src/tree.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-31e43dda", Component.options)
+  } else {
+    hotAPI.reload("data-v-31e43dda", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
 
 
 /***/ }),
 
-/***/ 297:
+/***/ 194:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    data: function data() {
+        return {
+            tree: {
+                data: [],
+                loaded: false,
+                allItems: new Map(),
+                selectedNode: {
+                    "name": "",
+                    "model": {},
+                    "node": {}
+                },
+                selectedItems: new Map()
+            }
+        };
+    },
+
+    methods: {
+        setEmptySelectedNode: function setEmptySelectedNode() {
+            var sNode = this.tree.selectedNode;
+            sNode.name = "";
+            sNode.model = {};
+            sNode.node = {};
+        },
+
+        loadTree: function loadTree(oriNode, resolve) {
+            var _this = this;
+
+            var getId = function getId(oriNode) {
+                var id = null;
+                if (typeof oriNode !== "undefined") {
+                    id = typeof oriNode.data.value != "undefined" ? oriNode.data.value.id : null;
+                }
+                return id;
+            };
+            var setIcon = function setIcon(obj, isLeaf) {
+                obj.icon = isLeaf ? "fa fa-sticky-note-o" : "fa fa-folder";
+                obj.isLeaf = isLeaf;
+            };
+
+            var id = getId(oriNode);
+
+            this.uploadInfo('/admin/tree/children', { "id": id }, function (data) {
+
+                if (data.length == 0) setIcon(oriNode.data, true);
+
+                var result = [];
+                var self = _this;
+
+                data.forEach(function (item, index) {
+
+                    var obj = {
+                        "id": item.id,
+                        "text": item.name,
+                        "value": item
+                    };
+                    setIcon(obj, !item.hasChild);
+                    self.tree.allItems.set(item.id, item);
+
+                    if (id === null && index == 0) {
+                        if (typeof self.table != "undefined") {
+                            if (typeof self.table.moreParams != "undefined") {
+                                obj.selected = true;
+                                self.table.moreParams.ou_id = item.id;
+                            }
+                        }
+                    }
+
+                    result.push(obj);
+                });
+                resolve(result);
+                _this.tree.loaded = true;
+            }, {}, function (data) {});
+        }
+    }
+});
+
+/***/ }),
+
+/***/ 227:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__permissions__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'has-permission',
+  data: function data() {
+    return {
+      permissions: __WEBPACK_IMPORTED_MODULE_0__permissions__["a" /* PERMISSIONS */]
+    };
+  },
+
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(["hasPermission", "hasAnyPermission"]))
+});
+
+/***/ }),
+
+/***/ 228:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(298);
+var content = __webpack_require__(229);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(86)("f92d64a8", content, false, {});
+var update = __webpack_require__(87)("28585422", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-823d8e84\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Role.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-823d8e84\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Role.vue");
+   module.hot.accept("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-31e43dda\",\"scoped\":false,\"hasInlineConfig\":true}!../../less-loader/dist/cjs.js!../../vue-loader/lib/selector.js?type=styles&index=0!./tree.vue", function() {
+     var newContent = require("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-31e43dda\",\"scoped\":false,\"hasInlineConfig\":true}!../../less-loader/dist/cjs.js!../../vue-loader/lib/selector.js?type=styles&index=0!./tree.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -204,35 +511,1001 @@ if(false) {
 
 /***/ }),
 
-/***/ 298:
+/***/ 229:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(85)(false);
+exports = module.exports = __webpack_require__(86)(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n.section_name[data-v-823d8e84] {\n  color: #fff;\n  background-color: #3c8dbc;\n  font-weight: bold;\n}\ntbody[data-v-823d8e84] {\n  border-top: none !important;\n}\n", ""]);
+exports.push([module.i, "/* tree default theme */\n.tree-node,\n.tree-children,\n.tree-container-ul {\n  display: block;\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n  list-style-image: none;\n}\n.tree-children {\n  overflow: hidden;\n}\n.tree-node {\n  white-space: nowrap;\n}\n.tree-anchor {\n  display: inline-block;\n  color: black;\n  white-space: nowrap;\n  padding: 0 4px 0 1px;\n  margin: 0;\n  vertical-align: top;\n  font-size: 14px;\n  cursor: pointer;\n}\n.tree-anchor:focus {\n  outline: 0;\n}\n.tree-anchor,\n.tree-anchor:link,\n.tree-anchor:visited,\n.tree-anchor:hover,\n.tree-anchor:active {\n  text-decoration: none;\n  color: inherit;\n}\n.tree-icon {\n  display: inline-block;\n  text-decoration: none;\n  margin: 0;\n  padding: 0;\n  vertical-align: top;\n  text-align: center;\n}\n.tree-icon:empty {\n  display: inline-block;\n  text-decoration: none;\n  margin: 0;\n  padding: 0;\n  vertical-align: top;\n  text-align: center;\n}\n.tree-ocl {\n  cursor: pointer;\n}\n.tree-leaf > .tree-ocl {\n  cursor: default;\n}\n.tree-anchor > .tree-themeicon {\n  margin-right: 2px;\n}\n.tree-no-icons .tree-themeicon,\n.tree-anchor > .tree-themeicon-hidden {\n  display: none;\n}\n.tree-hidden,\n.tree-node.tree-hidden {\n  display: none;\n}\n.tree-rtl .tree-anchor {\n  padding: 0 1px 0 4px;\n}\n.tree-rtl .tree-anchor > .tree-themeicon {\n  margin-left: 2px;\n  margin-right: 0;\n}\n.tree-rtl .tree-node {\n  margin-left: 0;\n}\n.tree-rtl .tree-container-ul > .tree-node {\n  margin-right: 0;\n}\n.tree-wholerow-ul {\n  position: relative;\n  display: inline-block;\n  min-width: 100%;\n}\n.tree-wholerow-ul .tree-leaf > .tree-ocl {\n  cursor: pointer;\n}\n.tree-wholerow-ul .tree-anchor,\n.tree-wholerow-ul .tree-icon {\n  position: relative;\n}\n.tree-wholerow-ul .tree-wholerow {\n  width: 100%;\n  cursor: pointer;\n  z-index: -1;\n  position: absolute;\n  left: 0;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.tree {\n  text-align: left;\n}\n.tree-default .tree-node,\n.tree-default .tree-icon {\n  background-repeat: no-repeat;\n  background-color: transparent;\n}\n.tree-default .tree-anchor,\n.tree-default .tree-animated,\n.tree-default .tree-wholerow {\n  transition: background-color 0.15s, box-shadow 0.15s;\n}\n.tree-default .tree-hovered {\n  background: #eee;\n  border: 0px;\n  box-shadow: none;\n}\n.tree-default .tree-context {\n  background: #eee;\n  border: 0px;\n  box-shadow: none;\n}\n.tree-default .tree-selected {\n  background: #e1e1e1;\n  border: 0px;\n  box-shadow: none;\n}\n.tree-default .tree-no-icons .tree-anchor > .tree-themeicon {\n  display: none;\n}\n.tree-default .tree-disabled {\n  background: transparent;\n  color: #666666;\n}\n.tree-default .tree-disabled.tree-hovered {\n  background: transparent;\n  box-shadow: none;\n}\n.tree-default .tree-disabled.tree-selected {\n  background: #efefef;\n}\n.tree-default .tree-disabled > .tree-icon {\n  opacity: 0.8;\n  filter: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='tree-grayscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#tree-grayscale\");\n  /* Firefox 10+ */\n  filter: gray;\n  /* IE6-9 */\n  -webkit-filter: grayscale(100%);\n  /* Chrome 19+ & Safari 6+ */\n}\n.tree-default .tree-search {\n  font-style: italic;\n  color: #8b0000;\n  font-weight: bold;\n}\n.tree-default .tree-no-checkboxes .tree-checkbox {\n  display: none !important;\n}\n.tree-default.tree-checkbox-no-clicked .tree-selected {\n  background: transparent;\n  box-shadow: none;\n}\n.tree-default.tree-checkbox-no-clicked .tree-selected.tree-hovered {\n  background: #eee;\n}\n.tree-default.tree-checkbox-no-clicked > .tree-wholerow-ul .tree-wholerow-clicked {\n  background: transparent;\n}\n.tree-default.tree-checkbox-no-clicked > .tree-wholerow-ul .tree-wholerow-clicked.tree-wholerow-hovered {\n  background: #eee;\n}\n.tree-default > .tree-striped {\n  min-width: 100%;\n  display: inline-block;\n  background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAkCAMAAAB/qqA+AAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMNAMM9s3UAAAAXSURBVHjajcEBAQAAAIKg/H/aCQZ70AUBjAATb6YPDgAAAABJRU5ErkJggg==\") left top repeat;\n}\n.tree-default > .tree-wholerow-ul .tree-hovered,\n.tree-default > .tree-wholerow-ul .tree-selected {\n  background: transparent;\n  box-shadow: none;\n  border-radius: 0;\n}\n.tree-default .tree-wholerow {\n  -moz-box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.tree-default .tree-wholerow-hovered {\n  background: #eee;\n}\n.tree-default .tree-wholerow-clicked {\n  background: #e1e1e1;\n}\n.tree-default .tree-node {\n  min-height: 24px;\n  line-height: 24px;\n  margin-left: 30px;\n  min-width: 24px;\n}\n.tree-default .tree-anchor {\n  line-height: 24px;\n  height: 24px;\n}\n.tree-default .tree-icon {\n  width: 24px;\n  height: 24px;\n  line-height: 24px;\n}\n.tree-default .tree-icon:empty {\n  width: 24px;\n  height: 24px;\n  line-height: 24px;\n}\n.tree-default.tree-rtl .tree-node {\n  margin-right: 24px;\n}\n.tree-default .tree-wholerow {\n  height: 24px;\n}\n.tree-default .tree-node,\n.tree-default .tree-icon {\n  background-image: url(\"data:image/png;base64,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\");\n}\n.tree-default .tree-node {\n  background-position: -292px -4px;\n  background-repeat: repeat-y;\n}\n.tree-default .tree-last {\n  background: transparent;\n}\n.tree-default .tree-open > .tree-ocl {\n  background-position: -132px -4px;\n}\n.tree-default .tree-closed > .tree-ocl {\n  background-position: -100px -4px;\n}\n.tree-default .tree-leaf > .tree-ocl {\n  background-position: -68px -4px;\n}\n.tree-default .tree-themeicon {\n  background-position: -260px -4px;\n}\n.tree-default > .tree-no-dots .tree-node,\n.tree-default > .tree-no-dots .tree-leaf > .tree-ocl {\n  background: transparent;\n}\n.tree-default > .tree-no-dots .tree-open > .tree-ocl {\n  background-position: -36px -4px;\n}\n.tree-default > .tree-no-dots .tree-closed > .tree-ocl {\n  background-position: -4px -4px;\n}\n.tree-default .tree-disabled {\n  background: transparent;\n}\n.tree-default .tree-disabled.tree-hovered {\n  background: transparent;\n}\n.tree-default .tree-disabled.tree-selected {\n  background: #efefef;\n}\n.tree-default .tree-checkbox {\n  background-position: -164px -4px;\n}\n.tree-default .tree-checkbox:hover {\n  background-position: -164px -36px;\n}\n.tree-default.tree-checkbox-selection .tree-selected > .tree-checkbox,\n.tree-default .tree-checked > .tree-checkbox {\n  background-position: -228px -4px;\n}\n.tree-default.tree-checkbox-selection .tree-selected > .tree-checkbox:hover,\n.tree-default .tree-checked > .tree-checkbox:hover {\n  background-position: -228px -36px;\n}\n.tree-default .tree-anchor > .tree-undetermined {\n  background-position: -196px -4px;\n}\n.tree-default .tree-anchor > .tree-undetermined:hover {\n  background-position: -196px -36px;\n}\n.tree-default .tree-checkbox-disabled {\n  opacity: 0.8;\n  filter: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='tree-grayscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#tree-grayscale\");\n  /* Firefox 10+ */\n  filter: gray;\n  /* IE6-9 */\n  -webkit-filter: grayscale(100%);\n  /* Chrome 19+ & Safari 6+ */\n}\n.tree-default > .tree-striped {\n  background-size: auto 48px;\n}\n.tree-default.tree-rtl .tree-node {\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==\");\n  background-position: 100% 1px;\n  background-repeat: repeat-y;\n}\n.tree-default.tree-rtl .tree-last {\n  background: transparent;\n}\n.tree-default.tree-rtl .tree-open > .tree-ocl {\n  background-position: -132px -36px;\n}\n.tree-default.tree-rtl .tree-closed > .tree-ocl {\n  background-position: -100px -36px;\n}\n.tree-default.tree-rtl .tree-leaf > .tree-ocl {\n  background-position: -68px -36px;\n}\n.tree-default.tree-rtl > .tree-no-dots .tree-node,\n.tree-default.tree-rtl > .tree-no-dots .tree-leaf > .tree-ocl {\n  background: transparent;\n}\n.tree-default.tree-rtl > .tree-no-dots .tree-open > .tree-ocl {\n  background-position: -36px -36px;\n}\n.tree-default.tree-rtl > .tree-no-dots .tree-closed > .tree-ocl {\n  background-position: -4px -36px;\n}\n.tree-default .tree-themeicon-custom {\n  background-color: transparent;\n  background-image: none;\n  background-position: 0 0;\n}\n.tree-default .tree-node.tree-loading {\n  background: none;\n}\n.tree-default > .tree-container-ul .tree-loading > .tree-ocl {\n  background: url(\"data:image/gif;base64,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\") center center no-repeat;\n}\n.tree-default .tree-file {\n  background: url(\"data:image/png;base64,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\") -100px -68px no-repeat;\n}\n.tree-default .tree-folder {\n  background: url(\"data:image/png;base64,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\") -260px -4px no-repeat;\n}\n.tree-default > .tree-container-ul > .tree-node {\n  margin-left: 0;\n  margin-right: 0;\n}\n.tree-default .tree-ellipsis {\n  overflow: hidden;\n}\n.tree-default .tree-ellipsis .tree-anchor {\n  width: calc(100% - 29px);\n  text-overflow: ellipsis;\n  overflow: hidden;\n}\n.tree-default .tree-ellipsis.tree-no-icons .tree-anchor {\n  width: calc(100% - 5px);\n}\n.tree-default.tree-rtl .tree-node {\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==\");\n}\n.tree-default.tree-rtl .tree-last {\n  background: transparent;\n}\n.tree-default-small .tree-node {\n  min-height: 18px;\n  line-height: 18px;\n  margin-left: 24px;\n  min-width: 18px;\n}\n.tree-default-small .tree-anchor {\n  line-height: 18px;\n  height: 18px;\n}\n.tree-default-small .tree-icon {\n  width: 18px;\n  height: 18px;\n  line-height: 18px;\n}\n.tree-default-small .tree-icon:empty {\n  width: 18px;\n  height: 18px;\n  line-height: 18px;\n}\n.tree-default-small.tree-rtl .tree-node {\n  margin-right: 18px;\n}\n.tree-default-small .tree-wholerow {\n  height: 18px;\n}\n.tree-default-small .tree-node,\n.tree-default-small .tree-icon {\n  background-image: url(\"data:image/png;base64,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\");\n}\n.tree-default-small .tree-node {\n  background-position: -295px -7px;\n  background-repeat: repeat-y;\n}\n.tree-default-small .tree-last {\n  background: transparent;\n}\n.tree-default-small .tree-open > .tree-ocl {\n  background-position: -135px -7px;\n}\n.tree-default-small .tree-closed > .tree-ocl {\n  background-position: -103px -7px;\n}\n.tree-default-small .tree-leaf > .tree-ocl {\n  background-position: -71px -7px;\n}\n.tree-default-small .tree-themeicon {\n  background-position: -263px -7px;\n}\n.tree-default-small > .tree-no-dots .tree-node,\n.tree-default-small > .tree-no-dots .tree-leaf > .tree-ocl {\n  background: transparent;\n}\n.tree-default-small > .tree-no-dots .tree-open > .tree-ocl {\n  background-position: -39px -7px;\n}\n.tree-default-small > .tree-no-dots .tree-closed > .tree-ocl {\n  background-position: -7px -7px;\n}\n.tree-default-small .tree-disabled {\n  background: transparent;\n}\n.tree-default-small .tree-disabled.tree-hovered {\n  background: transparent;\n}\n.tree-default-small .tree-disabled.tree-selected {\n  background: #efefef;\n}\n.tree-default-small .tree-checkbox {\n  background-position: -167px -7px;\n}\n.tree-default-small .tree-checkbox:hover {\n  background-position: -167px -39px;\n}\n.tree-default-small.tree-checkbox-selection .tree-selected > .tree-checkbox,\n.tree-default-small .tree-checked > .tree-checkbox {\n  background-position: -231px -7px;\n}\n.tree-default-small.tree-checkbox-selection .tree-selected > .tree-checkbox:hover,\n.tree-default-small .tree-checked > .tree-checkbox:hover {\n  background-position: -231px -39px;\n}\n.tree-default-small .tree-anchor > .tree-undetermined {\n  background-position: -199px -7px;\n}\n.tree-default-small .tree-anchor > .tree-undetermined:hover {\n  background-position: -199px -39px;\n}\n.tree-default-small .tree-checkbox-disabled {\n  opacity: 0.8;\n  filter: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='tree-grayscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#tree-grayscale\");\n  /* Firefox 10+ */\n  filter: gray;\n  /* IE6-9 */\n  -webkit-filter: grayscale(100%);\n  /* Chrome 19+ & Safari 6+ */\n}\n.tree-default-small > .tree-striped {\n  background-size: auto 36px;\n}\n.tree-default-small.tree-rtl .tree-node {\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==\");\n  background-position: 100% 1px;\n  background-repeat: repeat-y;\n}\n.tree-default-small.tree-rtl .tree-last {\n  background: transparent;\n}\n.tree-default-small.tree-rtl .tree-open > .tree-ocl {\n  background-position: -135px -39px;\n}\n.tree-default-small.tree-rtl .tree-closed > .tree-ocl {\n  background-position: -103px -39px;\n}\n.tree-default-small.tree-rtl .tree-leaf > .tree-ocl {\n  background-position: -71px -39px;\n}\n.tree-default-small.tree-rtl > .tree-no-dots .tree-node,\n.tree-default-small.tree-rtl > .tree-no-dots .tree-leaf > .tree-ocl {\n  background: transparent;\n}\n.tree-default-small.tree-rtl > .tree-no-dots .tree-open > .tree-ocl {\n  background-position: -39px -39px;\n}\n.tree-default-small.tree-rtl > .tree-no-dots .tree-closed > .tree-ocl {\n  background-position: -7px -39px;\n}\n.tree-default-small .tree-themeicon-custom {\n  background-color: transparent;\n  background-image: none;\n  background-position: 0 0;\n}\n.tree-default-small .tree-node.tree-loading {\n  background: none;\n}\n.tree-default-small > .tree-container-ul .tree-loading > .tree-ocl {\n  background: url(\"data:image/gif;base64,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\") center center no-repeat;\n}\n.tree-default-small .tree-file {\n  background: url(\"data:image/png;base64,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\") -103px -71px no-repeat;\n}\n.tree-default-small .tree-folder {\n  background: url(\"data:image/png;base64,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\") -263px -7px no-repeat;\n}\n.tree-default-small > .tree-container-ul > .tree-node {\n  margin-left: 0;\n  margin-right: 0;\n}\n.tree-default-small .tree-ellipsis {\n  overflow: hidden;\n}\n.tree-default-small .tree-ellipsis .tree-anchor {\n  width: calc(100% - 23px);\n  text-overflow: ellipsis;\n  overflow: hidden;\n}\n.tree-default-small .tree-ellipsis.tree-no-icons .tree-anchor {\n  width: calc(100% - 5px);\n}\n.tree-default-small.tree-rtl .tree-node {\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAACAQMAAABv1h6PAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMHBgAAiABBI4gz9AAAAABJRU5ErkJggg==\");\n}\n.tree-default-small.tree-rtl .tree-last {\n  background: transparent;\n}\n.tree-default-large .tree-node {\n  min-height: 32px;\n  line-height: 32px;\n  margin-left: 38px;\n  min-width: 32px;\n}\n.tree-default-large .tree-anchor {\n  line-height: 32px;\n  height: 32px;\n}\n.tree-default-large .tree-icon {\n  width: 32px;\n  height: 32px;\n  line-height: 32px;\n}\n.tree-default-large .tree-icon:empty {\n  width: 32px;\n  height: 32px;\n  line-height: 32px;\n}\n.tree-default-large.tree-rtl .tree-node {\n  margin-right: 32px;\n}\n.tree-default-large .tree-wholerow {\n  height: 32px;\n}\n.tree-default-large .tree-node,\n.tree-default-large .tree-icon {\n  background-image: url(\"data:image/png;base64,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\");\n}\n.tree-default-large .tree-node {\n  background-position: -288px 0px;\n  background-repeat: repeat-y;\n}\n.tree-default-large .tree-last {\n  background: transparent;\n}\n.tree-default-large .tree-open > .tree-ocl {\n  background-position: -128px 0px;\n}\n.tree-default-large .tree-closed > .tree-ocl {\n  background-position: -96px 0px;\n}\n.tree-default-large .tree-leaf > .tree-ocl {\n  background-position: -64px 0px;\n}\n.tree-default-large .tree-themeicon {\n  background-position: -256px 0px;\n}\n.tree-default-large > .tree-no-dots .tree-node,\n.tree-default-large > .tree-no-dots .tree-leaf > .tree-ocl {\n  background: transparent;\n}\n.tree-default-large > .tree-no-dots .tree-open > .tree-ocl {\n  background-position: -32px 0px;\n}\n.tree-default-large > .tree-no-dots .tree-closed > .tree-ocl {\n  background-position: 0px 0px;\n}\n.tree-default-large .tree-disabled {\n  background: transparent;\n}\n.tree-default-large .tree-disabled.tree-hovered {\n  background: transparent;\n}\n.tree-default-large .tree-disabled.tree-selected {\n  background: #efefef;\n}\n.tree-default-large .tree-checkbox {\n  background-position: -160px 0px;\n}\n.tree-default-large .tree-checkbox:hover {\n  background-position: -160px -32px;\n}\n.tree-default-large.tree-checkbox-selection .tree-selected > .tree-checkbox,\n.tree-default-large .tree-checked > .tree-checkbox {\n  background-position: -224px 0px;\n}\n.tree-default-large.tree-checkbox-selection .tree-selected > .tree-checkbox:hover,\n.tree-default-large .tree-checked > .tree-checkbox:hover {\n  background-position: -224px -32px;\n}\n.tree-default-large .tree-anchor > .tree-undetermined {\n  background-position: -192px 0px;\n}\n.tree-default-large .tree-anchor > .tree-undetermined:hover {\n  background-position: -192px -32px;\n}\n.tree-default-large .tree-checkbox-disabled {\n  opacity: 0.8;\n  filter: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='tree-grayscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#tree-grayscale\");\n  /* Firefox 10+ */\n  filter: gray;\n  /* IE6-9 */\n  -webkit-filter: grayscale(100%);\n  /* Chrome 19+ & Safari 6+ */\n}\n.tree-default-large > .tree-striped {\n  background-size: auto 64px;\n}\n.tree-default-large.tree-rtl .tree-node {\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==\");\n  background-position: 100% 1px;\n  background-repeat: repeat-y;\n}\n.tree-default-large.tree-rtl .tree-last {\n  background: transparent;\n}\n.tree-default-large.tree-rtl .tree-open > .tree-ocl {\n  background-position: -128px -32px;\n}\n.tree-default-large.tree-rtl .tree-closed > .tree-ocl {\n  background-position: -96px -32px;\n}\n.tree-default-large.tree-rtl .tree-leaf > .tree-ocl {\n  background-position: -64px -32px;\n}\n.tree-default-large.tree-rtl > .tree-no-dots .tree-node,\n.tree-default-large.tree-rtl > .tree-no-dots .tree-leaf > .tree-ocl {\n  background: transparent;\n}\n.tree-default-large.tree-rtl > .tree-no-dots .tree-open > .tree-ocl {\n  background-position: -32px -32px;\n}\n.tree-default-large.tree-rtl > .tree-no-dots .tree-closed > .tree-ocl {\n  background-position: 0px -32px;\n}\n.tree-default-large .tree-themeicon-custom {\n  background-color: transparent;\n  background-image: none;\n  background-position: 0 0;\n}\n.tree-default-large .tree-node.tree-loading {\n  background: none;\n}\n.tree-default-large > .tree-container-ul .tree-loading > .tree-ocl {\n  background: url(\"data:image/gif;base64,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\") center center no-repeat;\n}\n.tree-default-large .tree-file {\n  background: url(\"data:image/png;base64,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\") -96px -64px no-repeat;\n}\n.tree-default-large .tree-folder {\n  background: url(\"data:image/png;base64,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\") -256px 0px no-repeat;\n}\n.tree-default-large > .tree-container-ul > .tree-node {\n  margin-left: 0;\n  margin-right: 0;\n}\n.tree-default-large .tree-ellipsis {\n  overflow: hidden;\n}\n.tree-default-large .tree-ellipsis .tree-anchor {\n  width: calc(100% - 37px);\n  text-overflow: ellipsis;\n  overflow: hidden;\n}\n.tree-default-large .tree-ellipsis.tree-no-icons .tree-anchor {\n  width: calc(100% - 5px);\n}\n.tree-default-large.tree-rtl .tree-node {\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAACAQMAAAAD0EyKAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjgIIGBgABCgCBvVLXcAAAAABJRU5ErkJggg==\");\n}\n.tree-default-large.tree-rtl .tree-last {\n  background: transparent;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 299:
+/***/ 230:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tree_item_vue__ = __webpack_require__(231);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tree_item_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__tree_item_vue__);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var ITEM_ID = 0;
+var ITEM_HEIGHT_SMALL = 18;
+var ITEM_HEIGHT_DEFAULT = 24;
+var ITEM_HEIGHT_LARGE = 32;
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'VJstree',
+    props: {
+        data: { type: Array },
+        size: { type: String, validator: function validator(value) {
+                return ['large', 'small'].indexOf(value) > -1;
+            } },
+        showCheckbox: { type: Boolean, default: false },
+        wholeRow: { type: Boolean, default: false },
+        noDots: { type: Boolean, default: false },
+        collapse: { type: Boolean, default: false },
+        multiple: { type: Boolean, default: false },
+        allowBatch: { type: Boolean, default: false },
+        allowTransition: { type: Boolean, default: true },
+        textFieldName: { type: String, default: 'text' },
+        valueFieldName: { type: String, default: 'value' },
+        childrenFieldName: { type: String, default: 'children' },
+        itemEvents: {
+            type: Object, default: function _default() {
+                return {};
+            }
+        },
+        async: { type: Function },
+        loadingText: { type: String, default: 'Loading...' },
+        draggable: { type: Boolean, default: false },
+        dragOverBackgroundColor: { type: String, default: "#C9FDC9" },
+        klass: String
+    },
+    data: function data() {
+        return {
+            draggedItem: undefined,
+            draggedElm: undefined
+        };
+    },
+
+    computed: {
+        classes: function classes() {
+            return [{ 'tree': true }, { 'tree-default': !this.size }, _defineProperty({}, 'tree-default-' + this.size, !!this.size), { 'tree-checkbox-selection': !!this.showCheckbox }, _defineProperty({}, this.klass, !!this.klass)];
+        },
+        containerClasses: function containerClasses() {
+            return [{ 'tree-container-ul': true }, { 'tree-children': true }, { 'tree-wholerow-ul': !!this.wholeRow }, { 'tree-no-dots': !!this.noDots }];
+        },
+        sizeHeight: function sizeHeight() {
+            switch (this.size) {
+                case 'large':
+                    return ITEM_HEIGHT_LARGE;
+                case 'small':
+                    return ITEM_HEIGHT_SMALL;
+                default:
+                    return ITEM_HEIGHT_DEFAULT;
+            }
+        }
+    },
+    methods: {
+        initializeData: function initializeData(items) {
+            if (items && items.length > 0) {
+                for (var i in items) {
+                    var dataItem = this.initializeDataItem(items[i]);
+                    items[i] = dataItem;
+                    this.initializeData(items[i][this.childrenFieldName]);
+                }
+            }
+        },
+        initializeDataItem: function initializeDataItem(item) {
+            function Model(item, textFieldName, valueFieldName, childrenFieldName, collapse) {
+                this.id = item.id || ITEM_ID++;
+                this[textFieldName] = item[textFieldName] || '';
+                this[valueFieldName] = item[valueFieldName] || item[textFieldName];
+                this.icon = item.icon || '';
+                this.opened = item.opened || collapse;
+                this.selected = item.selected || false;
+                this.disabled = item.disabled || false;
+                this.loading = item.loading || false;
+                this[childrenFieldName] = item[childrenFieldName] || [];
+            }
+
+            var node = Object.assign(new Model(item, this.textFieldName, this.valueFieldName, this.childrenFieldName, this.collapse), item);
+            var self = this;
+            node.addBefore = function (data, selectedNode) {
+                var newItem = self.initializeDataItem(data);
+                var index = selectedNode.parentItem.findIndex(function (t) {
+                    return t.id === node.id;
+                });
+                selectedNode.parentItem.splice(index, 0, newItem);
+            };
+            node.addAfter = function (data, selectedNode) {
+                var newItem = self.initializeDataItem(data);
+                var index = selectedNode.parentItem.findIndex(function (t) {
+                    return t.id === node.id;
+                }) + 1;
+                selectedNode.parentItem.splice(index, 0, newItem);
+            };
+            node.addChild = function (data) {
+                var newItem = self.initializeDataItem(data);
+                node.opened = true;
+                node[self.childrenFieldName].push(newItem);
+                return newItem;
+            };
+            node.openChildren = function () {
+                node.opened = true;
+                self.handleRecursionNodeChildren(node, function (node) {
+                    node.opened = true;
+                });
+            };
+            node.closeChildren = function () {
+                node.opened = false;
+                self.handleRecursionNodeChildren(node, function (node) {
+                    node.opened = false;
+                });
+            };
+            return node;
+        },
+        initializeLoading: function initializeLoading() {
+            var item = {};
+            item[this.textFieldName] = this.loadingText;
+            item.disabled = true;
+            item.loading = true;
+            return this.initializeDataItem(item);
+        },
+        handleRecursionNodeChilds: function handleRecursionNodeChilds(node, func) {
+            if (func(node) !== false) {
+                if (node.$children && node.$children.length > 0) {
+                    var _iteratorNormalCompletion = true;
+                    var _didIteratorError = false;
+                    var _iteratorError = undefined;
+
+                    try {
+                        for (var _iterator = node.$children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                            var childNode = _step.value;
+
+                            if (!childNode.disabled) {
+                                this.handleRecursionNodeChilds(childNode, func);
+                            }
+                        }
+                    } catch (err) {
+                        _didIteratorError = true;
+                        _iteratorError = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion && _iterator.return) {
+                                _iterator.return();
+                            }
+                        } finally {
+                            if (_didIteratorError) {
+                                throw _iteratorError;
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        handleRecursionNodeChildren: function handleRecursionNodeChildren(node, func) {
+            if (func(node) !== false) {
+                if (node[this.childrenFieldName] && node[this.childrenFieldName].length > 0) {
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
+
+                    try {
+                        for (var _iterator2 = node[this.childrenFieldName][Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var childNode = _step2.value;
+
+                            this.handleRecursionNodeChildren(childNode, func);
+                        }
+                    } catch (err) {
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                            }
+                        } finally {
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        onItemClick: function onItemClick(oriNode, oriItem, e) {
+            if (this.multiple) {
+                if (this.allowBatch) {
+                    this.handleBatchSelectItems(oriNode, oriItem);
+                }
+            } else {
+                this.handleSingleSelectItems(oriNode, oriItem);
+            }
+            this.$emit('item-click', oriNode, oriItem, e);
+        },
+        handleSingleSelectItems: function handleSingleSelectItems(oriNode, oriItem) {
+            this.handleRecursionNodeChilds(this, function (node) {
+                if (node.model) node.model.selected = false;
+            });
+            oriNode.model.selected = true;
+        },
+        handleBatchSelectItems: function handleBatchSelectItems(oriNode, oriItem) {
+            this.handleRecursionNodeChilds(oriNode, function (node) {
+                if (node.model.disabled) return;
+                node.model.selected = oriNode.model.selected;
+            });
+        },
+        onItemToggle: function onItemToggle(oriNode, oriItem, e) {
+            if (oriNode.model.opened) {
+                this.handleAsyncLoad(oriNode.model[this.childrenFieldName], oriNode, oriItem);
+            }
+            this.$emit('item-toggle', oriNode, oriItem, e);
+        },
+        handleAsyncLoad: function handleAsyncLoad(oriParent, oriNode, oriItem) {
+            var self = this;
+            if (this.async) {
+                if (oriParent[0].loading) {
+                    this.async(oriNode, function (data) {
+                        if (data.length > 0) {
+                            for (var i in data) {
+                                if (!data[i].isLeaf) {
+                                    if (_typeof(data[i][self.childrenFieldName]) !== "object") {
+                                        data[i][self.childrenFieldName] = [self.initializeLoading()];
+                                    }
+                                }
+                                var dataItem = self.initializeDataItem(data[i]);
+                                self.$set(oriParent, i, dataItem);
+                            }
+                        } else {
+                            oriNode.model[self.childrenFieldName] = [];
+                        }
+                    });
+                }
+            }
+        },
+        onItemDragStart: function onItemDragStart(e, oriNode, oriItem) {
+            if (!this.draggable || oriItem.dragDisabled) return false;
+            e.dataTransfer.effectAllowed = "move";
+            e.dataTransfer.setData('text', null);
+            this.draggedElm = e.target;
+            this.draggedItem = {
+                item: oriItem,
+                parentItem: oriNode.parentItem,
+                index: oriNode.parentItem.findIndex(function (t) {
+                    return t.id === oriItem.id;
+                })
+            };
+
+            this.$emit("item-drag-start", oriNode, oriItem, e);
+        },
+        onItemDragEnd: function onItemDragEnd(e, oriNode, oriItem) {
+            this.draggedItem = undefined;
+            this.draggedElm = undefined;
+            this.$emit("item-drag-end", oriNode, oriItem, e);
+        },
+        onItemDrop: function onItemDrop(e, oriNode, oriItem) {
+            var _this = this;
+
+            if (!this.draggable || !!oriItem.dropDisabled) return false;
+            this.$emit("item-drop-before", oriNode, oriItem, !this.draggedItem ? undefined : this.draggedItem.item, e);
+            if (!this.draggedElm || this.draggedElm === e.target || this.draggedElm.contains(e.target)) {
+                return;
+            }
+            if (this.draggedItem) {
+                if (this.draggedItem.parentItem === oriItem[this.childrenFieldName] || this.draggedItem.item === oriItem || oriItem[this.childrenFieldName] && oriItem[this.childrenFieldName].findIndex(function (t) {
+                    return t.id === _this.draggedItem.item.id;
+                }) !== -1) {
+                    return;
+                }
+                if (!!oriItem[this.childrenFieldName]) {
+                    oriItem[this.childrenFieldName].push(this.draggedItem.item);
+                } else {
+                    oriItem[this.childrenFieldName] = [this.draggedItem.item];
+                }
+                oriItem.opened = true;
+                var draggedItem = this.draggedItem;
+                this.$nextTick(function () {
+                    draggedItem.parentItem.splice(draggedItem.index, 1);
+                });
+                this.$emit("item-drop", oriNode, oriItem, draggedItem.item, e);
+            }
+        }
+    },
+    created: function created() {
+        this.initializeData(this.data);
+    },
+    mounted: function mounted() {
+        if (this.async) {
+            this.$set(this.data, 0, this.initializeLoading());
+            this.handleAsyncLoad(this.data, this);
+        }
+    },
+
+    components: {
+        TreeItem: __WEBPACK_IMPORTED_MODULE_0__tree_item_vue___default.a
+    }
+});
+
+/***/ }),
+
+/***/ 231:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(232)
+/* template */
+var __vue_template__ = __webpack_require__(233)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/vue-jstree/src/tree-item.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-fb40d486", Component.options)
+  } else {
+    hotAPI.reload("data-v-fb40d486", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 232:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'TreeItem',
+    props: {
+        data: { type: Object, required: true },
+        textFieldName: { type: String },
+        valueFieldName: { type: String },
+        childrenFieldName: { type: String },
+        itemEvents: { type: Object },
+        wholeRow: { type: Boolean, default: false },
+        showCheckbox: { type: Boolean, default: false },
+        allowTransition: { type: Boolean, default: true },
+        height: { type: Number, default: 24 },
+        parentItem: { type: Array },
+        draggable: { type: Boolean, default: false },
+        dragOverBackgroundColor: { type: String },
+        onItemClick: {
+            type: Function, default: function _default() {
+                return false;
+            }
+        },
+        onItemToggle: {
+            type: Function, default: function _default() {
+                return false;
+            }
+        },
+        onItemDragStart: {
+            type: Function, default: function _default() {
+                return false;
+            }
+        },
+        onItemDragEnd: {
+            type: Function, default: function _default() {
+                return false;
+            }
+        },
+        onItemDrop: {
+            type: Function, default: function _default() {
+                return false;
+            }
+        },
+        klass: String
+    },
+    data: function data() {
+        return {
+            isHover: false,
+            isDragEnter: false,
+            model: this.data,
+            maxHeight: 0,
+            events: {}
+        };
+    },
+
+    watch: {
+        isDragEnter: function isDragEnter(newValue) {
+            if (newValue) {
+                this.$el.style.backgroundColor = this.dragOverBackgroundColor;
+            } else {
+                this.$el.style.backgroundColor = "inherit";
+            }
+        },
+        data: function data(newValue) {
+            this.model = newValue;
+        },
+
+        'model.opened': {
+            handler: function handler(val, oldVal) {
+                this.onItemToggle(this, this.model);
+                this.handleGroupMaxHeight();
+            },
+            deep: true
+        }
+    },
+    computed: {
+        isFolder: function isFolder() {
+            return this.model[this.childrenFieldName] && this.model[this.childrenFieldName].length;
+        },
+        classes: function classes() {
+            return [{ 'tree-node': true }, { 'tree-open': this.model.opened }, { 'tree-closed': !this.model.opened }, { 'tree-leaf': !this.isFolder }, { 'tree-loading': !!this.model.loading }, { 'tree-drag-enter': this.isDragEnter }, _defineProperty({}, this.klass, !!this.klass)];
+        },
+        anchorClasses: function anchorClasses() {
+            return [{ 'tree-anchor': true }, { 'tree-disabled': this.model.disabled }, { 'tree-selected': this.model.selected }, { 'tree-hovered': this.isHover }];
+        },
+        wholeRowClasses: function wholeRowClasses() {
+            return [{ 'tree-wholerow': true }, { 'tree-wholerow-clicked': this.model.selected }, { 'tree-wholerow-hovered': this.isHover }];
+        },
+        themeIconClasses: function themeIconClasses() {
+            return [{ 'tree-icon': true }, { 'tree-themeicon': true }, _defineProperty({}, this.model.icon, !!this.model.icon), { 'tree-themeicon-custom': !!this.model.icon }];
+        },
+        isWholeRow: function isWholeRow() {
+            if (this.wholeRow) {
+                if (this.$parent.model === undefined) {
+                    return true;
+                } else if (this.$parent.model.opened === true) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        },
+        groupStyle: function groupStyle() {
+            return {
+                'position': this.model.opened ? '' : 'relative',
+                'max-height': !!this.allowTransition ? this.maxHeight + 'px' : '',
+                'transition-duration': !!this.allowTransition ? Math.ceil(this.model[this.childrenFieldName].length / 100) * 300 + 'ms' : '',
+                'transition-property': !!this.allowTransition ? 'max-height' : '',
+                'display': !!this.allowTransition ? 'block' : this.model.opened ? 'block' : 'none'
+            };
+        }
+    },
+    methods: {
+        handleItemToggle: function handleItemToggle(e) {
+            if (this.isFolder) {
+                this.model.opened = !this.model.opened;
+                //this.onItemToggle(this, this.model)
+            }
+        },
+        handleGroupMaxHeight: function handleGroupMaxHeight() {
+            if (!!this.allowTransition) {
+                var length = 0;
+                var childHeight = 0;
+                if (this.model.opened) {
+                    length = this.$children.length;
+                    var _iteratorNormalCompletion = true;
+                    var _didIteratorError = false;
+                    var _iteratorError = undefined;
+
+                    try {
+                        for (var _iterator = this.$children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                            var children = _step.value;
+
+                            childHeight += children.maxHeight;
+                        }
+                    } catch (err) {
+                        _didIteratorError = true;
+                        _iteratorError = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion && _iterator.return) {
+                                _iterator.return();
+                            }
+                        } finally {
+                            if (_didIteratorError) {
+                                throw _iteratorError;
+                            }
+                        }
+                    }
+                }
+                this.maxHeight = length * this.height + childHeight;
+                if (this.$parent.$options._componentTag === 'tree-item') {
+                    this.$parent.handleGroupMaxHeight();
+                }
+            }
+        },
+        handleItemClick: function handleItemClick(e) {
+            if (this.model.disabled) return;
+            this.model.selected = !this.model.selected;
+            this.onItemClick(this, this.model, e);
+        },
+        handleItemMouseOver: function handleItemMouseOver() {
+            this.isHover = true;
+        },
+        handleItemMouseOut: function handleItemMouseOut() {
+            this.isHover = false;
+        },
+        handleItemDrop: function handleItemDrop(e, oriNode, oriItem) {
+            this.$el.style.backgroundColor = "inherit";
+            this.onItemDrop(e, oriNode, oriItem);
+        }
+    },
+    created: function created() {
+        var _this = this;
+
+        var self = this;
+        var events = {
+            'click': this.handleItemClick,
+            'mouseover': this.handleItemMouseOver,
+            'mouseout': this.handleItemMouseOut
+        };
+
+        var _loop = function _loop(itemEvent) {
+            var itemEventCallback = _this.itemEvents[itemEvent];
+            if (events.hasOwnProperty(itemEvent)) {
+                var eventCallback = events[itemEvent];
+                events[itemEvent] = function (event) {
+                    eventCallback(self, self.model, event);
+                    itemEventCallback(self, self.model, event);
+                };
+            } else {
+                events[itemEvent] = function (event) {
+                    itemEventCallback(self, self.model, event);
+                };
+            }
+        };
+
+        for (var itemEvent in this.itemEvents) {
+            _loop(itemEvent);
+        }
+        this.events = events;
+    },
+    mounted: function mounted() {
+        this.handleGroupMaxHeight();
+    }
+});
+
+/***/ }),
+
+/***/ 233:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "li",
+    {
+      class: _vm.classes,
+      attrs: { role: "treeitem", draggable: _vm.draggable },
+      on: {
+        dragstart: function($event) {
+          $event.stopPropagation()
+          _vm.onItemDragStart($event, _vm._self, _vm._self.model)
+        },
+        dragend: function($event) {
+          $event.stopPropagation()
+          $event.preventDefault()
+          _vm.onItemDragEnd($event, _vm._self, _vm._self.model)
+        },
+        dragover: function($event) {
+          $event.stopPropagation()
+          $event.preventDefault()
+          _vm.isDragEnter = true
+        },
+        dragenter: function($event) {
+          $event.stopPropagation()
+          $event.preventDefault()
+          _vm.isDragEnter = true
+        },
+        dragleave: function($event) {
+          $event.stopPropagation()
+          $event.preventDefault()
+          _vm.isDragEnter = false
+        },
+        drop: function($event) {
+          $event.stopPropagation()
+          $event.preventDefault()
+          _vm.handleItemDrop($event, _vm._self, _vm._self.model)
+        }
+      }
+    },
+    [
+      _vm.isWholeRow
+        ? _c(
+            "div",
+            { class: _vm.wholeRowClasses, attrs: { role: "presentation" } },
+            [_vm._v(" ")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("i", {
+        staticClass: "tree-icon tree-ocl",
+        attrs: { role: "presentation" },
+        on: { click: _vm.handleItemToggle }
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        _vm._g({ class: _vm.anchorClasses }, _vm.events),
+        [
+          _vm.showCheckbox && !_vm.model.loading
+            ? _c("i", {
+                staticClass: "tree-icon tree-checkbox",
+                attrs: { role: "presentation" }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._t(
+            "default",
+            [
+              !_vm.model.loading
+                ? _c("i", {
+                    class: _vm.themeIconClasses,
+                    attrs: { role: "presentation" }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _c("span", {
+                domProps: { innerHTML: _vm._s(_vm.model[_vm.textFieldName]) }
+              })
+            ],
+            { vm: this, model: _vm.model }
+          )
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm.isFolder
+        ? _c(
+            "ul",
+            {
+              ref: "group",
+              staticClass: "tree-children",
+              style: _vm.groupStyle,
+              attrs: { role: "group" }
+            },
+            _vm._l(_vm.model[_vm.childrenFieldName], function(child, index) {
+              return _c("tree-item", {
+                key: index,
+                attrs: {
+                  data: child,
+                  "text-field-name": _vm.textFieldName,
+                  "value-field-name": _vm.valueFieldName,
+                  "children-field-name": _vm.childrenFieldName,
+                  "item-events": _vm.itemEvents,
+                  "whole-row": _vm.wholeRow,
+                  "show-checkbox": _vm.showCheckbox,
+                  "allow-transition": _vm.allowTransition,
+                  height: _vm.height,
+                  "parent-item": _vm.model[_vm.childrenFieldName],
+                  draggable: _vm.draggable,
+                  "drag-over-background-color": _vm.dragOverBackgroundColor,
+                  "on-item-click": _vm.onItemClick,
+                  "on-item-toggle": _vm.onItemToggle,
+                  "on-item-drag-start": _vm.onItemDragStart,
+                  "on-item-drag-end": _vm.onItemDragEnd,
+                  "on-item-drop": _vm.onItemDrop,
+                  klass:
+                    index === _vm.model[_vm.childrenFieldName].length - 1
+                      ? "tree-last"
+                      : ""
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(_) {
+                      return [
+                        _vm._t(
+                          "default",
+                          [
+                            !_vm.model.loading
+                              ? _c("i", {
+                                  class: _.vm.themeIconClasses,
+                                  attrs: { role: "presentation" }
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("span", {
+                              domProps: {
+                                innerHTML: _vm._s(_.model[_vm.textFieldName])
+                              }
+                            })
+                          ],
+                          { vm: _.vm, model: _.model }
+                        )
+                      ]
+                    }
+                  }
+                ])
+              })
+            }),
+            1
+          )
+        : _vm._e()
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-fb40d486", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 234:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      class: _vm.classes,
+      attrs: { role: "tree", onselectstart: "return false" }
+    },
+    [
+      _c(
+        "ul",
+        { class: _vm.containerClasses, attrs: { role: "group" } },
+        _vm._l(_vm.data, function(child, index) {
+          return _c("tree-item", {
+            key: index,
+            attrs: {
+              data: child,
+              "text-field-name": _vm.textFieldName,
+              "value-field-name": _vm.valueFieldName,
+              "children-field-name": _vm.childrenFieldName,
+              "item-events": _vm.itemEvents,
+              "whole-row": _vm.wholeRow,
+              "show-checkbox": _vm.showCheckbox,
+              "allow-transition": _vm.allowTransition,
+              height: _vm.sizeHeight,
+              "parent-item": _vm.data,
+              draggable: _vm.draggable,
+              "drag-over-background-color": _vm.dragOverBackgroundColor,
+              "on-item-click": _vm.onItemClick,
+              "on-item-toggle": _vm.onItemToggle,
+              "on-item-drag-start": _vm.onItemDragStart,
+              "on-item-drag-end": _vm.onItemDragEnd,
+              "on-item-drop": _vm.onItemDrop,
+              klass: index === _vm.data.length - 1 ? "tree-last" : ""
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(_) {
+                  return [
+                    _vm._t(
+                      "default",
+                      [
+                        !_.model.loading
+                          ? _c("i", {
+                              class: _.vm.themeIconClasses,
+                              attrs: { role: "presentation" }
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_.model[_vm.textFieldName])
+                          }
+                        })
+                      ],
+                      { vm: _.vm, model: _.model }
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        }),
+        1
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-31e43dda", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 314:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(315);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(87)("72656bbe", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-45c236c2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Structure.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-45c236c2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Structure.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 315:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(86)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.structure .structure-action {\n  display: inline-block;\n  visibility: hidden;\n  border: 0px;\n  background-color: transparent;\n  cursor: pointer;\n  margin-left: 10px;\n}\n.structure .tree-selected .structure-action {\n  visibility: visible;\n}\n.float-right {\n  float: right !important;\n}\n.messenger-users-wrapper {\n  display: flex;\n}\n.messenger-users-wrapper .handler {\n    width: 20px;\n    padding: 0;\n    cursor: ew-resize;\n    flex: 0 0 auto;\n}\n.messenger-users-wrapper .handler::before {\n    content: '';\n    display: block;\n    width: 3px;\n    height: 100%;\n    background: #d2d6de;\n    margin: 0 auto;\n}\n.messenger-users-wrapper .panel-box {\n    box-sizing: border-box;\n    padding: 10px;\n}\n.messenger-users-wrapper .panel-box.user-table {\n      flex-grow: 1;\n      /*flex: 1 1 1200px;\n\n            @media (max-width: 1200px) {\n                flex: 1 1 1000px;\n            }\n\n            @media (max-width: 1024px) {\n                flex: 1 1 600px;\n            }\n\n            @media (max-width: 800px) {\n                flex: 1 1 400px;\n            }*/\n}\n.messenger-users-wrapper .panel-box.user-table .filter-bar button {\n        display: inline-block;\n        margin-right: 10px;\n}\n.messenger-users-wrapper .panel-box.user-table .form-control-feedback.vbt-simple-filter-clear {\n        pointer-events: auto;\n        line-height: 3.375rem;\n}\n.messenger-users-wrapper .panel-box.user-table .pagination {\n        margin: 0 0;\n}\n.messenger-users-wrapper .panel-box.user-table .pagination input[type=\"number\"] {\n          display: none !important;\n}\n.messenger-users-wrapper .panel-box.user-table .pagination .vbt-per-page-dropdown {\n          display: none !important;\n}\n.messenger-users-wrapper .panel-box.tree {\n      height: calc(100vh - 145px);\n      min-width: 250px;\n      /* flex: 1 1 150px;*/\n}\n.messenger-users-wrapper .panel-box.tree .tree-selected {\n        background: #e1e1e1 !important;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 316:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ok_action_inform_vue__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ok_action_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__mixins_ok_action_inform_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_has_permission_vue__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_has_permission_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__mixins_has_permission_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_liquor_tree__ = __webpack_require__(235);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mixins_permissions__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_permissions__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mixins_draggable_window__ = __webpack_require__(317);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__mixins_states__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__mixins_ok_action_inform_vue__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__mixins_ok_action_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__mixins_ok_action_inform_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_jstree_src_tree_vue__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_jstree_src_tree_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_vue_jstree_src_tree_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__mixins_load_tree__ = __webpack_require__(194);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -301,152 +1574,350 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
 
 
+
+
+
+
+
+//import VJstree from 'vue-jstree'
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: { ErrorInform: __WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue___default.a, OkActionInform: __WEBPACK_IMPORTED_MODULE_2__mixins_ok_action_inform_vue___default.a, liquorTree: __WEBPACK_IMPORTED_MODULE_4_liquor_tree__["a" /* default */] },
-    name: 'role-form',
-    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue___default.a],
-    created: function created() {
-        var _this = this;
-
-        this.role.id = this.$route.params.id;
-        var path = '/admin/role/' + this.role.id + '/get';
-
-        this.uploadInfo(path, {}, function (data) {
-            _this.initRole(data);
-            _this.initTree(data);
-
-            // let permission = this.hasPermission(this.permissions.ADMIN_EDIT_ROLE);
-
-        }, {}, function (data) {});
-    },
+    name: 'messenger-users',
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue___default.a, __WEBPACK_IMPORTED_MODULE_2__mixins_has_permission_vue___default.a, __WEBPACK_IMPORTED_MODULE_5__mixins_draggable_window__["a" /* default */], __WEBPACK_IMPORTED_MODULE_9__mixins_load_tree__["a" /* default */]],
     data: function data() {
         return {
-            error: '',
-            role: {
-                "id": "",
-                "name": "",
-                "is_editable": 1
+            actions: {
+                "delete": new Map(),
+                "add": new Map(),
+                "rename": new Map()
             },
-            tree: {
-                data: [],
-                loaded: false
-            },
-            permissions: [], // key -> id, value {checked, approved, disabled},
-            selectedPermissions: [],
-            selectedAttributes: []
+            saved: false,
+            okMessage: ""
+
         };
     },
 
+    components: {
+        VJstree: __WEBPACK_IMPORTED_MODULE_8_vue_jstree_src_tree_vue___default.a,
+        errorInform: __WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue___default.a,
+        OkActionInform: __WEBPACK_IMPORTED_MODULE_7__mixins_ok_action_inform_vue___default.a
+    },
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(["hasPermission"]), {
-        disabled: function disabled() {
-            return !this.hasPermission(this.permissions.ADMIN_EDIT_ROLE) || this.role.is_editable == 0;
+        changeDisabled: function changeDisabled() {
+            return this.tree.selectedNode.name == "";
+        },
+        isSaved: function isSaved() {
+            return this.saved;
         }
     }),
     methods: {
-        initTree: function initTree(data) {
-            this.tree.data = data.tree;
-
-            var self = this;
-            data.tree.forEach(function (record) {
-                record.children.forEach(function (permission) {
-
-                    if (permission.state.checked) {
-                        self.selectedPermissions.push(permission.id);
-
-                        if (permission.attributes.approved) self.selectedAttributes.push(permission.id);
-                    }
-                });
-            });
-
-            this.tree.loaded = true;
+        reloadPage: function reloadPage() {
+            console.log(this.$router.currentRoute);
+            this.$router.push(this.$router.currentRoute.path);
+            //this.$router.go(this.$router.currentRoute)
         },
-        initRole: function initRole(data) {
-            for (var key in data) {
-                if (this.role[key] != "undefined") this.role[key] = data[key];
+        itemClick: function itemClick(node) {
+            this.setSelectedNode(node);
+        },
+        setSelectedNode: function setSelectedNode(node) {
+            this.tree.selectedNode.model = node.model;
+            this.tree.selectedNode.name = node.model.text;
+            this.tree.selectedNode.node = node;
+
+            console.log(this.tree.selectedNode);
+        },
+        changeName: function changeName() {
+            this.tree.selectedNode.model.text = this.tree.selectedNode.name;
+            this.tree.selectedNode.model.value.name = this.tree.selectedNode.name;
+            this.saveForRename(this.tree.selectedNode.model);
+        },
+        saveForRename: function saveForRename(model) {
+            if (this.isExistsTree(model)) {
+                this.actions.rename.set(model.id, model);
             }
         },
-        changeAttributes: function changeAttributes(id) {
-            if (this.isDisabled(id)) {
-                var index = this.selectedAttributes.indexOf(id);
-                if (index !== -1) {
-                    this.selectedAttributes.splice(index, 1);
+        saveForDelete: function saveForDelete(model) {
+
+            if (this.isExistsTree(model)) {
+                this.actions.rename.delete(model.id);
+                this.actions.delete.set(model.id, model);
+            }
+        },
+        addItem: function addItem() {
+            var model = this.tree.selectedNode.model;
+            if (model.id !== undefined) {
+                var newItem = model.addChild({
+                    text: "Новое подразделение",
+                    opened: true,
+                    value: {
+                        name: "Новое подразделение",
+                        hasUsers: false,
+                        parentId: model.id
+                    },
+                    isLeaf: true,
+                    icon: "fa fa-sticky-note-o"
+                });
+
+                if (this.isExistsTree(model)) {
+                    this.actions.add.set(newItem.id, newItem);
+                }
+
+                model.isLeaf = false;
+                model.icon = "fa fa-folder";
+            }
+        },
+        isExistsTree: function isExistsTree(model) {
+            if (Number.isInteger(model.id)) {
+                return false;
+            }
+            return true;
+        },
+        removeItemWrapper: function removeItemWrapper() {
+            var _this = this;
+
+            var node = this.tree.selectedNode.node;
+
+            if (typeof node.model.value.hasUsers == "undefined") {
+                this.uploadInfo('/user/ou/has', { "ou_id": node.model.value.id }, function (data) {
+                    node.model.value.hasUsers = data.has;
+                    _this.removeOrAlert(node);
+                }, {}, function (data) {});
+            } else {
+                this.removeOrAlert(node);
+            }
+        },
+        removeOrAlert: function removeOrAlert(node) {
+            if (node.model.value.hasUsers) {
+                this.state = __WEBPACK_IMPORTED_MODULE_6__mixins_states__["a" /* STATES */].ERROR;
+                this.err.common = [];
+                this.err.common.push("Данное подразделение не может быть удалено так как содержит пользователей");
+            } else {
+                this.removeItem(node);
+            }
+        },
+        removeItem: function removeItem(node) {
+
+            if (node.model.id !== undefined) {
+                this.saveForDelete(node.model);
+                node.model.text = "";
+                var index = node.parentItem.indexOf(node.model);
+                node.parentItem.splice(index, 1);
+
+                var parent = node.$parent;
+
+                if (parent.$children.length == 1) {
+                    parent.model.icon = "fa fa-sticky-note-o";
+                    parent.model.isLeaf = true;
+                }
+                this.setEmptySelectedNode();
+            }
+        },
+        getRemoveItems: function getRemoveItems() {
+            var result = [];
+            var self = this;
+
+            var keys = self.actions["delete"].keys();
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var key = _step.value;
+
+                    var item = self.actions["delete"].get(key);
+                    result.push(item.id);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
                 }
             }
+
+            return result;
         },
-        isDisabled: function isDisabled(id) {
-            return this.selectedPermissions.indexOf(id) == -1;
-        },
-
-
-        validate: function validate() {
-            var permissions = [];
-
+        getRenameItems: function getRenameItems() {
+            var result = {};
             var self = this;
-            self.selectedPermissions.forEach(function (permission) {
-                permissions.push({
-                    "id": permission,
-                    "approved": self.selectedAttributes.indexOf(permission) != -1
+            var keys = self.actions["rename"].keys();
+
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = keys[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var key = _step2.value;
+
+                    var item = self.actions["rename"].get(key);
+                    result[item.id] = item.text;
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+
+            return result;
+        },
+        getAddItems: function getAddItems() {
+            var result = [];
+            var keys = this.actions["add"].keys();
+
+            var _iteratorNormalCompletion3 = true;
+            var _didIteratorError3 = false;
+            var _iteratorError3 = undefined;
+
+            try {
+                for (var _iterator3 = keys[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                    var key = _step3.value;
+
+                    var item = this.actions["add"].get(key);
+                    result.push({
+                        "name": item.text,
+                        "parentId": item.value.parentId,
+                        "children": this.addRecursion(item)
+                    });
+                }
+            } catch (err) {
+                _didIteratorError3 = true;
+                _iteratorError3 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                        _iterator3.return();
+                    }
+                } finally {
+                    if (_didIteratorError3) {
+                        throw _iteratorError3;
+                    }
+                }
+            }
+
+            return result;
+        },
+        addRecursion: function addRecursion(item) {
+            var children = [];
+
+            for (var i = 0; i < item.children.length; i++) {
+                children.push({
+                    "name": item.children[i].text,
+                    "children": this.addRecursion(item.children[i])
                 });
-            });
+            }
+
+            return children;
+        },
+        save: function save() {
 
             var data = {
-                "name": this.role.name,
-                "description": this.role.description,
-                permissions: permissions
+                "rename": this.getRenameItems(),
+                "add": this.getAddItems(),
+                "remove": this.getRemoveItems()
             };
 
-            console.log(data);
+            var self = this;
 
-            this.send("/admin/role/" + this.role.id + "/update", data, function (data) {
-                console.log("updated role");
+            this.send("/ou/structure/save", data, function (data) {
+                self.state = __WEBPACK_IMPORTED_MODULE_6__mixins_states__["a" /* STATES */].ANSWER;
+                self.saved = true;
+                self.okMessage = "Структура подразделений была изменена";
+
+                console.log(self.okMessage);
             });
+        },
+        closeErrorInform: function closeErrorInform() {
+            this.state = __WEBPACK_IMPORTED_MODULE_6__mixins_states__["a" /* STATES */].START;
+            this.err.common = [];
         }
     },
     locales: {
         uz: {}
     }
+
 });
 
 /***/ }),
 
-/***/ 300:
+/***/ 317:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    mounted: function mounted() {
+        this.initDraggableWindow();
+    },
+
+    methods: {
+        initDraggableWindow: function initDraggableWindow() {
+            var handler = document.querySelector('.handler');
+            var wrapper = handler.closest('.messenger-users-wrapper');
+            var boxA = wrapper.querySelector('.tree');
+            var isHandlerDragging = false;
+
+            document.addEventListener('mousedown', function (e) {
+                // If mousedown event is fired from .handler, toggle flag to true
+                if (e.target === handler) {
+                    isHandlerDragging = true;
+                }
+            });
+
+            document.addEventListener('mousemove', function (e) {
+                // Don't do anything if dragging flag is false
+                if (!isHandlerDragging) {
+                    return false;
+                }
+
+                // Get offset
+                var containerOffsetLeft = wrapper.offsetLeft;
+
+                // Get x-coordinate of pointer relative to container
+                var pointerRelativeXpos = e.clientX - containerOffsetLeft;
+
+                // Resize box A
+                // * 8px is the left/right spacing between .handler and its inner pseudo-element
+                // * Set flex-grow to 0 to prevent it from growing
+                boxA.style.width = pointerRelativeXpos - 8 + 'px';
+                boxA.style.flexGrow = 0;
+            });
+
+            document.addEventListener('mouseup', function (e) {
+                // Turn off dragging flag when user mouse is up
+                isHandlerDragging = false;
+            });
+        }
+    }
+});
+
+/***/ }),
+
+/***/ 318:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -457,469 +1928,132 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("section", { staticClass: "content" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-6 col-md-12" }, [
-          _c("div", { staticClass: "box box-info" }, [
-            _vm._m(1),
+      _c("div", { staticClass: "messenger-users-wrapper box" }, [
+        _c(
+          "div",
+          {
+            staticClass: "panel-box tree structure",
+            staticStyle: { position: "relative" }
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-refresh",
+              staticStyle: {
+                position: "absolute",
+                top: "5px",
+                right: "0",
+                cursor: "pointer"
+              },
+              attrs: { "aria-hidden": "true" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.reloadPage($event)
+                }
+              }
+            }),
             _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "form-horizontal",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.validate($event)
+            _c("v-jstree", {
+              ref: "jsTree",
+              attrs: {
+                data: _vm.tree.data,
+                async: _vm.loadTree,
+                "allow-batch": "",
+                "whole-row": ""
+              },
+              on: { "item-click": _vm.itemClick },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(_) {
+                    return [
+                      _c("div", [
+                        !_.model.loading
+                          ? _c("i", {
+                              class: _.vm.themeIconClasses,
+                              attrs: { role: "presentation" }
+                            })
+                          : _vm._e(),
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_.model.text) +
+                            "\n                            "
+                        ),
+                        _.model.opened
+                          ? _c(
+                              "a",
+                              {
+                                staticClass: "structure-action",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.addItem(_.vm, _.model, $event)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-plus-square",
+                                  staticStyle: { color: "green" }
+                                })
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _.model.opened
+                          ? _c(
+                              "a",
+                              {
+                                staticClass: "structure-action",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.removeItemWrapper(_.vm, _.model, $event)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-trash-o",
+                                  staticStyle: { color: "red" }
+                                })
+                              ]
+                            )
+                          : _vm._e()
+                      ])
+                    ]
                   }
                 }
-              },
-              [
-                _c(
+              ])
+            }),
+            _vm._v(" "),
+            !_vm.isSaved
+              ? _c(
                   "div",
-                  { staticClass: "box-body" },
+                  {
+                    staticStyle: {
+                      position: "absolute",
+                      bottom: "10px",
+                      left: "0",
+                      width: "100%",
+                      "text-align": "center"
+                    }
+                  },
                   [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "form-group",
-                        class: { "has-error": _vm.errors.has("role") }
-                      },
-                      [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "col-sm-2 control-label",
-                            attrs: { for: "role" }
-                          },
-                          [_vm._v("Роль")]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-10" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.role.name,
-                                expression: "role.name"
-                              },
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: {
-                                  required: true,
-                                  min: 3,
-                                  regex: /^[a-zA-Z]{1,}$/
-                                },
-                                expression:
-                                  "{ required: true, min:3, regex: /^[a-zA-Z]{1,}$/ }"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              id: "role",
-                              name: "role",
-                              placeholder: "Название (Только Латинские буквы)",
-                              disabled: _vm.disabled
-                            },
-                            domProps: { value: _vm.role.name },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(_vm.role, "name", $event.target.value)
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("role"),
-                                  expression: "errors.has('role')"
-                                }
-                              ],
-                              staticClass: "help-block"
-                            },
-                            [_vm._v(_vm._s(_vm.errors.first("role")))]
-                          )
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "form-group",
-                        class: { "has-error": _vm.errors.has("description") }
-                      },
-                      [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "col-sm-2 control-label",
-                            attrs: { for: "role" }
-                          },
-                          [_vm._v("Описание")]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-10" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.role.description,
-                                expression: "role.description"
-                              },
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "max:100",
-                                expression: "'max:100'"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              id: "description",
-                              name: "description",
-                              placeholder: "Описание",
-                              disabled: _vm.disabled
-                            },
-                            domProps: { value: _vm.role.description },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.role,
-                                  "description",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("description"),
-                                  expression: "errors.has('description')"
-                                }
-                              ],
-                              staticClass: "help-block"
-                            },
-                            [_vm._v(_vm._s(_vm.errors.first("description")))]
-                          )
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "form-group",
-                        class: { "has-error": _vm.errors.has("permissions") }
-                      },
-                      [
-                        _c("label", { staticClass: "col-sm-2 control-label" }, [
-                          _vm._v("Права")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-10" }, [
-                          _c("div", { staticClass: "table-responsive" }, [
-                            _vm.tree.loaded
-                              ? _c(
-                                  "table",
-                                  { staticClass: "table table-bordered" },
-                                  [
-                                    _c("thead", [
-                                      _c("tr", [
-                                        _c(
-                                          "th",
-                                          { staticStyle: { width: "20px" } },
-                                          [_vm._v("#")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "th",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "translate",
-                                                rawName: "v-translate"
-                                              }
-                                            ]
-                                          },
-                                          [_vm._v("Название")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "th",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "translate",
-                                                rawName: "v-translate"
-                                              }
-                                            ],
-                                            staticStyle: { width: "90px" }
-                                          },
-                                          [_vm._v("Одобрение")]
-                                        )
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _vm._l(_vm.tree.data, function(section) {
-                                      return _c(
-                                        "tbody",
-                                        [
-                                          _c("tr", [
-                                            _c(
-                                              "td",
-                                              {
-                                                staticClass: "section_name",
-                                                attrs: { colspan: "3" }
-                                              },
-                                              [_vm._v(_vm._s(section.text))]
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _vm._l(section.children, function(
-                                            permission
-                                          ) {
-                                            return _c("tr", [
-                                              _c(
-                                                "td",
-                                                { staticClass: "form-group" },
-                                                [
-                                                  _c("input", {
-                                                    directives: [
-                                                      {
-                                                        name: "model",
-                                                        rawName: "v-model",
-                                                        value:
-                                                          _vm.selectedPermissions,
-                                                        expression:
-                                                          "selectedPermissions"
-                                                      }
-                                                    ],
-                                                    attrs: {
-                                                      type: "checkbox",
-                                                      disabled: _vm.disabled
-                                                    },
-                                                    domProps: {
-                                                      value: permission.id,
-                                                      checked: Array.isArray(
-                                                        _vm.selectedPermissions
-                                                      )
-                                                        ? _vm._i(
-                                                            _vm.selectedPermissions,
-                                                            permission.id
-                                                          ) > -1
-                                                        : _vm.selectedPermissions
-                                                    },
-                                                    on: {
-                                                      change: [
-                                                        function($event) {
-                                                          var $$a =
-                                                              _vm.selectedPermissions,
-                                                            $$el =
-                                                              $event.target,
-                                                            $$c = $$el.checked
-                                                              ? true
-                                                              : false
-                                                          if (
-                                                            Array.isArray($$a)
-                                                          ) {
-                                                            var $$v =
-                                                                permission.id,
-                                                              $$i = _vm._i(
-                                                                $$a,
-                                                                $$v
-                                                              )
-                                                            if ($$el.checked) {
-                                                              $$i < 0 &&
-                                                                (_vm.selectedPermissions = $$a.concat(
-                                                                  [$$v]
-                                                                ))
-                                                            } else {
-                                                              $$i > -1 &&
-                                                                (_vm.selectedPermissions = $$a
-                                                                  .slice(0, $$i)
-                                                                  .concat(
-                                                                    $$a.slice(
-                                                                      $$i + 1
-                                                                    )
-                                                                  ))
-                                                            }
-                                                          } else {
-                                                            _vm.selectedPermissions = $$c
-                                                          }
-                                                        },
-                                                        function($event) {
-                                                          _vm.changeAttributes(
-                                                            permission.id
-                                                          )
-                                                        }
-                                                      ]
-                                                    }
-                                                  })
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c("td", [
-                                                _vm._v(_vm._s(permission.text))
-                                              ]),
-                                              _vm._v(" "),
-                                              _c(
-                                                "td",
-                                                {
-                                                  staticStyle: {
-                                                    "text-align": "center"
-                                                  }
-                                                },
-                                                [
-                                                  permission.attributes
-                                                    .is_approved == 1
-                                                    ? _c("input", {
-                                                        directives: [
-                                                          {
-                                                            name: "model",
-                                                            rawName: "v-model",
-                                                            value:
-                                                              _vm.selectedAttributes,
-                                                            expression:
-                                                              "selectedAttributes"
-                                                          }
-                                                        ],
-                                                        attrs: {
-                                                          type: "checkbox",
-                                                          disabled: _vm.isDisabled(
-                                                            permission.id
-                                                          )
-                                                        },
-                                                        domProps: {
-                                                          value: permission.id,
-                                                          checked: Array.isArray(
-                                                            _vm.selectedAttributes
-                                                          )
-                                                            ? _vm._i(
-                                                                _vm.selectedAttributes,
-                                                                permission.id
-                                                              ) > -1
-                                                            : _vm.selectedAttributes
-                                                        },
-                                                        on: {
-                                                          change: function(
-                                                            $event
-                                                          ) {
-                                                            var $$a =
-                                                                _vm.selectedAttributes,
-                                                              $$el =
-                                                                $event.target,
-                                                              $$c = $$el.checked
-                                                                ? true
-                                                                : false
-                                                            if (
-                                                              Array.isArray($$a)
-                                                            ) {
-                                                              var $$v =
-                                                                  permission.id,
-                                                                $$i = _vm._i(
-                                                                  $$a,
-                                                                  $$v
-                                                                )
-                                                              if (
-                                                                $$el.checked
-                                                              ) {
-                                                                $$i < 0 &&
-                                                                  (_vm.selectedAttributes = $$a.concat(
-                                                                    [$$v]
-                                                                  ))
-                                                              } else {
-                                                                $$i > -1 &&
-                                                                  (_vm.selectedAttributes = $$a
-                                                                    .slice(
-                                                                      0,
-                                                                      $$i
-                                                                    )
-                                                                    .concat(
-                                                                      $$a.slice(
-                                                                        $$i + 1
-                                                                      )
-                                                                    ))
-                                                              }
-                                                            } else {
-                                                              _vm.selectedAttributes = $$c
-                                                            }
-                                                          }
-                                                        }
-                                                      })
-                                                    : _vm._e()
-                                                ]
-                                              )
-                                            ])
-                                          })
-                                        ],
-                                        2
-                                      )
-                                    })
-                                  ],
-                                  2
-                                )
-                              : _vm._e()
-                          ])
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("error-inform", {
-                      attrs: { err: _vm.err, state: _vm.state }
-                    }),
-                    _vm._v(" "),
-                    _c("ok-action-inform", { attrs: { state: _vm.state } }, [
+                    _c("div", { staticClass: "overlay-wrapper" }, [
                       _c(
-                        "div",
-                        { attrs: { slot: "ok-message" }, slot: "ok-message" },
-                        [
-                          _c(
-                            "div",
-                            {
-                              directives: [
-                                { name: "translate", rawName: "v-translate" }
-                              ]
-                            },
-                            [_vm._v("Роль была изменена.")]
-                          )
-                        ]
-                      )
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                !_vm.disabled
-                  ? _c("div", { staticClass: "box-footer overlay-wrapper" }, [
-                      _c(
-                        "button",
+                        "a",
                         {
-                          staticClass: "btn btn-primary pull-right",
-                          attrs: { type: "submit" }
+                          staticClass: "btn btn-primary",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.save($event)
+                            }
+                          }
                         },
-                        [_vm._v("Изменить")]
+                        [_vm._v("Сохранить")]
                       ),
                       _vm._v(" "),
                       _vm.submitting
@@ -928,10 +2062,131 @@ var render = function() {
                           ])
                         : _vm._e()
                     ])
-                  : _vm._e()
-              ]
-            )
-          ])
+                  ]
+                )
+              : _vm._e()
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "handler" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel-box user-table" }, [
+          _c(
+            "div",
+            { staticClass: "row", staticStyle: { "margin-bottom": "20px" } },
+            [
+              _c(
+                "div",
+                { staticClass: "col-sm-12 col-md-9 col-lg-6" },
+                [
+                  _c(
+                    "h3",
+                    {
+                      staticStyle: {
+                        "margin-top": "0px",
+                        "margin-bottom": "20px",
+                        "font-size": "20px"
+                      }
+                    },
+                    [_vm._v("Выделенный элемент")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      { staticClass: "control-label", attrs: { for: "name" } },
+                      [_vm._v("Название")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.tree.selectedNode.name,
+                            expression: "tree.selectedNode.name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", id: "name", name: "name" },
+                        domProps: { value: _vm.tree.selectedNode.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.tree.selectedNode,
+                              "name",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  !_vm.isSaved
+                    ? _c(
+                        "div",
+                        {
+                          staticStyle: {
+                            display: "flex",
+                            "margin-bottom": "20px"
+                          }
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                flex: "1 1 auto",
+                                "text-align": "right"
+                              }
+                            },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-primary",
+                                  attrs: {
+                                    href: "#",
+                                    disabled: _vm.changeDisabled
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.changeName($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Изменить")]
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("error-inform", {
+                    attrs: { err: _vm.err, state: _vm.state },
+                    on: { "error-inform:closed": _vm.closeErrorInform }
+                  }),
+                  _vm._v(" "),
+                  _c("ok-action-inform", { attrs: { state: _vm.state } }, [
+                    _c(
+                      "div",
+                      { attrs: { slot: "ok-message" }, slot: "ok-message" },
+                      [_c("div", [_vm._v(_vm._s(_vm.okMessage))])]
+                    )
+                  ])
+                ],
+                1
+              )
+            ]
+          )
         ])
       ])
     ])
@@ -943,7 +2198,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("section", { staticClass: "content-header" }, [
-      _c("h1", [_vm._v("Роль")]),
+      _c("h1", [_vm._v("Структура подразделений")]),
       _vm._v(" "),
       _c("ol", { staticClass: "breadcrumb" }, [
         _c("li", [
@@ -953,16 +2208,8 @@ var staticRenderFns = [
           ])
         ]),
         _vm._v(" "),
-        _c("li", { staticClass: "active" }, [_vm._v("Роль")])
+        _c("li", { staticClass: "active" }, [_vm._v("Структура подразделений")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box-header with-border" }, [
-      _c("h3", { staticClass: "box-title" }, [_vm._v("Редактировать роль")])
     ])
   }
 ]
@@ -971,31 +2218,31 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-823d8e84", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-45c236c2", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ 78:
+/***/ 81:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(297)
+  __webpack_require__(314)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(299)
+var __vue_script__ = __webpack_require__(316)
 /* template */
-var __vue_template__ = __webpack_require__(300)
+var __vue_template__ = __webpack_require__(318)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-823d8e84"
+var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -1006,7 +2253,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "src/js/pages/admin/Role.vue"
+Component.options.__file = "src/js/pages/messenger/Structure.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -1015,9 +2262,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-823d8e84", Component.options)
+    hotAPI.createRecord("data-v-45c236c2", Component.options)
   } else {
-    hotAPI.reload("data-v-823d8e84", Component.options)
+    hotAPI.reload("data-v-45c236c2", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -1029,7 +2276,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 85:
+/***/ 86:
 /***/ (function(module, exports) {
 
 /*
@@ -1112,7 +2359,7 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ 86:
+/***/ 87:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1341,15 +2588,15 @@ function applyToTag (styleElement, obj) {
 
 /***/ }),
 
-/***/ 88:
+/***/ 94:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(95)
+var __vue_script__ = __webpack_require__(102)
 /* template */
-var __vue_template__ = __webpack_require__(96)
+var __vue_template__ = __webpack_require__(103)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -1386,117 +2633,6 @@ if (false) {(function () {
 
 module.exports = Component.exports
 
-
-/***/ }),
-
-/***/ 95:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__states__ = __webpack_require__(16);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'error-inform',
-    props: {
-        state: { type: Number, default: __WEBPACK_IMPORTED_MODULE_0__states__["a" /* STATES */].START },
-        err: { type: Object, default: function _default() {
-                return { validation: [], common: [] };
-            } }
-    },
-    data: function data() {
-        return {};
-    },
-
-    computed: {
-        showError: function showError() {
-            return (this.err.validation.length > 0 || this.err.common.length > 0) && this.state == __WEBPACK_IMPORTED_MODULE_0__states__["a" /* STATES */].ERROR;
-        }
-    },
-    methods: {
-        closeErrors: function closeErrors() {
-            this.$emit("error-inform:closed");
-            this.err = { validation: [], common: [] };
-        }
-    }
-});
-
-/***/ }),
-
-/***/ 96:
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm.showError
-    ? _c(
-        "div",
-        { staticClass: "alert alert-danger fade in alert-dismissible" },
-        [
-          _c(
-            "button",
-            {
-              staticClass: "close",
-              attrs: {
-                type: "button",
-                "data-dismiss": "alert",
-                "aria-hidden": "true"
-              },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.closeErrors($event)
-                }
-              }
-            },
-            [_vm._v("×")]
-          ),
-          _vm._v(" "),
-          _vm._l(_vm.err.validation, function(er) {
-            return _c("div", { staticClass: "top-10" }, [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(er.name) +
-                  " - " +
-                  _vm._s(er.description) +
-                  "\n                "
-              )
-            ])
-          }),
-          _vm._v(" "),
-          _vm._l(_vm.err.common, function(er) {
-            return _c("div", { staticClass: "top-10" }, [
-              _c("div", { staticClass: "top-10" }, [_vm._v(_vm._s(er))])
-            ])
-          })
-        ],
-        2
-      )
-    : _vm._e()
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5d373c7e", module.exports)
-  }
-}
 
 /***/ })
 

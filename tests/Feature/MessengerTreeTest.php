@@ -37,8 +37,6 @@ class MessengerTreeTest extends TestCase
             $tree = new MessengerTree("5c6fcf47ba44a8ea066f2977");
             $path = $tree->getPath();
             var_dump($path);
-        }
-
 
 
 
