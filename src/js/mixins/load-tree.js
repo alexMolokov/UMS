@@ -75,6 +75,7 @@ export default {
 
                 });
                 resolve(result);
+                //this.$emit("tree:loaded", this.tree.selectedNode)
                 this.tree.loaded = true;
 
             }, {}, (data) => { });

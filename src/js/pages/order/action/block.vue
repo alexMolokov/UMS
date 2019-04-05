@@ -20,13 +20,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="position" class="col-sm-2 control-label">Должность</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="position" name="position" :value="info.position" readonly>
-            </div>
-        </div>
-
-        <div class="form-group">
             <label for="firstname" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="email"  name="email" :value="info.email" readonly>

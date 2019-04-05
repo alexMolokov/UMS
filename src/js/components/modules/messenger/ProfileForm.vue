@@ -24,7 +24,7 @@
                             <div class="form-group"  :class="{'has-error': errors.has('middlename')}">
                                 <label for="middlename" class="col-sm-2 control-label">Отчество</label>
                                 <div class="col-sm-10">
-                                    <input :disabled="disabled" type="text" class="form-control" id="middlename" name="firstname" placeholder="Отчество" v-model="user.middleName"  v-validate="'min:3'">
+                                    <input :disabled="disabled" type="text" class="form-control" id="middlename" name="middlename" placeholder="Отчество" v-model="user.middleName"  v-validate="'min:3'">
                                     <span v-show="errors.has('middlename')" class="help-block">{{errors.first('middlename')}}</span>
                                 </div>
                             </div>
@@ -58,8 +58,7 @@
                             <div style="margin-top: 10px" v-if="hasOrderId">
                                 <ok-action-inform :state="state">
                                     <div slot="ok-message">
-                                        <div>Ваша заявка на изменение профиля пользователя принята.</div>
-                                        <h4>Номер заявки {{order.id}}</h4>
+
                                     </div>
                                 </ok-action-inform>
                             </div>
@@ -146,10 +145,10 @@
 
                 let data = {
                     "email": this.user.email,
-                    "firstname": this.user.firstName,
-                    "lastname": this.user.lastName,
-                    "middlename": this.user.middleName,
-                    "nickname": this.user.nickName,
+                    "firstName": this.user.firstName,
+                    "lastName": this.user.lastName,
+                    "middleName": this.user.middleName,
+                    "nickName": this.user.nickName,
                     "login": this.user.id
                 };
 

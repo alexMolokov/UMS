@@ -26,12 +26,20 @@
                                         <span v-show="errors.has('repeatPassword')" class="help-block">{{errors.first('repeatPassword')}}</span>
                                     </div>
                                 </div>
-                                <error-inform :err="err" :state="state"></error-inform>
-                                <ok-action-inform :state="state">
-                                    <div slot="ok-message">
-                                        <div  v-translate>Пароль пользователя был изменен.</div>
-                                    </div>
-                                </ok-action-inform>
+                                <div style="margin-top: 10px">
+                                    <error-inform :err="err" :state="state"></error-inform>
+                                    <ok-action-inform :state="state">
+                                        <div slot="ok-message">
+                                            <div  v-if="hasOrderId">
+                                                <div>Ваша заявка на изменение пароля пользователя принята.</div>
+                                                <h4>Номер заявки {{order.id}}</h4>
+                                            </div>
+                                            <div  v-else v-translate>Пароль пользователя был изменен.</div>
+                                        </div>
+                                    </ok-action-inform>
+                                </div>
+
+
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer  overlay-wrapper">
@@ -45,15 +53,17 @@
 
 <script>
     import ajaxform from '../../../mixins/ajax-form.vue';
+    import acceptAction from '../../../mixins/accept-action.vue';
     import hasPermission from '../../../mixins/has-permission.vue';
     import ErrorInform  from '../../../mixins/error-inform.vue';
     import OkActionInform  from '../../../mixins/ok-action-inform.vue';
+    import {ACCEPT_ACTION_HANDLER} from "../../../mixins/accept-action-handler";
 
     export default {
         components: {ErrorInform, OkActionInform},
         name: 'login',
 
-        mixins: [ajaxform, hasPermission],
+        mixins: [ajaxform, hasPermission, acceptAction],
         data(){
             return {
                 error: '',
@@ -84,10 +94,14 @@
                     "login": this.$route.params.id
                 };
 
-
+                let self = this;
                 this.send("/user/change/password", data,
                     function(data) {
-                            //console.log("password changed");
+                        ACCEPT_ACTION_HANDLER.handle(
+                            self,
+                            () => {},
+                            data
+                        );
                     });
             }
 

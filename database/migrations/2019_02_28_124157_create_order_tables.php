@@ -29,7 +29,7 @@ class CreateOrderTables extends Migration
         Schema::create(self::TABLE_ORDER, function (Blueprint $table) {
             $table->increments('id');
             $table->string('subject', 200);
-            $table->string('action', 15);
+            $table->string('action', 50);
             $table->integer('order_state_id');
 
             $table->json('data');

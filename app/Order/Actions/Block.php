@@ -72,8 +72,8 @@ class Block extends Action implements IAction
 
         if($result->getStatus())
         {
-            $this->notify("messenger:user:block", [
-                "event" => "messenger:user:block",
+            $this->notify(ActionFactory::BLOCK, [
+                "event" => ActionFactory::BLOCK,
                 "user_id" => $this->order->created_by,
                 "data" => $obj
             ]);

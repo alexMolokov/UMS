@@ -9,8 +9,6 @@
 
 namespace App\Order\Actions;
 
-use App\Http\Middleware\Messenger\EmailHandler;
-use App\Http\Middleware\Messenger\UserProfileHandler;
 use App\Order\ActionFactory;
 use App\Order\CalculateAccepter;
 use App\Order\Order;
@@ -18,29 +16,29 @@ use App\Order\State;
 use App\OrganizationUnit\OrganizationUnit;
 use App\Permission;
 use App\Exceptions\Messenger\MessengerException;
+use Illuminate\Support\Facades\Crypt;
 
-class ChangeProfile extends Action implements IAction
+class ChangePassword extends Action implements IAction
 {
 
     public function getData() : array
     {
+
+
         return [
                 "login" => $this->request->input("login"),
-                "email" => $this->request->input("email"),
-                "firstName" => $this->request->input("firstName"),
-                "lastName" => $this->request->input("lastName"),
-                "middleName" => $this->request->input("middleName"),
-                "nickName" => $this->request->input("nickName"),
+                "password" => Crypt::encryptString($this->request->input("newPassword"))
             ];
+
     }
 
 
     public function getSubject() : string {
-        return __("Change Profile");
+        return __("Change Password");
     }
 
     public function getType() {
-        return ActionFactory::CHANGE_PROFILE;
+        return ActionFactory::CHANGE_PASSWORD;
     }
 
     public function getPermissionName(): string {
@@ -56,8 +54,8 @@ class ChangeProfile extends Action implements IAction
 
             if($response->valid())
             {
-                $blockedUser = $response->current();
-                $ouId = $blockedUser["ou_id"];
+                $user = $response->current();
+                $ouId = $user["ou_id"];
                 return $ouId;
             }
         }
@@ -69,19 +67,14 @@ class ChangeProfile extends Action implements IAction
 
         $obj = json_decode($this->order->data);
 
-        $emailHandler = new EmailHandler($service);
-        $userProfileHandler = new UserProfileHandler($service);
-
-        $emailHandler->setNext($userProfileHandler);
-
-        $result = $emailHandler->handle($obj);
+        $result = $service->setPassword($obj->login, Crypt::decryptString($obj->password));
 
         if($result->getStatus())
         {
-            $this->notify(ActionFactory::CHANGE_PROFILE, [
-                "event" => ActionFactory::CHANGE_PROFILE,
+            $this->notify(ActionFactory::CHANGE_PASSWORD, [
+                "event" =>ActionFactory::CHANGE_PASSWORD,
                 "user_id" => $this->order->created_by,
-                "data" => $obj
+                "data" => (object)["login" => $obj->login]
             ]);
             $this->order->order_state_id = State::DONE;
             return $this->order;
@@ -90,4 +83,11 @@ class ChangeProfile extends Action implements IAction
         throw new MessengerException($result->getDescription());
 
     }
+
+    private function getBlocked() {
+        return $this->request->input("blocked");
+    }
+
+
+
 }

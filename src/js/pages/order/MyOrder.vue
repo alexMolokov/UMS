@@ -39,6 +39,8 @@
                 <div class="row">
                     <div class="col-sm-12 col-lg-10">
                             <form-block-account v-if="forms.showFormBlockAccount" :info="order.info"></form-block-account>
+                            <form-change-profile  v-if="forms.showFormChangeProfile" :info="order.info"></form-change-profile>
+                            <form-create-user v-if="forms.showFormCreateUser" :info="order.info"></form-create-user>
                     </div>
                 </div>
             </div>
@@ -53,6 +55,8 @@
 
 <script>
     const formBlockAccount  = () => System.import('./action/block.vue');
+    const formChangeProfile  = () => System.import('./action/changeProfile.vue');
+    const formCreateUser  = () => System.import('./action/createUser.vue');
 
     import ErrorInform from '../../mixins/error-inform.vue';
     import OkActionInform  from '../../mixins/ok-action-inform.vue';
@@ -66,7 +70,9 @@
         components: {
             ErrorInform,
             OkActionInform,
-            formBlockAccount
+            formBlockAccount,
+            formChangeProfile,
+            formCreateUser
         },
         name: 'order-my-id',
         mixins: [ajaxform],
@@ -96,7 +102,10 @@
         data(){
             return {
                 actionMap: {
-                  "block": "showFormBlockAccount"
+                  "messenger.user.block": "showFormBlockAccount",
+                  "messenger.change.profile": "showFormChangeProfile",
+                  "messenger.user.change.password": "showFormBlockAccount",
+                  "messenger.user.create": "showFormCreateUser"
                 },
                 order: {
                     id: "",
@@ -108,7 +117,9 @@
                 },
 
                 forms: {
-                    showFormBlockAccount: false
+                    showFormBlockAccount: false,
+                    showFormChangeProfile: false,
+                    showFormCreateUser: false
                 }
 
             }

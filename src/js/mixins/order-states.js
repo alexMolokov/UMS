@@ -12,7 +12,7 @@ export const ORDER_STATES = {
             [DONE]: "Done"
         },
         ru: {
-            [ACCEPT]: "На одобрении",
+            [ACCEPT]: "На рассмотрении",
             [CANCEL]: "Отменен",
             [REJECT]: "Отклонен",
             [DONE]: "Выполнен"

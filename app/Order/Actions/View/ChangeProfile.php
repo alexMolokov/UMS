@@ -13,8 +13,9 @@ use App\Order\Order;
 class ChangeProfile extends View implements IActionView
 {
     public function info(Order $order ) : array {
-            $result =  ["new" => [], "old" => []];
             $data = json_decode($order->data);
+            $result =  ["new" => (array) $data, "old" => []];
+
             $login = $data->login;
 
             $service = $this->getUserService();

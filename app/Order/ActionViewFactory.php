@@ -18,7 +18,8 @@ class ActionViewFactory
         $views = [
             ActionFactory::BLOCK => "App\Order\Actions\View\Block",
             ActionFactory::CHANGE_PROFILE => "App\Order\Actions\View\ChangeProfile",
-
+            ActionFactory::CHANGE_PASSWORD => "App\Order\Actions\View\ChangePassword",
+            ActionFactory::CREATE_USER => "App\Order\Actions\View\CreateUser"
         ];
 
         $class = $views[$viewId];

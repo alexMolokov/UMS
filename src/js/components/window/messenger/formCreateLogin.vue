@@ -3,13 +3,24 @@
         <div slot="title" v-translate>Новый пользователь Messenger</div>
         <form :url="url" @submit.prevent.stop class="form-horizontal">
             <div style="position: relative">
-                <loading-inform :state="state" @close="close">
+                <loading-inform :state="state" @close="close" v-if="!hasOrderId">
                     <div class="window-center" slot="ok-message">
                         <div class="complete-body" v-translate>Пользователь был успешно создан.</div>
                         <div class="button-close-ok"><button type="button" class="btn  btn-primary" v-translate @click="close">Ok</button></div>
                     </div>
                     <div slot="buttons"></div>
                 </loading-inform>
+                <loading-inform :state="state" @close="close" v-if="hasOrderId">
+                    <div class="window-center" slot="ok-message">
+                        <div class="complete-body">
+                            <div>Ваша заявка на изменение профиля пользователя принята.</div>
+                            <h4>Номер заявки {{order.id}}</h4>
+                        </div>
+                        <div class="button-close-ok"><button type="button" class="btn  btn-primary" v-translate @click="close">Ok</button></div>
+                    </div>
+                    <div slot="buttons"></div>
+                </loading-inform>
+
                 <div class="modal-body">
                     <div>
                         <div class="row">
@@ -89,6 +100,8 @@
 
     import modalWindow from '../modalWindow.vue';
     import ajaxform from '../../../mixins/ajax-form.vue';
+    import acceptAction from '../../../mixins/accept-action.vue';
+    import {ACCEPT_ACTION_HANDLER} from "../../../mixins/accept-action-handler";
     import errorInform from '../../../mixins/error-inform.vue';
     import loadingInform from '../../../mixins/loading-inform.vue';
     import {mapState} from 'vuex';
@@ -96,6 +109,9 @@
 
     export default {
         name: 'form-create-messenger-login',
+        props: {
+          "ou": [String]
+        },
         components: {
             "modal-window": modalWindow,
             "error-inform": errorInform,
@@ -122,7 +138,7 @@
                     }
                 }
             },
-            mixins: [ajaxform],
+            mixins: [ajaxform, acceptAction],
             locales: {
                 uz: {}
             },
@@ -140,13 +156,19 @@
                         middleName: user.middleName,
                         nickName: user.nickName,
                         password: user.password,
-                        blocked: user.blocked
+                        blocked: user.blocked,
+                        ou: this.ou
                     };
                     this.error = '';
 
-
+                    let self = this;
                     this.send(this.url, data, (response) => {
-                        this.$emit("form:create-login", response);
+                        ACCEPT_ACTION_HANDLER.handle(
+                            self,
+                            () => {},
+                            response
+                        );
+                        if(!self.hasOrderId) this.$emit("form:create-login", response);
                     }, () => {
 
                     });

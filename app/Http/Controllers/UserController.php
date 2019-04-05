@@ -46,7 +46,6 @@ class UserController extends Controller
 
     }
 
-
     public function block(Request $request)
     {
        $request->merge(["action" => ActionFactory::BLOCK]);
@@ -59,6 +58,47 @@ class UserController extends Controller
                "order_state_id" => $order->order_state_id
        ]);
 
+    }
+
+    public function changePassword(Request $request){
+        $request->merge(["action" => ActionFactory::CHANGE_PASSWORD]);
+        $action = ActionFactory::create($request);
+
+        $order = $action->handle($request->input("order_id"));
+
+        return response()->success([
+            "id" => $order->id,
+            "order_state_id" => $order->order_state_id
+        ]);
+    }
+
+
+    public function createUser(CreateUserRequest $request)
+    {
+        $request->merge(["action" => ActionFactory::CREATE_USER]);
+        $action = ActionFactory::create($request);
+        $order = $action->handle($request->input("order_id"));
+
+        $orderData = (array) $order->data;
+        unset($orderData["password"]);
+
+        return response()->success(array_merge([
+            "id" => $order->id,
+            "order_state_id" => $order->order_state_id
+        ],$orderData));
+
+       /* $data = $request->only(["firstName", "lastName", "middleName", "nickName", "email", "login", "password", "blocked", "ou"]);
+        $user = new MessengerUser($data);
+
+        $response = $this->service->add($user);
+
+        if($response->getStatus())
+        {
+            unset($data["password"]);
+            return response()->success($data);
+        }
+
+        return response()->error(__($response->getDescription())); */
     }
 
 
@@ -81,36 +121,9 @@ class UserController extends Controller
 
     }
 
-    public function changePassword(Request $request){
-        $login =  $request->input("login");
-        $password =  $request->input("newPassword");
-        $response = $this->service->setPassword($login, $password);
 
-        if($response->getStatus())
-        {
-            return response()->success();
-        }
 
-        return response()->error(__("Can't change password") . ". " .  __("Please try later") . "!");
 
-    }
-
-    public function createUser(CreateUserRequest $request)
-    {
-        $data = $request->only(["firstName", "lastName", "middleName", "nickName", "email", "login", "password", "blocked"]);
-
-        $user = new MessengerUser($data);
-
-        $response = $this->service->add($user);
-
-        if($response->getStatus())
-        {
-            unset($data["password"]);
-            return response()->success($data);
-        }
-
-        return response()->error(__($response->getDescription()));
-    }
 
     public function createFromCsv(Request $request){
         $result = [];

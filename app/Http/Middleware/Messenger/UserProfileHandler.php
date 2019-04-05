@@ -18,10 +18,10 @@ class UserProfileHandler extends MessengerHandler
 
 
         $response = $this->service->setUserProfile($obj->login, [
-            "firstName" => $obj->firstname,
-            "lastName" => $obj->lastname,
-            "middleName" => $obj->middlename,
-            "nickName" => $obj->nickname
+            "firstName" => $obj->firstName,
+            "lastName" => $obj->lastName,
+            "middleName" => $obj->middleName,
+            "nickName" => $obj->nickName
         ]);
 
         if($response->getStatus()) return parent::handle($obj);

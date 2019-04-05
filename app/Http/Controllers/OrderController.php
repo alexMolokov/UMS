@@ -179,6 +179,7 @@ class OrderController extends Controller
 
             $action = ActionFactory::create($this->request);
             $order = $action->handle($id);
+            $order->save();
             return response()->success(["id" => $id, "state" => $order->order_state_id]);
 
 

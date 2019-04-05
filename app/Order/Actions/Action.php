@@ -52,8 +52,7 @@ abstract class Action implements \SplSubject
           $this->setNewOrder();
       }
 
-      if($this->isApproved())
-      {
+      if($this->isApproved()) {
             $this->setAssignUser();
             $this->order->save();
             return $this->order;
@@ -61,6 +60,7 @@ abstract class Action implements \SplSubject
       else {
           return $this->execute();
       }
+
     }
 
 

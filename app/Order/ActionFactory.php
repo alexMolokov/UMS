@@ -15,8 +15,11 @@ use Illuminate\Http\Request;
 
 class ActionFactory
 {
-    const BLOCK = "block";
-    const CHANGE_PROFILE = "change_profile";
+    const BLOCK = "messenger.user.block";
+    const CHANGE_PROFILE = "messenger.change.profile";
+    const CHANGE_PASSWORD = "messenger.user.change.password";
+    const CREATE_USER = "messenger.user.create";
+
 
     public static function create(Request $request) {
         $actionId = $request->input("action");
@@ -24,6 +27,8 @@ class ActionFactory
         $actions = [
             self::BLOCK => "App\Order\Actions\Block",
             self::CHANGE_PROFILE => "App\Order\Actions\ChangeProfile",
+            self::CHANGE_PASSWORD => "App\Order\Actions\ChangePassword",
+            self::CREATE_USER => "App\Order\Actions\CreateUser",
         ];
 
         $class = $actions[$actionId];

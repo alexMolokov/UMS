@@ -19,7 +19,7 @@
 
                     <div class="row" style="margin-bottom: 20px">
                         <div class="col-xs-12">
-                            <form-create-login v-if="showForm.formCreateUserShow"  @close="showForm.formCreateUserShow = false" @form:create-login="create"></form-create-login>
+                            <form-create-login v-if="showForm.formCreateUserShow"  @close="showForm.formCreateUserShow = false" @form:create-login="create" :ou="table.moreParams.ou_id"></form-create-login>
                             <form-user-action v-if="showForm.formUserActionShow"  @close="showForm.formUserActionShow = false" :action="userAction.type" :checked-users="userAction.chooseUsers" @form:copy-move-users-ok="copyMoveUsersOk"></form-user-action>
                             <gapp-table
                                     v-if="tree.loaded"
@@ -166,7 +166,6 @@
                     formCreateUserShow: false,
                     formUserActionShow: false
                 },
-
                 userAction: {
                     type: "",
                     chooseUsersMap: new Map(),
@@ -286,50 +285,7 @@
                     isHandlerDragging = false;
                 });
             },
-         /*   loadTree: function (oriNode, resolve) {
-                let id = null;
 
-                if(typeof oriNode !== "undefined"){
-                    id = (typeof oriNode.data.value != "undefined") ? oriNode.data.value.id : null;
-                }
-
-                this.uploadInfo('/admin/tree/children', {"id": id}, (data) => {
-                    let result = [];
-
-                    let self = this;
-
-                    if(data.length == 0) {
-                        oriNode.data.isLeaf = true;
-                        oriNode.data.icon = "fa fa-sticky-note-o";
-                    }
-
-                    data.forEach(function(item, index){
-
-                        self.tree.allItems.set(item.id, item);
-
-                        let isLeaf = !item.hasChild;
-
-                        let obj = {
-                            "text": item.name,
-                            "value": item,
-                            "isLeaf": isLeaf,
-                            "icon": (isLeaf)? "fa fa-sticky-note-o": "fa fa-folder"
-                        };
-                        if(id === null && index == 0) {
-                            obj.selected = true;
-                            self.table.moreParams.ou_id = item.id;
-                        }
-
-
-                        result.push(obj)
-
-
-                    });
-                    resolve(result);
-                    this.tree.loaded = true;
-
-                }, {}, (data) => { });
-            },*/
             itemClick (node) {
                 let model =  node.model;
                 let value = model.value
