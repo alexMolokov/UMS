@@ -19,6 +19,10 @@ class ActionFactory
     const CHANGE_PROFILE = "messenger.change.profile";
     const CHANGE_PASSWORD = "messenger.user.change.password";
     const CREATE_USER = "messenger.user.create";
+    const COPY_USER = "messenger.user.copy";
+    const MOVE_USER = "messenger.user.move";
+    const CHANGE_STRUCTURE = "messenger.structure.change";
+    const CREATE_USERS = "messenger.users.create";
 
 
     public static function create(Request $request) {
@@ -29,6 +33,10 @@ class ActionFactory
             self::CHANGE_PROFILE => "App\Order\Actions\ChangeProfile",
             self::CHANGE_PASSWORD => "App\Order\Actions\ChangePassword",
             self::CREATE_USER => "App\Order\Actions\CreateUser",
+            self::COPY_USER => "App\Order\Actions\CopyUser",
+            self::MOVE_USER => "App\Order\Actions\MoveUser",
+            self::CHANGE_STRUCTURE => "App\Order\Actions\ChangeStructure",
+            self::CREATE_USERS => "App\Order\Actions\CreateUsers",
         ];
 
         $class = $actions[$actionId];

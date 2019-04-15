@@ -11,25 +11,24 @@ namespace App\Traits;
 
 trait Observervable {
 
-
     private $observers = [];
 
 
-    public function attach(\SplObserver $observer, string $event = "*"): void
+    public function attach(\SplObserver $observer, string $event = "*")
     {
         $this->initEventGroup($event);
 
         $this->observers[$event][] = $observer;
     }
 
-    private function initEventGroup(string $event = "*"): void
+    private function initEventGroup(string $event = "*")
     {
         if (!isset($this->observers[$event])) {
             $this->observers[$event] = [];
         }
     }
 
-    public function detach(\SplObserver $observer, string $event = "*"): void
+    public function detach(\SplObserver $observer, string $event = "*")
     {
         foreach ($this->getEventObservers($event) as $key => $s) {
             if ($s === $observer) {
@@ -55,7 +54,7 @@ trait Observervable {
     }
 
 
-    public function notify(string $event = "*", $data = null): void
+    public function notify(string $event = "*", $data = null)
     {
         foreach ($this->getEventObservers($event) as $observer) {
             $observer->update($this, $event, $data);

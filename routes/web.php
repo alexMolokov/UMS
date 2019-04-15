@@ -157,6 +157,10 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'permissions']
         ->name("messengerCreateFromCsv")
         ->defaults("permission", Permission::MESSENGER_EDIT_USER);
 
+    Route::match(["post"],'/check/csv', 'UserController@checkCsv')
+        ->name("messengerCcheckCsv")
+        ->defaults("permission", Permission::MESSENGER_EDIT_USER);
+
 
     Route::match(["post"],'/ou/has', 'UserController@hasUser')
         ->name("messengerOuHasUser")

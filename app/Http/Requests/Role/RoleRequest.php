@@ -26,10 +26,20 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' =>  'required|min:3|alpha',
+            'name' =>  'required|min:3|alpha|unique:roles',
             'description' =>  'present|max:100'
         ];
 
 
     }
+
+    public function messages()
+    {
+        return [
+            'name.unique' =>  __('Role exists')
+        ];
+
+
+    }
+
 }

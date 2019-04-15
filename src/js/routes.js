@@ -75,7 +75,7 @@ const routes = [
                 meta: {permission: PERMISSIONS.MESSENGER_WATCH_USER}
             },
             {
-                path: '/messenger/load-users-file',
+                path: '/messenger/load-users-file/:ou',
                 name: 'messenger-load-users-file',
                 component: (resolve) => { require(['./pages/messenger/LoadUsersFile'], resolve)},
                 meta: {permission: PERMISSIONS.MESSENGER_EDIT_USER}

@@ -25,9 +25,15 @@
                                     </div>
                                     <div style="margin-top: 10px;"  v-if="hasPermission(permissions.ADMIN_EDIT_USER)">
                                         <div v-if="!tree.loaded"><a href="#" @click.prevent="tree.loaded = true">Добавить</a></div>
-                                        <div style="overflow: auto; width: 100%; height: 300px; border: 1px solid rgb(210, 214, 222); position: relative" v-if="tree.loaded" >
-                                            <v-jstree :data="tree.data" :async="loadTree" show-checkbox multiple allow-batch whole-row  @item-click="itemClick" ref="jsTree"></v-jstree>
-                                            <button style="position: absolute; right: 0; top: 0; width: 80px; " type="button" class="btn btn-block btn-success btn-flat" @click.prevent="addToPaths">Добавить</button>
+
+                                        <div v-if="tree.loaded">
+                                            <div style="overflow: auto; width: 100%; height: 300px; border: 1px solid rgb(210, 214, 222); position: relative"  >
+                                                <v-jstree :data="tree.data" :async="loadTree" show-checkbox multiple allow-batch whole-row  @item-click="itemClick" ref="jsTree"></v-jstree>
+
+                                            </div>
+                                            <div style="margin-top: 10px">
+                                                <button type="button" class="btn btn-success btn-flat" @click.prevent="addToPaths">Добавить</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -45,7 +51,7 @@
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer overlay-wrapper"  v-if="hasPermission(permissions.ADMIN_EDIT_USER)">
-                            <button type="submit" class="btn btn-primary pull-right">Изменить</button>
+                            <button type="submit" class="btn btn-primary pull-right">Сохранить</button>
                             <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
                         </div>
                         <!-- /.box-footer -->
@@ -164,6 +170,7 @@
             validate: function()
             {
                 let roles = (window.$('#select2').select2('data'));
+
                 let userRoles = [];
                 roles.forEach(function(role) {
                     userRoles.push(role.text);

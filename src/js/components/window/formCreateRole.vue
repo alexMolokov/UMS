@@ -15,11 +15,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="box-body">
-                                    <div class="form-group"  :class="{'has-error': errors.has('role')}">
+                                    <div class="form-group"  :class="{'has-error': errors.has('name')}">
                                         <label for="role" class="col-sm-2 control-label">Роль</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="role" name="role" v-model="role.name"  v-validate="{ required: true, min:3, regex: /^[a-zA-Z]{1,}$/}" placeholder="Название (Только Латинские буквы)">
-                                            <span v-show="errors.has('role')" class="help-block">{{errors.first('role')}}</span>
+                                            <input type="text" class="form-control" id="role" name="name" v-model="role.name"  v-validate="{ required: true, min:3, regex: /^[a-zA-Z]{1,}$/}" placeholder="Название (Только Латинские буквы)">
+                                            <span v-show="errors.has('name')" class="help-block">{{errors.first('name')}}</span>
                                         </div>
                                     </div>
 

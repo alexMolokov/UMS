@@ -40,6 +40,9 @@
                         <form-block-account v-if="forms.showFormBlockAccount" :info="order.info"></form-block-account>
                         <form-change-profile  v-if="forms.showFormChangeProfile" :info="order.info"></form-change-profile>
                         <form-create-user v-if="forms.showFormCreateUser" :info="order.info"></form-create-user>
+                        <form-copy-user v-if="forms.showFormCopyUser" :info="order.info"></form-copy-user>
+                        <form-move-user v-if="forms.showFormMoveUser" :info="order.info"></form-move-user>
+                        <form-create-users v-if="forms.showFormCreateUsers" :info="order.info"></form-create-users>
                     </div>
                 </div>
             </div>
@@ -56,6 +59,9 @@
     const formBlockAccount  = () => System.import('./action/block.vue');
     const formChangeProfile  = () => System.import('./action/changeProfile.vue');
     const formCreateUser  = () => System.import('./action/createUser.vue');
+    const formCreateUsers  = () => System.import('./action/createUsers.vue');
+    const formMoveUser  = () => System.import('./action/moveUser.vue');
+    const formCopyUser  = () => System.import('./action/copyUser.vue');
 
 
     import ErrorInform from '../../mixins/error-inform.vue';
@@ -72,7 +78,10 @@
             OkActionInform,
             formBlockAccount,
             formChangeProfile,
-            formCreateUser
+            formCreateUser,
+            formMoveUser,
+            formCopyUser,
+            formCreateUsers
         },
         name: 'order-assigned-id',
         mixins: [ajaxform],
@@ -105,7 +114,10 @@
                     "messenger.user.block": "showFormBlockAccount",
                     "messenger.change.profile": "showFormChangeProfile",
                     "messenger.user.change.password": "showFormBlockAccount",
-                    "messenger.user.create": "showFormCreateUser"
+                    "messenger.user.create": "showFormCreateUser",
+                    "messenger.user.move": "showFormMoveUser",
+                    "messenger.user.copy": "showFormCopyUser",
+                    "messenger.users.create": "showFormCreateUsers",
                 },
                 order: {
                     id: "",
@@ -119,7 +131,10 @@
                 forms: {
                     showFormBlockAccount: false,
                     showFormChangeProfile: false,
-                    showFormCreateUser: false
+                    showFormCreateUser: false,
+                    showFormMoveUser: false,
+                    showFormCopyUser: false,
+                    showFormCreateUsers: false
                 }
 
             }

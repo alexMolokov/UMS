@@ -56,4 +56,9 @@ class User extends Authenticatable
         return $this->getAllPermissions()->find($permission->id);
     }
 
+    public static function hasRoleAnybody(Role $role) {
+        $result = User::role($role->name)->get()->first();
+        return !is_null($result);
+    }
+
 }

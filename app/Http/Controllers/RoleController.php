@@ -6,11 +6,14 @@ use App\Http\Requests\Role\ListRoleRequest;
 use App\Http\Requests\Role\RoleRequest;
 
 use App\ListModels;
+use App\User;
 use Auth;
 use App\Role;
 use App\Permission;
 
 use App\PermissionsGroup;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Response;
 
 
@@ -19,10 +22,9 @@ class RoleController extends Controller
 
     public function createRole(RoleRequest $request)
     {
-        $params = $request->only(["name", "description"]);
-        Role::create($params);
-
-        return response()->success();
+            $params = $request->only(["name", "description"]);
+            $role = Role::create($params);
+            return response()->success($params + ["id" => $role->id]);
     }
 
     /**
@@ -73,15 +75,26 @@ class RoleController extends Controller
         return response()->success();
     }
 
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
         $role = $this->getRole($id);
-        if(!$role->can_deleted)
+
+        if($request->user()->isSuperAdmin())
         {
-            return response()->json(['error' => 'Forbidden.'], 403);
+            if(User::hasRoleAnybody($role)) {
+                return response()->error(__('Forbidden action') . ". " .  __('Some users has role') . ".");
+            }
+
+            if($role->isEdit())
+            {
+                $role->delete();
+                return response()->success([]);
+            }
         }
-        $role->delete();
+
+        return response()->error(__('Forbidden action'));
     }
+
 
     public function listRole(ListRoleRequest $request){
 
@@ -152,7 +165,6 @@ class RoleController extends Controller
 
 
     }
-
 
     private function getRole($id) {
         $role = Role::find($id);

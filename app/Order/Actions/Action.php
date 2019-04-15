@@ -52,6 +52,7 @@ abstract class Action implements \SplSubject
           $this->setNewOrder();
       }
 
+
       if($this->isApproved()) {
             $this->setAssignUser();
             $this->order->save();
@@ -96,6 +97,18 @@ abstract class Action implements \SplSubject
     protected function getUnitService()
     {
         return  resolve("EncryptServer\Interfaces\IOrganizationUnit");
+    }
+
+    protected function getNotifyData($obj){
+        $user = $this->request->user();
+        $notifyData = [
+            "created_by" => $this->order->created_by,
+            "created_by_login" => $this->order->created_by_login,
+            "modified_by" => $user->id,
+            "modified_by_login" => $user->login,
+            "data" => (array) $obj
+        ];
+        return $notifyData;
     }
 
     abstract function getStartOuId();

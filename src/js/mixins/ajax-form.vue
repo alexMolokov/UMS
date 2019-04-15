@@ -32,6 +32,11 @@ export default {
         }
     },
     methods: {
+        resetErrors() {
+          this.state = STATES.START;
+          this.err = {validation:[], common: []}
+        },
+
         uploadInfo:  function(url, data, success, headers = {}, fail)
         {
             Object.assign(data, {lang: this.$store.state.lang});

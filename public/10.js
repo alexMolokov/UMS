@@ -1,6 +1,54 @@
 webpackJsonp([10],{
 
-/***/ 105:
+/***/ 104:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(118)
+/* template */
+var __vue_template__ = __webpack_require__(119)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/js/mixins/error-inform.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5d373c7e", Component.options)
+  } else {
+    hotAPI.reload("data-v-5d373c7e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 118:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46,7 +94,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 106:
+/***/ 119:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -111,15 +159,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 107:
+/***/ 120:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(122)
+var __vue_script__ = __webpack_require__(137)
 /* template */
-var __vue_template__ = __webpack_require__(123)
+var __vue_template__ = __webpack_require__(138)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -159,7 +207,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 121:
+/***/ 136:
 /***/ (function(module, exports) {
 
 /**
@@ -193,7 +241,7 @@ module.exports = function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ 122:
+/***/ 137:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -231,7 +279,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 123:
+/***/ 138:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -274,7 +322,82 @@ if (false) {
 
 /***/ }),
 
-/***/ 240:
+/***/ 193:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(233)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/js/mixins/has-permission.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-40bdeedc", Component.options)
+  } else {
+    hotAPI.reload("data-v-40bdeedc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 233:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__permissions__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'has-permission',
+  data: function data() {
+    return {
+      permissions: __WEBPACK_IMPORTED_MODULE_0__permissions__["a" /* PERMISSIONS */]
+    };
+  },
+
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(["hasPermission", "hasAnyPermission"]))
+});
+
+/***/ }),
+
+/***/ 243:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -288,17 +411,17 @@ var NodeContent={name:"node-content",props:["node"],render:function(e){var t=thi
 
 /***/ }),
 
-/***/ 305:
+/***/ 311:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(306);
+var content = __webpack_require__(312);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(90)("f92d64a8", content, false, {});
+var update = __webpack_require__(96)("f92d64a8", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -315,10 +438,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 306:
+/***/ 312:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(89)(false);
+exports = module.exports = __webpack_require__(95)(false);
 // imports
 
 
@@ -330,20 +453,22 @@ exports.push([module.i, "\n.section_name[data-v-823d8e84] {\n  color: #fff;\n  b
 
 /***/ }),
 
-/***/ 307:
+/***/ 313:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ok_action_inform_vue__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ok_action_inform_vue__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ok_action_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__mixins_ok_action_inform_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_liquor_tree__ = __webpack_require__(240);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_liquor_tree__ = __webpack_require__(243);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mixins_permissions__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_modules_admin_DeleteRole_vue__ = __webpack_require__(396);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_modules_admin_DeleteRole_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_modules_admin_DeleteRole_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -441,6 +566,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -450,7 +580,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: { ErrorInform: __WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue___default.a, OkActionInform: __WEBPACK_IMPORTED_MODULE_2__mixins_ok_action_inform_vue___default.a, liquorTree: __WEBPACK_IMPORTED_MODULE_4_liquor_tree__["a" /* default */] },
+    components: { ErrorInform: __WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue___default.a, OkActionInform: __WEBPACK_IMPORTED_MODULE_2__mixins_ok_action_inform_vue___default.a, liquorTree: __WEBPACK_IMPORTED_MODULE_4_liquor_tree__["a" /* default */], DeleteRole: __WEBPACK_IMPORTED_MODULE_6__components_modules_admin_DeleteRole_vue___default.a },
     name: 'role-form',
     mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue___default.a],
     created: function created() {
@@ -462,9 +592,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         this.uploadInfo(path, {}, function (data) {
             _this.initRole(data);
             _this.initTree(data);
-
-            // let permission = this.hasPermission(this.permissions.ADMIN_EDIT_ROLE);
-
         }, {}, function (data) {});
     },
     data: function data() {
@@ -473,7 +600,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             role: {
                 "id": "",
                 "name": "",
-                "is_editable": 1
+                "is_editable": 1,
+                "is_deleted": false
             },
             tree: {
                 data: [],
@@ -488,9 +616,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(["hasPermission"]), {
         disabled: function disabled() {
             return !this.hasPermission(this.permissions.ADMIN_EDIT_ROLE) || this.role.is_editable == 0;
+        },
+        isActive: function isActive() {
+            return !this.role.is_deleted;
         }
     }),
     methods: {
+        roleDeleted: function roleDeleted() {
+            this.role.is_deleted = true;
+        },
         initTree: function initTree(data) {
             this.tree.data = data.tree;
 
@@ -543,8 +677,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 permissions: permissions
             };
 
-            console.log(data);
-
             this.send("/admin/role/" + this.role.id + "/update", data, function (data) {
                 console.log("updated role");
             });
@@ -557,7 +689,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 
-/***/ 308:
+/***/ 314:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -565,487 +697,559 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "content-wrapper" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("section", { staticClass: "content" }, [
+    _c("section", { staticClass: "content-header" }, [
+      _c("h1", { staticStyle: { display: "inline-block" } }, [_vm._v("Роль")]),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-6 col-md-12" }, [
-          _c("div", { staticClass: "box box-info" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "form-horizontal",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.validate($event)
-                  }
-                }
-              },
-              [
+        _c(
+          "div",
+          { staticClass: "col-lg-6 col-md-12" },
+          [
+            _c("delete-role", {
+              attrs: { "role-id": _vm.role.id },
+              on: { "role:deleted": _vm.roleDeleted }
+            })
+          ],
+          1
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.isActive
+      ? _c("section", { staticClass: "content" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6 col-md-12" }, [
+              _c("div", { staticClass: "box box-info" }, [
+                _vm._m(1),
+                _vm._v(" "),
                 _c(
-                  "div",
-                  { staticClass: "box-body" },
+                  "form",
+                  {
+                    staticClass: "form-horizontal",
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.validate($event)
+                      }
+                    }
+                  },
                   [
                     _c(
                       "div",
-                      {
-                        staticClass: "form-group",
-                        class: { "has-error": _vm.errors.has("role") }
-                      },
+                      { staticClass: "box-body" },
                       [
                         _c(
-                          "label",
+                          "div",
                           {
-                            staticClass: "col-sm-2 control-label",
-                            attrs: { for: "role" }
+                            staticClass: "form-group",
+                            class: { "has-error": _vm.errors.has("role") }
                           },
-                          [_vm._v("Роль")]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-10" }, [
-                          _c("input", {
-                            directives: [
+                          [
+                            _c(
+                              "label",
                               {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.role.name,
-                                expression: "role.name"
+                                staticClass: "col-sm-2 control-label",
+                                attrs: { for: "role" }
                               },
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: {
-                                  required: true,
-                                  min: 3,
-                                  regex: /^[a-zA-Z]{1,}$/
+                              [_vm._v("Роль")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-sm-10" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.role.name,
+                                    expression: "role.name"
+                                  },
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: {
+                                      required: true,
+                                      min: 3,
+                                      regex: /^[a-zA-Z]{1,}$/
+                                    },
+                                    expression:
+                                      "{ required: true, min:3, regex: /^[a-zA-Z]{1,}$/ }"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  id: "role",
+                                  name: "role",
+                                  placeholder:
+                                    "Название (Только Латинские буквы)",
+                                  disabled: _vm.disabled
                                 },
-                                expression:
-                                  "{ required: true, min:3, regex: /^[a-zA-Z]{1,}$/ }"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              id: "role",
-                              name: "role",
-                              placeholder: "Название (Только Латинские буквы)",
-                              disabled: _vm.disabled
-                            },
-                            domProps: { value: _vm.role.name },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                                domProps: { value: _vm.role.name },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.role,
+                                      "name",
+                                      $event.target.value
+                                    )
+                                  }
                                 }
-                                _vm.$set(_vm.role, "name", $event.target.value)
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "span",
                                 {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("role"),
-                                  expression: "errors.has('role')"
-                                }
-                              ],
-                              staticClass: "help-block"
-                            },
-                            [_vm._v(_vm._s(_vm.errors.first("role")))]
-                          )
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "form-group",
-                        class: { "has-error": _vm.errors.has("description") }
-                      },
-                      [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "col-sm-2 control-label",
-                            attrs: { for: "role" }
-                          },
-                          [_vm._v("Описание")]
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: _vm.errors.has("role"),
+                                      expression: "errors.has('role')"
+                                    }
+                                  ],
+                                  staticClass: "help-block"
+                                },
+                                [_vm._v(_vm._s(_vm.errors.first("role")))]
+                              )
+                            ])
+                          ]
                         ),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-10" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.role.description,
-                                expression: "role.description"
-                              },
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "max:100",
-                                expression: "'max:100'"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              id: "description",
-                              name: "description",
-                              placeholder: "Описание",
-                              disabled: _vm.disabled
-                            },
-                            domProps: { value: _vm.role.description },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.role,
-                                  "description",
-                                  $event.target.value
-                                )
-                              }
+                        _c(
+                          "div",
+                          {
+                            staticClass: "form-group",
+                            class: {
+                              "has-error": _vm.errors.has("description")
                             }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("description"),
-                                  expression: "errors.has('description')"
+                          },
+                          [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-sm-2 control-label",
+                                attrs: { for: "role" }
+                              },
+                              [_vm._v("Описание")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-sm-10" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.role.description,
+                                    expression: "role.description"
+                                  },
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "max:100",
+                                    expression: "'max:100'"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  id: "description",
+                                  name: "description",
+                                  placeholder: "Описание",
+                                  disabled: _vm.disabled
+                                },
+                                domProps: { value: _vm.role.description },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.role,
+                                      "description",
+                                      $event.target.value
+                                    )
+                                  }
                                 }
-                              ],
-                              staticClass: "help-block"
-                            },
-                            [_vm._v(_vm._s(_vm.errors.first("description")))]
-                          )
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "form-group",
-                        class: { "has-error": _vm.errors.has("permissions") }
-                      },
-                      [
-                        _c("label", { staticClass: "col-sm-2 control-label" }, [
-                          _vm._v("Права")
-                        ]),
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: _vm.errors.has("description"),
+                                      expression: "errors.has('description')"
+                                    }
+                                  ],
+                                  staticClass: "help-block"
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.errors.first("description"))
+                                  )
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-10" }, [
-                          _c("div", { staticClass: "table-responsive" }, [
-                            _vm.tree.loaded
-                              ? _c(
-                                  "table",
-                                  { staticClass: "table table-bordered" },
-                                  [
-                                    _c("thead", [
-                                      _c("tr", [
-                                        _c(
-                                          "th",
-                                          { staticStyle: { width: "20px" } },
-                                          [_vm._v("#")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "th",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "translate",
-                                                rawName: "v-translate"
-                                              }
-                                            ]
-                                          },
-                                          [_vm._v("Название")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "th",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "translate",
-                                                rawName: "v-translate"
-                                              }
-                                            ],
-                                            staticStyle: { width: "90px" }
-                                          },
-                                          [_vm._v("Одобрение")]
-                                        )
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _vm._l(_vm.tree.data, function(section) {
-                                      return _c(
-                                        "tbody",
-                                        [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "form-group",
+                            class: {
+                              "has-error": _vm.errors.has("permissions")
+                            }
+                          },
+                          [
+                            _c(
+                              "label",
+                              { staticClass: "col-sm-2 control-label" },
+                              [_vm._v("Права")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-sm-10" }, [
+                              _c("div", { staticClass: "table-responsive" }, [
+                                _vm.tree.loaded
+                                  ? _c(
+                                      "table",
+                                      { staticClass: "table table-bordered" },
+                                      [
+                                        _c("thead", [
                                           _c("tr", [
                                             _c(
-                                              "td",
+                                              "th",
                                               {
-                                                staticClass: "section_name",
-                                                attrs: { colspan: "3" }
+                                                staticStyle: { width: "20px" }
                                               },
-                                              [_vm._v(_vm._s(section.text))]
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _vm._l(section.children, function(
-                                            permission
-                                          ) {
-                                            return _c("tr", [
-                                              _c(
-                                                "td",
-                                                { staticClass: "form-group" },
-                                                [
-                                                  _c("input", {
-                                                    directives: [
-                                                      {
-                                                        name: "model",
-                                                        rawName: "v-model",
-                                                        value:
-                                                          _vm.selectedPermissions,
-                                                        expression:
-                                                          "selectedPermissions"
-                                                      }
-                                                    ],
-                                                    attrs: {
-                                                      type: "checkbox",
-                                                      disabled: _vm.disabled
-                                                    },
-                                                    domProps: {
-                                                      value: permission.id,
-                                                      checked: Array.isArray(
-                                                        _vm.selectedPermissions
-                                                      )
-                                                        ? _vm._i(
-                                                            _vm.selectedPermissions,
-                                                            permission.id
-                                                          ) > -1
-                                                        : _vm.selectedPermissions
-                                                    },
-                                                    on: {
-                                                      change: [
-                                                        function($event) {
-                                                          var $$a =
-                                                              _vm.selectedPermissions,
-                                                            $$el =
-                                                              $event.target,
-                                                            $$c = $$el.checked
-                                                              ? true
-                                                              : false
-                                                          if (
-                                                            Array.isArray($$a)
-                                                          ) {
-                                                            var $$v =
-                                                                permission.id,
-                                                              $$i = _vm._i(
-                                                                $$a,
-                                                                $$v
-                                                              )
-                                                            if ($$el.checked) {
-                                                              $$i < 0 &&
-                                                                (_vm.selectedPermissions = $$a.concat(
-                                                                  [$$v]
-                                                                ))
-                                                            } else {
-                                                              $$i > -1 &&
-                                                                (_vm.selectedPermissions = $$a
-                                                                  .slice(0, $$i)
-                                                                  .concat(
-                                                                    $$a.slice(
-                                                                      $$i + 1
-                                                                    )
-                                                                  ))
-                                                            }
-                                                          } else {
-                                                            _vm.selectedPermissions = $$c
-                                                          }
-                                                        },
-                                                        function($event) {
-                                                          _vm.changeAttributes(
-                                                            permission.id
-                                                          )
-                                                        }
-                                                      ]
-                                                    }
-                                                  })
+                                              [_vm._v("#")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "th",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "translate",
+                                                    rawName: "v-translate"
+                                                  }
                                                 ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c("td", [
-                                                _vm._v(_vm._s(permission.text))
+                                              },
+                                              [_vm._v("Название")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "th",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "translate",
+                                                    rawName: "v-translate"
+                                                  }
+                                                ],
+                                                staticStyle: { width: "90px" }
+                                              },
+                                              [_vm._v("Одобрение")]
+                                            )
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(_vm.tree.data, function(
+                                          section
+                                        ) {
+                                          return _c(
+                                            "tbody",
+                                            [
+                                              _c("tr", [
+                                                _c(
+                                                  "td",
+                                                  {
+                                                    staticClass: "section_name",
+                                                    attrs: { colspan: "3" }
+                                                  },
+                                                  [_vm._v(_vm._s(section.text))]
+                                                )
                                               ]),
                                               _vm._v(" "),
-                                              _c(
-                                                "td",
-                                                {
-                                                  staticStyle: {
-                                                    "text-align": "center"
-                                                  }
-                                                },
-                                                [
-                                                  permission.attributes
-                                                    .is_approved == 1
-                                                    ? _c("input", {
+                                              _vm._l(section.children, function(
+                                                permission
+                                              ) {
+                                                return _c("tr", [
+                                                  _c(
+                                                    "td",
+                                                    {
+                                                      staticClass: "form-group"
+                                                    },
+                                                    [
+                                                      _c("input", {
                                                         directives: [
                                                           {
                                                             name: "model",
                                                             rawName: "v-model",
                                                             value:
-                                                              _vm.selectedAttributes,
+                                                              _vm.selectedPermissions,
                                                             expression:
-                                                              "selectedAttributes"
+                                                              "selectedPermissions"
                                                           }
                                                         ],
                                                         attrs: {
                                                           type: "checkbox",
-                                                          disabled: _vm.isDisabled(
-                                                            permission.id
-                                                          )
+                                                          disabled: _vm.disabled
                                                         },
                                                         domProps: {
                                                           value: permission.id,
                                                           checked: Array.isArray(
-                                                            _vm.selectedAttributes
+                                                            _vm.selectedPermissions
                                                           )
                                                             ? _vm._i(
-                                                                _vm.selectedAttributes,
+                                                                _vm.selectedPermissions,
                                                                 permission.id
                                                               ) > -1
-                                                            : _vm.selectedAttributes
+                                                            : _vm.selectedPermissions
                                                         },
                                                         on: {
-                                                          change: function(
-                                                            $event
-                                                          ) {
-                                                            var $$a =
-                                                                _vm.selectedAttributes,
-                                                              $$el =
-                                                                $event.target,
-                                                              $$c = $$el.checked
-                                                                ? true
-                                                                : false
-                                                            if (
-                                                              Array.isArray($$a)
-                                                            ) {
-                                                              var $$v =
-                                                                  permission.id,
-                                                                $$i = _vm._i(
-                                                                  $$a,
-                                                                  $$v
-                                                                )
+                                                          change: [
+                                                            function($event) {
+                                                              var $$a =
+                                                                  _vm.selectedPermissions,
+                                                                $$el =
+                                                                  $event.target,
+                                                                $$c = $$el.checked
+                                                                  ? true
+                                                                  : false
                                                               if (
-                                                                $$el.checked
+                                                                Array.isArray(
+                                                                  $$a
+                                                                )
                                                               ) {
-                                                                $$i < 0 &&
-                                                                  (_vm.selectedAttributes = $$a.concat(
-                                                                    [$$v]
-                                                                  ))
-                                                              } else {
-                                                                $$i > -1 &&
-                                                                  (_vm.selectedAttributes = $$a
-                                                                    .slice(
-                                                                      0,
-                                                                      $$i
-                                                                    )
-                                                                    .concat(
-                                                                      $$a.slice(
-                                                                        $$i + 1
-                                                                      )
+                                                                var $$v =
+                                                                    permission.id,
+                                                                  $$i = _vm._i(
+                                                                    $$a,
+                                                                    $$v
+                                                                  )
+                                                                if (
+                                                                  $$el.checked
+                                                                ) {
+                                                                  $$i < 0 &&
+                                                                    (_vm.selectedPermissions = $$a.concat(
+                                                                      [$$v]
                                                                     ))
+                                                                } else {
+                                                                  $$i > -1 &&
+                                                                    (_vm.selectedPermissions = $$a
+                                                                      .slice(
+                                                                        0,
+                                                                        $$i
+                                                                      )
+                                                                      .concat(
+                                                                        $$a.slice(
+                                                                          $$i +
+                                                                            1
+                                                                        )
+                                                                      ))
+                                                                }
+                                                              } else {
+                                                                _vm.selectedPermissions = $$c
                                                               }
-                                                            } else {
-                                                              _vm.selectedAttributes = $$c
+                                                            },
+                                                            function($event) {
+                                                              _vm.changeAttributes(
+                                                                permission.id
+                                                              )
                                                             }
-                                                          }
+                                                          ]
                                                         }
                                                       })
-                                                    : _vm._e()
-                                                ]
-                                              )
-                                            ])
-                                          })
-                                        ],
-                                        2
-                                      )
-                                    })
-                                  ],
-                                  2
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("td", [
+                                                    _vm._v(
+                                                      _vm._s(permission.text)
+                                                    )
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "td",
+                                                    {
+                                                      staticStyle: {
+                                                        "text-align": "center"
+                                                      }
+                                                    },
+                                                    [
+                                                      permission.attributes
+                                                        .is_approved == 1
+                                                        ? _c("input", {
+                                                            directives: [
+                                                              {
+                                                                name: "model",
+                                                                rawName:
+                                                                  "v-model",
+                                                                value:
+                                                                  _vm.selectedAttributes,
+                                                                expression:
+                                                                  "selectedAttributes"
+                                                              }
+                                                            ],
+                                                            attrs: {
+                                                              type: "checkbox",
+                                                              disabled: _vm.isDisabled(
+                                                                permission.id
+                                                              )
+                                                            },
+                                                            domProps: {
+                                                              value:
+                                                                permission.id,
+                                                              checked: Array.isArray(
+                                                                _vm.selectedAttributes
+                                                              )
+                                                                ? _vm._i(
+                                                                    _vm.selectedAttributes,
+                                                                    permission.id
+                                                                  ) > -1
+                                                                : _vm.selectedAttributes
+                                                            },
+                                                            on: {
+                                                              change: function(
+                                                                $event
+                                                              ) {
+                                                                var $$a =
+                                                                    _vm.selectedAttributes,
+                                                                  $$el =
+                                                                    $event.target,
+                                                                  $$c = $$el.checked
+                                                                    ? true
+                                                                    : false
+                                                                if (
+                                                                  Array.isArray(
+                                                                    $$a
+                                                                  )
+                                                                ) {
+                                                                  var $$v =
+                                                                      permission.id,
+                                                                    $$i = _vm._i(
+                                                                      $$a,
+                                                                      $$v
+                                                                    )
+                                                                  if (
+                                                                    $$el.checked
+                                                                  ) {
+                                                                    $$i < 0 &&
+                                                                      (_vm.selectedAttributes = $$a.concat(
+                                                                        [$$v]
+                                                                      ))
+                                                                  } else {
+                                                                    $$i > -1 &&
+                                                                      (_vm.selectedAttributes = $$a
+                                                                        .slice(
+                                                                          0,
+                                                                          $$i
+                                                                        )
+                                                                        .concat(
+                                                                          $$a.slice(
+                                                                            $$i +
+                                                                              1
+                                                                          )
+                                                                        ))
+                                                                  }
+                                                                } else {
+                                                                  _vm.selectedAttributes = $$c
+                                                                }
+                                                              }
+                                                            }
+                                                          })
+                                                        : _vm._e()
+                                                    ]
+                                                  )
+                                                ])
+                                              })
+                                            ],
+                                            2
+                                          )
+                                        })
+                                      ],
+                                      2
+                                    )
+                                  : _vm._e()
+                              ])
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("error-inform", {
+                          attrs: { err: _vm.err, state: _vm.state }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "ok-action-inform",
+                          { attrs: { state: _vm.state } },
+                          [
+                            _c(
+                              "div",
+                              {
+                                attrs: { slot: "ok-message" },
+                                slot: "ok-message"
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "translate",
+                                        rawName: "v-translate"
+                                      }
+                                    ]
+                                  },
+                                  [_vm._v("Роль была изменена.")]
                                 )
-                              : _vm._e()
-                          ])
-                        ])
-                      ]
+                              ]
+                            )
+                          ]
+                        )
+                      ],
+                      1
                     ),
                     _vm._v(" "),
-                    _c("error-inform", {
-                      attrs: { err: _vm.err, state: _vm.state }
-                    }),
-                    _vm._v(" "),
-                    _c("ok-action-inform", { attrs: { state: _vm.state } }, [
-                      _c(
-                        "div",
-                        { attrs: { slot: "ok-message" }, slot: "ok-message" },
-                        [
-                          _c(
-                            "div",
-                            {
-                              directives: [
-                                { name: "translate", rawName: "v-translate" }
-                              ]
-                            },
-                            [_vm._v("Роль была изменена.")]
-                          )
-                        ]
-                      )
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                !_vm.disabled
-                  ? _c("div", { staticClass: "box-footer overlay-wrapper" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary pull-right",
-                          attrs: { type: "submit" }
-                        },
-                        [_vm._v("Изменить")]
-                      ),
-                      _vm._v(" "),
-                      _vm.submitting
-                        ? _c("div", { staticClass: "overlay" }, [
-                            _c("i", { staticClass: "fa fa-refresh fa-spin" })
-                          ])
-                        : _vm._e()
-                    ])
-                  : _vm._e()
-              ]
-            )
+                    !_vm.disabled
+                      ? _c(
+                          "div",
+                          { staticClass: "box-footer overlay-wrapper" },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary pull-right",
+                                attrs: { type: "submit" }
+                              },
+                              [_vm._v("Сохранить")]
+                            ),
+                            _vm._v(" "),
+                            _vm.submitting
+                              ? _c("div", { staticClass: "overlay" }, [
+                                  _c("i", {
+                                    staticClass: "fa fa-refresh fa-spin"
+                                  })
+                                ])
+                              : _vm._e()
+                          ]
+                        )
+                      : _vm._e()
+                  ]
+                )
+              ])
+            ])
           ])
         ])
-      ])
-    ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -1053,19 +1257,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "content-header" }, [
-      _c("h1", [_vm._v("Роль")]),
+    return _c("ol", { staticClass: "breadcrumb" }, [
+      _c("li", [
+        _c("a", { attrs: { href: "#" } }, [
+          _c("i", { staticClass: "fa fa-dashboard" }),
+          _vm._v("Главная")
+        ])
+      ]),
       _vm._v(" "),
-      _c("ol", { staticClass: "breadcrumb" }, [
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fa fa-dashboard" }),
-            _vm._v("Главная")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "active" }, [_vm._v("Роль")])
-      ])
+      _c("li", { staticClass: "active" }, [_vm._v("Роль")])
     ])
   },
   function() {
@@ -1088,19 +1288,199 @@ if (false) {
 
 /***/ }),
 
+/***/ 396:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(397)
+/* template */
+var __vue_template__ = __webpack_require__(398)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/js/components/modules/admin/DeleteRole.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4cf52755", Component.options)
+  } else {
+    hotAPI.reload("data-v-4cf52755", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 397:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_has_permission_vue__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_has_permission_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__mixins_has_permission_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_error_inform_vue__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_error_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__mixins_error_inform_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_ok_action_inform_vue__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_ok_action_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__mixins_ok_action_inform_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex__ = __webpack_require__(5);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: { ErrorInform: __WEBPACK_IMPORTED_MODULE_2__mixins_error_inform_vue___default.a, OkActionInform: __WEBPACK_IMPORTED_MODULE_3__mixins_ok_action_inform_vue___default.a },
+    name: 'delete-role',
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_ajax_form_vue___default.a, __WEBPACK_IMPORTED_MODULE_1__mixins_has_permission_vue___default.a],
+    props: {
+        "roleId": [Number]
+    },
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_4_vuex__["b" /* mapGetters */])('roles', ['getRoles']), {
+        disabled: function disabled() {
+            return !this.hasPermission(this.permissions.ADMIN_EDIT_USER);
+        }
+    }),
+    data: function data() {
+        return {
+            error: '',
+            is_deleted: false
+        };
+    },
+
+    methods: {
+        deleteRole: function deleteRole() {
+            var self = this;
+            this.send("/admin/role/" + this.roleId + "/delete", {}, function (data) {
+                self.is_deleted = true;
+                self.$emit("role:deleted");
+            });
+        }
+    }
+
+});
+
+/***/ }),
+
+/***/ 398:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticStyle: { "margin-top": "5px" } }, [
+    !_vm.is_deleted
+      ? _c("div", { staticClass: "overlay-wrapper pull-right" }, [
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-danger",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.deleteRole($event)
+                }
+              }
+            },
+            [_vm._v("Удалить")]
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "clearfix" }),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticStyle: { "margin-top": "5px" } },
+      [
+        _c("ok-action-inform", { attrs: { err: _vm.err, state: _vm.state } }, [
+          _c("div", { attrs: { slot: "ok-message" }, slot: "ok-message" }, [
+            _c(
+              "div",
+              { directives: [{ name: "translate", rawName: "v-translate" }] },
+              [_vm._v("Роль была удалена.")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("error-inform", { attrs: { err: _vm.err, state: _vm.state } })
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4cf52755", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ 78:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(305)
+  __webpack_require__(311)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(307)
+var __vue_script__ = __webpack_require__(313)
 /* template */
-var __vue_template__ = __webpack_require__(308)
+var __vue_template__ = __webpack_require__(314)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -1140,7 +1520,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 89:
+/***/ 95:
 /***/ (function(module, exports) {
 
 /*
@@ -1223,7 +1603,7 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ 90:
+/***/ 96:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1242,7 +1622,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(121)
+var listToStyles = __webpack_require__(136)
 
 /*
 type StyleObject = {
@@ -1448,54 +1828,6 @@ function applyToTag (styleElement, obj) {
     styleElement.appendChild(document.createTextNode(css))
   }
 }
-
-
-/***/ }),
-
-/***/ 97:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(4)
-/* script */
-var __vue_script__ = __webpack_require__(105)
-/* template */
-var __vue_template__ = __webpack_require__(106)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "src/js/mixins/error-inform.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5d373c7e", Component.options)
-  } else {
-    hotAPI.reload("data-v-5d373c7e", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
 
 
 /***/ })

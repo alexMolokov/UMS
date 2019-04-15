@@ -18,8 +18,7 @@ class LogActionListener implements \SplObserver
                $logger = $this->getLogger();
                $data = $data + ["event" => $event];
 
-               $logger->info($event, ["test" => 2]);
-               //$logger->info($event, $data);
+               $logger->info($event, $data);
 
            } catch(\Exception $exception ) {
 

@@ -30,27 +30,66 @@ class AdminUserController extends Controller
     public function getUser($id)
     {
        $user =  $this->_getUser($id);
-       return response()->success($user->toArray());
+       $data = $user->toArray();
+
+       $data["date_from"] = $this->convertDate($data["date_from"], "Y-m-d", 'd.m.Y');
+       $data["date_to"] = $this->convertDate($data["date_to"], "Y-m-d", 'd.m.Y');
+
+       return response()->success($data);
     }
 
     public function updateProfile(ChangeProfileRequest $request, $id)
     {
         $data = $request->only('firstname', 'lastname', 'position', 'email');
-        return $this->updateUser($id, $data);
+        return $this->updateUser($id, $data, $request);
     }
 
     public function block(BlockRequest $request, $id) {
         $data = $request->only('blocked');
-        return $this->updateUser($id, $data);
+        if($request->user()->id == $id) {
+            return response()->error(__("Action forbidden"));
+        }
+        return $this->updateUser($id, $data, $request);
     }
 
     public function setDates(SetDatesRequest $request, $id) {
         $data = $request->only('date_from', 'date_to');
-        return $this->updateUser($id, $data);
+
+        $data["date_from"] = $this->convertDate($data["date_from"], 'd.m.Y', "Y-m-d");
+        $data["date_to"] = $this->convertDate($data["date_to"], 'd.m.Y', "Y-m-d");
+
+        if($this->isDateFromMoreDateTo($data["date_from"], $data["date_to"])) {
+            return response()->error(__("Date from more than date to"));
+        }
+
+        return $this->updateUser($id, $data, $request);
     }
 
-    private function updateUser($id, $data) {
+    private function isDateFromMoreDateTo($date_from, $date_to)
+    {
+        if(!empty($date_from) && !empty($date_to))
+        {
+            if(strtotime($date_from) > strtotime($date_to))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function convertDate($date, $formatFrom, $formatTo){
+        if(!empty($date)) {
+            $dateTime = \DateTime::createFromFormat($formatFrom, $date);
+            return   $dateTime->format($formatTo);
+        }
+        return $date;
+    }
+
+    private function updateUser($id, $data, $request) {
         $user = User::find($id);
+        if($user->isSuperAdmin() && !$request->user()->isSuperAdmin()) {
+            return response()->error(__("Action forbidden"));
+        }
         $user->update($data);
         return response()->success();
     }

@@ -34,11 +34,11 @@ const store = new Vuex.Store({
             return false;
         },
         hasAnyPermission: (state) => (permissions) => {
-            if(this.isSuperAdmin(state)) return true;
+                if(typeof state.user.roles[ROLES.SUPER_ADMIN] != "undefined") return true;
 
             for(let i = 0; i< permissions.length; i++ ) {
-               console.log(this.hasPermission(state,permissions[i]));
-               // if(typeof state.user.permissions[permission] != "undefined") return true;
+               let permission = permissions[i];
+               if(typeof state.user.permissions[permission] != "undefined") return true;
             }
             return false;
         },

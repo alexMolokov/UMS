@@ -2,15 +2,20 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Роль</h1>
+            <h1 style="display: inline-block">Роль</h1>
+
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i>Главная</a></li>
                 <li class="active">Роль</li>
             </ol>
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <delete-role :role-id="role.id" @role:deleted="roleDeleted"></delete-role>
+                </div>
+            </div>
         </section>
-
         <!-- Main content -->
-        <section class="content">
+        <section class="content" v-if="isActive">
             <!-- Default box -->
             <div class="row">
                 <div class="col-lg-6 col-md-12">
@@ -64,7 +69,6 @@
                                             </tbody>
                                         </table>
                                         </div>
-
                                       </div>
                                 </div>
 
@@ -77,7 +81,7 @@
 
                             </div>
                             <div class="box-footer overlay-wrapper" v-if="!disabled">
-                                <button type="submit" class="btn btn-primary pull-right">Изменить</button>
+                                <button type="submit" class="btn btn-primary pull-right">Сохранить</button>
                                 <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
                             </div>
                             <!-- /.box-footer -->
@@ -100,10 +104,11 @@
     import {mapGetters, mapMutations } from 'vuex'
     import liquorTree from 'liquor-tree'
     import {PERMISSIONS} from "../../mixins/permissions";
+    import DeleteRole from '../../components/modules/admin/DeleteRole.vue';
 
 
     export default {
-        components: {ErrorInform, OkActionInform, liquorTree},
+        components: {ErrorInform, OkActionInform, liquorTree, DeleteRole},
         name: 'role-form',
         mixins: [ajaxform],
         created(){
@@ -113,10 +118,6 @@
             this.uploadInfo(path, {}, (data) => {
                 this.initRole(data);
                 this.initTree(data);
-
-               // let permission = this.hasPermission(this.permissions.ADMIN_EDIT_ROLE);
-
-
             }, {}, (data) => {
 
             });
@@ -128,7 +129,8 @@
                 role: {
                     "id": "",
                     "name": "",
-                    "is_editable": 1
+                    "is_editable": 1,
+                    "is_deleted": false
                  },
                 tree: {
                     data: [],
@@ -143,9 +145,15 @@
             ...mapGetters(["hasPermission"]),
             disabled: function () {
                 return !this.hasPermission(this.permissions.ADMIN_EDIT_ROLE) || this.role.is_editable == 0
+            },
+            isActive() {
+                return !this.role.is_deleted;
             }
         },
         methods: {
+            roleDeleted: function(){
+                this.role.is_deleted = true;
+            },
             initTree: function(data) {
                 this.tree.data = data.tree;
 
@@ -203,9 +211,6 @@
                     "description": this.role.description,
                      permissions: permissions
                 };
-
-                console.log(data);
-
 
                 this.send("/admin/role/" + this.role.id + "/update", data,
                     function(data) {

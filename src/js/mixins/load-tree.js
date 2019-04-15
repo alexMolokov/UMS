@@ -4,15 +4,20 @@ export default {
             tree: {
                 data: [],
                 loaded: false,
+                empty: false,
                 allItems: new Map(),
                 selectedNode: {
                     "name": "",
-                    "model": {},
+                    "model": {
+                    },
                     "node": {}
                     },
                 selectedItems: new Map()
             }
         }
+    },
+    computed: {
+
     },
     methods: {
         setEmptySelectedNode(){
@@ -47,14 +52,13 @@ export default {
                 let self = this;
 
                 data.forEach(function(item, index){
-
                     let obj = {
                         "id": item.id,
                         "text": item.name,
-                        "value": item,
+                        "value": item
                     };
-                    setIcon(obj,  !item.hasChild);
-                    self.tree.allItems.set(item.id, item);
+                    setIcon(obj, !item.hasChild);
+                    //self.tree.allItems.set(item.id, item);
 
                     if(id === null && index == 0) {
                         if(typeof  self.table != "undefined")
@@ -64,18 +68,18 @@ export default {
                                 obj.selected = true;
                                 self.table.moreParams.ou_id = item.id;
                             }
-
                         }
-
                     }
-
-
                     result.push(obj)
-
-
                 });
+
+                if(id === null && result.length == 0) {
+                    this.tree.empty = true;
+                    this.tree.loaded = true;
+                    return;
+                }
+
                 resolve(result);
-                //this.$emit("tree:loaded", this.tree.selectedNode)
                 this.tree.loaded = true;
 
             }, {}, (data) => { });

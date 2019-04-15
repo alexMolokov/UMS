@@ -79,27 +79,14 @@ class UserController extends Controller
         $action = ActionFactory::create($request);
         $order = $action->handle($request->input("order_id"));
 
-        $orderData = (array) $order->data;
+        $orderData = (array) json_decode($order->data);
         unset($orderData["password"]);
 
         return response()->success(array_merge([
             "id" => $order->id,
             "order_state_id" => $order->order_state_id
         ],$orderData));
-
-       /* $data = $request->only(["firstName", "lastName", "middleName", "nickName", "email", "login", "password", "blocked", "ou"]);
-        $user = new MessengerUser($data);
-
-        $response = $this->service->add($user);
-
-        if($response->getStatus())
-        {
-            unset($data["password"]);
-            return response()->success($data);
-        }
-
-        return response()->error(__($response->getDescription())); */
-    }
+   }
 
 
     public function listUser(Request $request) {
@@ -122,35 +109,55 @@ class UserController extends Controller
     }
 
 
-
-
-
-    public function createFromCsv(Request $request){
+    public function checkCsv(Request $request) {
         $result = [];
         $users = $request->input("users");
-
-        foreach($users as $user){
-            $messengerUser = new MessengerUser([
-                "firstName" => $user["firstName"],
-                "lastName" => $user["lastName"],
-                "middleName" => $user["middleName"],
-                "email" =>  $user["email"],
-                "login" =>  $user["login"],
-                "password" => $user["password"],
-                "ou" => $user["ou"][0]
-            ]);
-
-            $response = $this->service->add($messengerUser);
+        foreach($users as $user) {
             $login = $user["login"];
             $result[$login] = [
-                "id" => $user["id"],
-                "status" => $response->getStatus(),
-                "statusName" => __($response->getDescription())
+                "id" => '',
+                "status" => true,
+                "statusName" => __("OK")
             ];
+            $response = $this->service->find([
+                "login" => $user["login"]
+            ], ["page" => 0, "count" => 1]);
+
+            $searchResult = $response->getResponse()["searchResult"];
+
+            if($response->getStatus() && $searchResult->getTotal() > 0) {
+                $result[$login] = [
+                    "status" => false,
+                    "statusName" => __("LOGIN_EXISTS")
+                ];
+            } else {
+                $response = $this->service->find([
+                    "email" => $user["email"]
+                ], ["page" => 0, "count" => 1]);
+
+                $searchResult = $response->getResponse()["searchResult"];
+
+                if ($response->getStatus() && $searchResult->getTotal() > 0) {
+                    $result[$login] = [
+                        "status" => false,
+                        "statusName" => __("EMAIL_EXISTS")
+                    ];
+                }
+            }
         }
-
         return response()->success($result);
+    }
 
+    public function createFromCsv(Request $request){
+        $request->merge(["action" => ActionFactory::CREATE_USERS]);
+
+        $action = ActionFactory::create($request);
+        $order = $action->handle($request->input("order_id"));
+
+        return response()->success(array_merge([
+            "id" => $order->id,
+            "order_state_id" => $order->order_state_id
+        ]));
     }
 
 

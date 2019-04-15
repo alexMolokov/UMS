@@ -78,11 +78,11 @@ class ChangeProfile extends Action implements IAction
 
         if($result->getStatus())
         {
-            $this->notify(ActionFactory::CHANGE_PROFILE, [
-                "event" => ActionFactory::CHANGE_PROFILE,
-                "user_id" => $this->order->created_by,
-                "data" => $obj
-            ]);
+            $this->notify(
+                ActionFactory::CHANGE_PROFILE,
+                $this->getNotifyData($obj)
+            );
+
             $this->order->order_state_id = State::DONE;
             return $this->order;
         }

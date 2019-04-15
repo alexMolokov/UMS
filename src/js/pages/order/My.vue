@@ -82,13 +82,22 @@
                             dataClass: 'text-right',
                             sortField: 'subject',
                             filtered: true,
-                            filtername: "subject",
+                            filtername: "action",
                             filterData: {
                                 type: "one-select",
                                 values: [
                                     {"value": "", "title":  this.t("All")},
-                                    {"value": "Block User", "title":  this.t("Block User")},
-                                    {"value": "Unblock User", "title":  this.t("Unblock User")},
+                                    {"value": "messenger.user.block", "title":  this.t("Block User")},
+                                    {"value": "messenger.change.password", "title":  this.t("Change Password")},
+                                    {"value": "messenger.change.profile", "title":  this.t("Change Profile")},
+                                    {"value": "messenger.user.copy", "title":  this.t("Copy to")},
+                                    {"value": "messenger.user.move", "title":  this.t("Move to")},
+                                    {"value": "messenger.user.block", "title":  this.t("Unblock User")},
+                                    {"value": "messenger.user.create", "title":  this.t("Create User")},
+                                    {"value": "messenger.users.create", "title":  this.t("Create Users")},
+
+
+
                                 ]
 
                             }
@@ -158,6 +167,14 @@
                 "Cancelled": "Отменена",
                 "Block User": "Блокировать пользователя",
                 "Unblock User": "Разблокировать пользователя",
+                "Change Password": "Изменить пароль",
+                "Create User": "Создать пользователя",
+                "Move users": "Переместить пользователей",
+                "Copy users": "Копировать пользователей",
+                "Copy to": "Копировать пользователей",
+                "Move to": "Переместить пользователей",
+                "Create Users": "Создать пользователей",
+                "Change Profile": "Изменить профиль",
             },
             uz: {
 

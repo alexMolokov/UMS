@@ -3,13 +3,24 @@
         <div slot="title" v-translate><span v-if="isCopy">Копирование</span><span v-if="!isCopy">Перемещение</span> пользователей</div>
         <form @submit.prevent.stop class="form-horizontal">
             <div style="position: relative">
-                <loading-inform :state="state" @close="close">
+                <loading-inform :state="state" @close="close" v-if="!hasOrderId">
                     <div class="window-center" slot="ok-message">
                         <div class="complete-body"><span>Пользователи были успешно</span> <span  v-if="!isCopy">перенесены</span> <span  v-if="isCopy">скопированы</span>.</div>
                         <div class="button-close-ok"><button type="button" class="btn  btn-primary" v-translate @click="close">Ok</button></div>
                     </div>
                     <div slot="buttons"></div>
                 </loading-inform>
+                <loading-inform :state="state" @close="close" v-if="hasOrderId">
+                    <div class="window-center" slot="ok-message">
+                        <div class="complete-body">
+                            <div>Ваша заявка на  <span  v-if="!isCopy">перемещение</span> <span  v-if="isCopy">копирование</span> пользователей принята.</div>
+                            <h4>Номер заявки {{order.id}}</h4>
+                        </div>
+                        <div class="button-close-ok"><button type="button" class="btn  btn-primary" v-translate @click="close">Ok</button></div>
+                    </div>
+                    <div slot="buttons"></div>
+                </loading-inform>
+
                 <div class="modal-body">
                     <div>
                         <div class="row">
@@ -60,10 +71,12 @@
     import Vuetable from "vuetable-2/src/components/Vuetable.vue";
     import VJstree from "vue-jstree/src/tree.vue";
     import loadTree from '../../../mixins/load-tree';
+    import acceptAction from '../../../mixins/accept-action.vue';
+    import {ACCEPT_ACTION_HANDLER} from "../../../mixins/accept-action-handler";
 
     export default {
         name: 'form-user-action',
-        mixins: [ajax, loadTree],
+        mixins: [ajax, loadTree, acceptAction],
         components: {
             modalWindow,
             VJstree,
@@ -93,12 +106,6 @@
         data() {
                 return {
                     id: "user-action",
-                    /*tree: {
-                        data: [],
-                        loaded: false,
-                        allItems: new Map(),
-                        selectedNode: {}
-                    },*/
                     table: {
                         css: {
                             tableClass: "table table-bordered table-striped dataTable",
@@ -205,43 +212,7 @@
 
 
                 },
-               /* loadTree: function (oriNode, resolve) {
-                    let id = null;
 
-                    if(typeof oriNode !== "undefined"){
-                        id = oriNode.data.value ? oriNode.data.value : null;
-                    }
-
-                    this.uploadInfo('/admin/tree/children', {"id": id}, (data) => {
-                        let result = [];
-
-                        let self = this;
-
-                        data.forEach(function(item, index){
-
-                            item.added = false;
-                            item.nowAdded = false;
-
-                            self.tree.allItems.set(item.id, item);
-
-                            let isLeaf = !item.hasChild;
-
-                            let obj = {
-                                "text": item.name,
-                                "value": item,
-                                "isLeaf": isLeaf,
-                                "icon": (isLeaf)? "fa fa-sticky-note-o": "fa fa-folder"
-                            };
-
-                            result.push(obj)
-
-
-                        });
-                        resolve(result);
-                        this.tree.loaded = true;
-
-                    }, {}, (data) => { });
-                },*/
 
                 validate: function () {
 
@@ -254,8 +225,14 @@
                         data.users.push(user.login);
                     })
 
+                    let self = this;
                     this.send(url, data, (response) => {
-                        this.$emit("form:copy-move-users-ok")
+                        ACCEPT_ACTION_HANDLER.handle(
+                            self,
+                            () => {},
+                            response
+                        );
+                        if(!self.hasOrderId) this.$emit("form:copy-move-users-ok")
                     }, () => {
 
                     });

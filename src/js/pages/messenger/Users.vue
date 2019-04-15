@@ -12,7 +12,12 @@
         <section class="content">
             <div class="messenger-users-wrapper box">
                 <div class="panel-box tree">
-                    <v-jstree :data="tree.data" :async="loadTree"allow-batch whole-row  ref="jsTree"  @item-click="itemClick"></v-jstree>
+                    <div>
+                        <v-jstree  v-if="!tree.empty" :data="tree.data" :async="loadTree" allow-batch whole-row  ref="jsTree"  @item-click="itemClick"></v-jstree>
+                        <div v-if="tree.empty">
+                            Нет назначенных подразделений
+                        </div>
+                    </div>
                 </div>
                 <div class="handler"></div>
                 <div class="panel-box user-table">
@@ -22,7 +27,7 @@
                             <form-create-login v-if="showForm.formCreateUserShow"  @close="showForm.formCreateUserShow = false" @form:create-login="create" :ou="table.moreParams.ou_id"></form-create-login>
                             <form-user-action v-if="showForm.formUserActionShow"  @close="showForm.formUserActionShow = false" :action="userAction.type" :checked-users="userAction.chooseUsers" @form:copy-move-users-ok="copyMoveUsersOk"></form-user-action>
                             <gapp-table
-                                    v-if="tree.loaded"
+                                    v-if="tree.loaded && !tree.empty"
                                     :tableProperties="table"
                                     @gapptable:create="showForm.formCreateUserShow = true"
                                     @gapptable:checkbox-toggled="checkboxToggled"
@@ -32,7 +37,7 @@
                                     ref="messengerUsers">
                                         <template slot="add-buttons">
                                             <div class="pull-right create-button" v-if="hasPermission(permissions.MESSENGER_EDIT_USER)" style="margin-right: 20px">
-                                                <router-link :to="{ name: 'messenger-load-users-file' }" class="btn btn-block btn-primary">Загрузить из csv</router-link>
+                                                <router-link :to="{ name: 'messenger-load-users-file', params: {'ou': table.moreParams.ou_id}}" class="btn btn-block btn-primary">Загрузить из csv</router-link>
                                             </div>
 
                                             <div class="pull-right" style="margin-right: 20px" v-if="hasPermission(permissions.MESSENGER_COPY_USER)">
@@ -313,7 +318,7 @@
         display: flex;
 
         .handler {
-            width: 20px;
+            width: 2px;
             padding: 0;
             cursor: ew-resize;
             flex: 0 0 auto;
@@ -377,7 +382,8 @@
             &.tree {
                 height: calc(100vh - 145px);
                 min-width: 250px;
-                //flex: 1 1 150px;
+                overflow-y: auto;
+                position: relative;
 
                 .tree-selected {
                     background: #e1e1e1 !important;

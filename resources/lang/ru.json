@@ -43,6 +43,17 @@
   "Change Profile": "Изменить профиль",
   "Full name": "ФИО",
   "Change Password": "Изменить пароль",
-  "Create User": "Создать пользователя"
+  "Create User": "Создать пользователя",
+  "Move users": "Переместить пользователей",
+  "Copy users": "Копировать пользователей",
+  "users": "Пользователи",
+  "Copy to": "Копировать в",
+  "Move to": "Переместить в",
+  "Create Users": "Создать пользователей",
+  "Action forbidden": "Действие запрещено",
+  "Date from more than date to": "Дата начала больше чем дата окончания",
+  "Role exists": "Роль уже существует",
+  "Forbidden action": "Действие запрещено",
+  "Some users has role": "У пользователей есть данная роль"
 
 }

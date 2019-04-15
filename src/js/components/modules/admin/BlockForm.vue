@@ -6,9 +6,13 @@
                   <button type="submit" class="btn  btn-danger pull-right" v-if="isBlocked">Блокирован</button>
                   <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
              </div>
+             <div class="clearfix"></div>
       </form>
 
-      <error-inform :err="err" :state="state"></error-inform>
+      <div style="margin-top: 10px">
+          <error-inform :err="err" :state="state"></error-inform>
+      </div>
+
    </div>
 </template>
 

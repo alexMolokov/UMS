@@ -37,7 +37,7 @@
 
 
 
-                            <error-inform :err="err" :state="state"></error-inform>
+                            <error-inform :err="err" :state="state" @error-inform:closed="resetErrors"></error-inform>
                             <ok-action-inform :state="state">
                                 <div slot="ok-message">
                                     <div  v-translate>Срок действия был изменен.</div>
@@ -82,11 +82,11 @@
         },
         mounted() {
             let selector = document.getElementById("date_from");
-            let im = new Inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd"})
+            let im = new Inputmask({ alias: "datetime", inputFormat: "dd.mm.yyyy"})
             im.mask(selector);
 
             selector = document.getElementById("date_to");
-            im = new Inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd"})
+            im = new Inputmask({ alias: "datetime", inputFormat: "dd.mm.yyyy"})
             im.mask(selector);
         },
         data(){

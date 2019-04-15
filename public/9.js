@@ -1,17 +1,17 @@
 webpackJsonp([9],{
 
-/***/ 248:
+/***/ 254:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_Sidebar_vue__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_Sidebar_vue__ = __webpack_require__(255);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_Sidebar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__partials_Sidebar_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_Header_vue__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_Header_vue__ = __webpack_require__(258);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_Header_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__partials_Header_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_Footer_vue__ = __webpack_require__(255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_Footer_vue__ = __webpack_require__(261);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_Footer_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__partials_Footer_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__partials_ControlSidebar_vue__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__partials_ControlSidebar_vue__ = __webpack_require__(264);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__partials_ControlSidebar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__partials_ControlSidebar_vue__);
 //
 //
@@ -48,15 +48,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 249:
+/***/ 255:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(250)
+var __vue_script__ = __webpack_require__(256)
 /* template */
-var __vue_template__ = __webpack_require__(251)
+var __vue_template__ = __webpack_require__(257)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -96,7 +96,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 250:
+/***/ 256:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -105,6 +105,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_permissions__ = __webpack_require__(17);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
 //
 //
 //
@@ -208,13 +209,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     created: function created() {},
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])(["hasPermission"]))
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])(["hasPermission", "hasAnyPermission"]))
 
 });
 
 /***/ }),
 
-/***/ 251:
+/***/ 257:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -226,45 +227,50 @@ var render = function() {
       _c("ul", { staticClass: "sidebar-menu" }, [
         _c("li", { staticClass: "header" }, [_vm._v("НАВИГАЦИЯ")]),
         _vm._v(" "),
-        _c("li", { staticClass: "treeview" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("ul", { staticClass: "treeview-menu" }, [
-            _vm.hasPermission(_vm.permissions.ADMIN_WATCH_USER)
-              ? _c(
-                  "li",
-                  [
-                    _c(
-                      "router-link",
-                      { attrs: { to: { name: "admin-users" } } },
+        _vm.hasAnyPermission([
+          _vm.permissions.ADMIN_WATCH_USER,
+          _vm.permissions.ADMIN_WATCH_ROLE
+        ])
+          ? _c("li", { staticClass: "treeview" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("ul", { staticClass: "treeview-menu" }, [
+                _vm.hasPermission(_vm.permissions.ADMIN_WATCH_USER)
+                  ? _c(
+                      "li",
                       [
-                        _c("i", { staticClass: "fa fa-circle-o" }),
-                        _vm._v("Пользователи")
-                      ]
+                        _c(
+                          "router-link",
+                          { attrs: { to: { name: "admin-users" } } },
+                          [
+                            _c("i", { staticClass: "fa fa-circle-o" }),
+                            _vm._v("Пользователи")
+                          ]
+                        )
+                      ],
+                      1
                     )
-                  ],
-                  1
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.hasPermission(_vm.permissions.ADMIN_WATCH_ROLE)
-              ? _c(
-                  "li",
-                  [
-                    _c(
-                      "router-link",
-                      { attrs: { to: { name: "admin-roles" } } },
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.hasPermission(_vm.permissions.ADMIN_WATCH_ROLE)
+                  ? _c(
+                      "li",
                       [
-                        _c("i", { staticClass: "fa fa-circle-o" }),
-                        _vm._v("Роли")
-                      ]
+                        _c(
+                          "router-link",
+                          { attrs: { to: { name: "admin-roles" } } },
+                          [
+                            _c("i", { staticClass: "fa fa-circle-o" }),
+                            _vm._v("Роли")
+                          ]
+                        )
+                      ],
+                      1
                     )
-                  ],
-                  1
-                )
-              : _vm._e()
-          ])
-        ]),
+                  : _vm._e()
+              ])
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _c("li", { staticClass: "treeview" }, [
           _vm._m(1),
@@ -340,35 +346,7 @@ var render = function() {
               1
             )
           ])
-        ]),
-        _vm._v(" "),
-        _vm.hasPermission(_vm.permissions.LOG_WATCH)
-          ? _c(
-              "li",
-              [
-                _c("router-link", { attrs: { to: "/logs" } }, [
-                  _c("i", { staticClass: "fa fa-map-o" }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Логи")])
-                ])
-              ],
-              1
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.hasPermission(_vm.permissions.FEEDBACK)
-          ? _c(
-              "li",
-              [
-                _c("router-link", { attrs: { to: "/logs" } }, [
-                  _c("i", { staticClass: "fa fa-envelope" }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Обратная связь")])
-                ])
-              ],
-              1
-            )
-          : _vm._e()
+        ])
       ])
     ])
   ])
@@ -428,15 +406,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 252:
+/***/ 258:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(253)
+var __vue_script__ = __webpack_require__(259)
 /* template */
-var __vue_template__ = __webpack_require__(254)
+var __vue_template__ = __webpack_require__(260)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -476,7 +454,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 253:
+/***/ 259:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -562,7 +540,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 
-/***/ 254:
+/***/ 260:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -708,15 +686,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 255:
+/***/ 261:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(256)
+var __vue_script__ = __webpack_require__(262)
 /* template */
-var __vue_template__ = __webpack_require__(257)
+var __vue_template__ = __webpack_require__(263)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -756,7 +734,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 256:
+/***/ 262:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -783,7 +761,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 257:
+/***/ 263:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -819,15 +797,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 258:
+/***/ 264:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(259)
+var __vue_script__ = __webpack_require__(265)
 /* template */
-var __vue_template__ = __webpack_require__(260)
+var __vue_template__ = __webpack_require__(266)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -867,7 +845,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 259:
+/***/ 265:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -908,7 +886,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 260:
+/***/ 266:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -974,7 +952,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 261:
+/***/ 267:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1015,9 +993,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(248)
+var __vue_script__ = __webpack_require__(254)
 /* template */
-var __vue_template__ = __webpack_require__(261)
+var __vue_template__ = __webpack_require__(267)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

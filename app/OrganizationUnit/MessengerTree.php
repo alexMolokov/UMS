@@ -14,6 +14,8 @@ use App\OrganizationUnit\OrganizationUnit;
 use App\User;
 use EncryptServer\OrganizationUnitFacade;
 
+use EncryptServer\Models\OrganizationUnit as OU;
+
 class MessengerTree implements Tree
 {
      private $facade;
@@ -31,15 +33,19 @@ class MessengerTree implements Tree
         $children = $this->facade->getChildren($id);
 
         foreach($children as $child) {
-            $result[] = [
-                "id" => $child->getGuid(),
-                "name" => $child->getName(),
-                "parentId" => $child->getParent(),
-                "hasChild" => true
-            ];
+            $result[] = $this->getAsArray($child);
         }
 
         return  $result;
+    }
+
+    private function getAsArray(OU $unit){
+        return [
+            "id" =>  $unit->getGuid(),
+            "name" =>  $unit->getName(),
+            "parentId" =>  $unit->getParent(),
+            "hasChild" => true
+        ];
     }
 
 
@@ -49,14 +55,8 @@ class MessengerTree implements Tree
 
         foreach($ids as $id){
             $item = $this->facade->get($id);
-            $result[] = [
-                "id" => $item->getGuid(),
-                "name" => $item->getName(),
-                "parentId" => $item->getParent(),
-                "hasChild" => true
-            ];
+            $result[] = $this->getAsArray($item);
         }
-
         return $result;
     }
 

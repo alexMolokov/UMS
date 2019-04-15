@@ -46,6 +46,27 @@ class Context
         return self::action_messenger_change_profile($data);
     }
 
+    public static function action_messenger_users_create($data){
+        $result = "";
+        $users = (array) $data->users;
+        foreach($users as $user) {
+            $result = self::action_messenger_change_profile($user);
+            break;
+        }
+
+        return $result . "...";
+    }
+
+    public static function action_messenger_user_copy($data)
+    {
+        return __("Copy to") . ": " .  implode("\\", $data->ou_path) . ", " . __("users") . ": " .  implode(",", $data->users);
+    }
+
+    public static function action_messenger_user_move($data)
+    {
+        return __("Move to") . ": " .  implode("\\", $data->ou_path) . ", " . __("users") . ": " .  implode(",", $data->users);
+    }
+
 
     private static function fullName($data)
     {

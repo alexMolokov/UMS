@@ -106,14 +106,19 @@
                                                 <strong>Добавлено {{countAdded}} пользователей из {{users.data.length}}</strong>
                                             </div>
                                             <div class="overlay-wrapper pull-right" style="position: relative" v-if="!isAllAdded">
-                                                <button type="button" class="btn btn-block btn-primary" @click.prevent="validate">Сохранить</button>
+                                                <button type="button" class="btn  btn-primary" @click.prevent="check" v-if="!isAllChecked">Проверить</button>
+                                                <button type="button" class="btn  btn-primary" @click.prevent="validate" v-if="isAllChecked">Сохранить</button>
                                                 <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
                                             </div>
                                         </div>
                                         <div class="col-xs-12" v-if="isAllAdded" style="margin-top: 10px;">
                                             <ok-action-inform :state="state">
                                                 <div slot="ok-message">
-                                                    <div  v-translate>Пользователи были успешно добавлены</div>
+                                                    <div  v-if="hasOrderId">
+                                                        <div>Ваша заявка на изменение пароля пользователя принята.</div>
+                                                        <h4>Номер заявки {{order.id}}</h4>
+                                                    </div>
+                                                    <div  v-else v-translate>Пользователи были успешно добавлены</div>
                                                 </div>
                                             </ok-action-inform>
                                         </div>
@@ -148,6 +153,8 @@
 
     import ajaxform from '../../mixins/ajax-form.vue';
     import {STATES} from "../../mixins/states";
+    import acceptAction from '../../mixins/accept-action.vue';
+    import {ACCEPT_ACTION_HANDLER} from "../../mixins/accept-action-handler";
 
     export default {
         components: {
@@ -159,7 +166,7 @@
             OkActionInform
         },
         name: 'load-users-file',
-        mixins: [ajaxform],
+        mixins: [ajaxform, acceptAction],
         data(){
             return {
                 table: {
@@ -280,6 +287,7 @@
                     ],
                 },
                 users: [],
+
                 step: {
                     current: 1,
                     count: 2,
@@ -287,6 +295,7 @@
                     finish: 3
                 },
                 countAdded: 0,
+                countChecked: 0,
 
                 files: [],
                 fileLoaded: false,
@@ -318,7 +327,12 @@
             isAllAdded(){
                 if(typeof this.users.data == "undefined") return false;
                 return this.countAdded == this.users.data.length
-            }
+            },
+            isAllChecked(){
+                if(typeof this.users.data == "undefined") return false;
+                return this.countChecked == this.users.data.length
+            },
+
         },
         methods: {
             chooseOU(){
@@ -346,6 +360,15 @@
                 table.setData(this.users);
             },
 
+            modifyUser(user) {
+                if(user.status) {
+                    this.countChecked = ( this.countChecked - 1 > 0 )? this.countChecked - 1: 0
+                    user.status = false;
+                    user.statusName = "";
+                }
+                return user;
+
+            },
             editedUser(user){
                 let self = this;
                 let keys = Object.keys(user);
@@ -353,7 +376,9 @@
                     self.userData[key] = user[key];
                 });
 
+                user = this.modifyUser(user);
                 this.userData = user;
+
             },
             cloneObject(obj){
                 let keys = Object.keys(obj);
@@ -405,6 +430,7 @@
                 let file = document.getElementById('files').files[0];
                 let self = this;
                 Papa.parse(file, {
+                    skipEmptyLines: true,
                     complete: function(results) {
                         self.users = self.vuetableDataAdapter(results.data);
                         self.fileLoaded = true;
@@ -426,6 +452,7 @@
                 let self = this;
                 data.forEach(function(item, index){
                     let isValidEmail = self.$validator.rules["email"].validate(item[5])
+
                     result.data.push({
                         "id": i,
                         "login": item[0],
@@ -459,10 +486,7 @@
                 this.err.common = [];
             },
 
-
-
-            validate() {
-
+            check() {
                 this.state = STATES.START;
                 this.$validator.errors.clear();
 
@@ -483,7 +507,58 @@
                 }
 
                 let self = this;
-                this.send("/user/create/csv", {users: users, "lang": this.$store.state.lang}, (response) => {
+                this.send("/user/check/csv", {users: users, "lang": this.$store.state.lang}, (response) => {
+
+                    self.countChecked = 0;
+                    self.users.data.forEach(function(user) {
+                        let login = user.login;
+
+                        if(typeof response[login] != "undefined"){
+                            user.status = response[login].status;
+                            user.statusName = self.$translate.text(response[login].statusName);
+                        }
+
+                        if(user.status) self.countChecked++;
+
+                    })
+
+
+                    let table = self.getTableReference();
+                    table.setData(this.users)
+                }, () => {
+                    console.log("bad");
+                });
+            },
+
+            validate() {
+
+                this.state = STATES.START;
+                this.$validator.errors.clear();
+
+                let len = this.users.data.length;
+                let users = [];
+                for(let i = 0; i< len; i++)
+                {
+                    let user = this.users.data[i];
+
+                    if(!this.isFilled(user))
+                    {
+                        this.state = STATES.ERROR;
+                        this.err.common = [];
+                        this.err.common.push("Необходимо заполнить поля Логин, Пароль, Фамилия, Имя и Подразделение");
+                        return;
+                    }
+                    if(user.status) users.push(user);
+                }
+
+                let self = this;
+                this.send("/user/create/csv", {users: users, "lang": this.$store.state.lang, "ou": this.$route.params.ou}, (response) => {
+
+                    ACCEPT_ACTION_HANDLER.handle(
+                        self,
+                        () => {},
+                        response
+                    );
 
                     self.countAdded = 0;
                     self.users.data.forEach(function(user) {
@@ -505,6 +580,8 @@
                     if(this.isAllAdded) {
                         this.state = STATES.ANSWER;
                     }
+
+
 
 
                      self.step.current = self.step.finish;

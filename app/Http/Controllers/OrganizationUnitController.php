@@ -9,6 +9,8 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 
 use EncryptServer\Models\OrganizationUnit as OU;
+use App\Order\ActionFactory;
+
 
 
 class OrganizationUnitController extends Controller
@@ -53,38 +55,49 @@ class OrganizationUnitController extends Controller
         return $user;
     }
 
-    public function copyUsers(Request $request, $copy = true){
-        $ouId = $request->input("ou");
-        $users = $request->input("users");
-        try {
-            $response = $this->service->copyUsers($ouId, $users,$copy);
-            return response()->success([]);
-        } catch (\Exception $e) {
-            return response()->error();
-        }
+    public function copyUsers(Request $request){
+        $request->merge(["action" => ActionFactory::COPY_USER]);
+        $action = ActionFactory::create($request);
+        $order = $action->handle($request->input("order_id"));
+        return response()->success([
+            "id" => $order->id,
+            "order_state_id" => $order->order_state_id
+        ]);
+
     }
+
+    public function moveUsers(Request $request){
+        $request->merge(["action" => ActionFactory::MOVE_USER]);
+        $action = ActionFactory::create($request);
+        $order = $action->handle($request->input("order_id"));
+        return response()->success([
+            "id" => $order->id,
+            "order_state_id" => $order->order_state_id
+        ]);
+    }
+
 
     public function saveStructure(Request $request) {
         try {
-            $this->rename($request);
-            $this->add($request);
+            $this->change($request);
             $this->remove($request);
-            return response()->success([]);
+            $result = $this->add($request);
+            return response()->success($result);
         }
         catch (\Exception $e) {
             return response()->error();
         }
     }
 
-    private function rename(Request $request) {
-        $items = $request->input("rename");
-        foreach($items as $key => $name) {
+    private function change(Request $request) {
+        $items = $request->input("change");
+        foreach($items as $key => $value) {
             $unit = new OU([
                 "guid" => $key,
-                "name" => $name
+                "name" => $value["name"]
             ]);
 
-           $this->service->rename($unit);
+           $this->service->change($unit);
         }
     }
 
@@ -95,16 +108,37 @@ class OrganizationUnitController extends Controller
     }
 
     private function add(Request $request){
+        $result = [];
         $items = $request->input("add");
         foreach($items as $item) {
            $unit = $this->getUnit($item);
-           $this->service->add($unit);
+           $ou = $this->service->add($unit);
+           $result = array_merge($result, $this->getAddResult($ou));
         }
+
+        return $result;
     }
+
+    private function getAddResult(OU $unit) {
+        $result = [];
+
+        $result[] = [
+            "id" => $unit->getGuid(),
+            "parentId" => $unit->getParent(),
+            "name" => $unit->getName()
+        ];
+
+        $children = $unit->getChildren();
+        foreach($children as $child) {
+            $result = array_merge($result, $this->getAddResult($child));
+        }
+        return $result;
+    }
+
 
     private function getUnit($item){
         $data = [
-            "name" => $item["name"],
+            "name" => $item["name"]
         ];
 
         if(isset($item["parentId"])) {
@@ -123,11 +157,6 @@ class OrganizationUnitController extends Controller
         return $unit;
     }
 
-
-
-    public function moveUsers(Request $request){
-        return $this->copyUsers($request, false);
-    }
 
     protected function setEncryptServerIOrganizationUnit()
     {

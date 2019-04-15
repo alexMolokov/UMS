@@ -1,6 +1,54 @@
 webpackJsonp([13],{
 
-/***/ 105:
+/***/ 104:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(118)
+/* template */
+var __vue_template__ = __webpack_require__(119)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/js/mixins/error-inform.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5d373c7e", Component.options)
+  } else {
+    hotAPI.reload("data-v-5d373c7e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 118:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46,7 +94,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 106:
+/***/ 119:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -111,15 +159,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 107:
+/***/ 120:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(122)
+var __vue_script__ = __webpack_require__(137)
 /* template */
-var __vue_template__ = __webpack_require__(123)
+var __vue_template__ = __webpack_require__(138)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -159,7 +207,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 121:
+/***/ 136:
 /***/ (function(module, exports) {
 
 /**
@@ -193,7 +241,7 @@ module.exports = function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ 122:
+/***/ 137:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -231,7 +279,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 123:
+/***/ 138:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -274,7 +322,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 238:
+/***/ 219:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -323,17 +371,17 @@ var ORDER_STATES = {
 
 /***/ }),
 
-/***/ 359:
+/***/ 364:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(360);
+var content = __webpack_require__(365);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(90)("41a04444", content, false, {});
+var update = __webpack_require__(96)("41a04444", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -350,10 +398,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 360:
+/***/ 365:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(89)(false);
+exports = module.exports = __webpack_require__(95)(false);
 // imports
 
 
@@ -365,19 +413,22 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 361:
+/***/ 366:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_error_inform_vue__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_error_inform_vue__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_error_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__mixins_error_inform_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ok_action_inform_vue__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ok_action_inform_vue__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ok_action_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__mixins_ok_action_inform_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ajax_form_vue__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ajax_form_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__mixins_ajax_form_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_states__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_order_states__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_order_states__ = __webpack_require__(219);
+//
+//
+//
 //
 //
 //
@@ -434,13 +485,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 var formBlockAccount = function formBlockAccount() {
-    return __webpack_require__.e/* import() */(17/* duplicate */).then(__webpack_require__.bind(null, 245));
+    return __webpack_require__.e/* import() */(22/* duplicate */).then(__webpack_require__.bind(null, 246));
 };
 var formChangeProfile = function formChangeProfile() {
-    return __webpack_require__.e/* import() */(18/* duplicate */).then(__webpack_require__.bind(null, 370));
+    return __webpack_require__.e/* import() */(21/* duplicate */).then(__webpack_require__.bind(null, 247));
 };
 var formCreateUser = function formCreateUser() {
-    return __webpack_require__.e/* import() */(20/* duplicate */).then(__webpack_require__.bind(null, 379));
+    return __webpack_require__.e/* import() */(20/* duplicate */).then(__webpack_require__.bind(null, 248));
+};
+var formCreateUsers = function formCreateUsers() {
+    return __webpack_require__.e/* import() */(18/* duplicate */).then(__webpack_require__.bind(null, 249));
+};
+var formMoveUser = function formMoveUser() {
+    return __webpack_require__.e/* import() */(17/* duplicate */).then(__webpack_require__.bind(null, 250));
+};
+var formCopyUser = function formCopyUser() {
+    return __webpack_require__.e/* import() */(19/* duplicate */).then(__webpack_require__.bind(null, 251));
 };
 
 
@@ -456,7 +516,10 @@ var formCreateUser = function formCreateUser() {
         OkActionInform: __WEBPACK_IMPORTED_MODULE_1__mixins_ok_action_inform_vue___default.a,
         formBlockAccount: formBlockAccount,
         formChangeProfile: formChangeProfile,
-        formCreateUser: formCreateUser
+        formCreateUser: formCreateUser,
+        formMoveUser: formMoveUser,
+        formCopyUser: formCopyUser,
+        formCreateUsers: formCreateUsers
     },
     name: 'order-assigned-id',
     mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_ajax_form_vue___default.a],
@@ -484,7 +547,10 @@ var formCreateUser = function formCreateUser() {
                 "messenger.user.block": "showFormBlockAccount",
                 "messenger.change.profile": "showFormChangeProfile",
                 "messenger.user.change.password": "showFormBlockAccount",
-                "messenger.user.create": "showFormCreateUser"
+                "messenger.user.create": "showFormCreateUser",
+                "messenger.user.move": "showFormMoveUser",
+                "messenger.user.copy": "showFormCopyUser",
+                "messenger.users.create": "showFormCreateUsers"
             },
             order: {
                 id: "",
@@ -498,7 +564,10 @@ var formCreateUser = function formCreateUser() {
             forms: {
                 showFormBlockAccount: false,
                 showFormChangeProfile: false,
-                showFormCreateUser: false
+                showFormCreateUser: false,
+                showFormMoveUser: false,
+                showFormCopyUser: false,
+                showFormCreateUsers: false
             }
 
         };
@@ -551,7 +620,7 @@ var formCreateUser = function formCreateUser() {
 
 /***/ }),
 
-/***/ 366:
+/***/ 391:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -672,6 +741,18 @@ var render = function() {
               _vm._v(" "),
               _vm.forms.showFormCreateUser
                 ? _c("form-create-user", { attrs: { info: _vm.order.info } })
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.forms.showFormCopyUser
+                ? _c("form-copy-user", { attrs: { info: _vm.order.info } })
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.forms.showFormMoveUser
+                ? _c("form-move-user", { attrs: { info: _vm.order.info } })
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.forms.showFormCreateUsers
+                ? _c("form-create-users", { attrs: { info: _vm.order.info } })
                 : _vm._e()
             ],
             1
@@ -715,13 +796,13 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(359)
+  __webpack_require__(364)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(361)
+var __vue_script__ = __webpack_require__(366)
 /* template */
-var __vue_template__ = __webpack_require__(366)
+var __vue_template__ = __webpack_require__(391)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -761,7 +842,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 89:
+/***/ 95:
 /***/ (function(module, exports) {
 
 /*
@@ -844,7 +925,7 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ 90:
+/***/ 96:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -863,7 +944,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(121)
+var listToStyles = __webpack_require__(136)
 
 /*
 type StyleObject = {
@@ -1069,54 +1150,6 @@ function applyToTag (styleElement, obj) {
     styleElement.appendChild(document.createTextNode(css))
   }
 }
-
-
-/***/ }),
-
-/***/ 97:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(4)
-/* script */
-var __vue_script__ = __webpack_require__(105)
-/* template */
-var __vue_template__ = __webpack_require__(106)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "src/js/mixins/error-inform.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5d373c7e", Component.options)
-  } else {
-    hotAPI.reload("data-v-5d373c7e", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
 
 
 /***/ })

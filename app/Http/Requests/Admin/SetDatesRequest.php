@@ -24,8 +24,8 @@ class SetDatesRequest extends FormRequest
     public function rules()
     {
         return [
-            "date_from"  => "nullable|date_format:Y-m-d",
-            "date_to"  => "nullable|date_format:Y-m-d"
+            "date_from"  => "nullable|date_format:d.m.Y",
+            "date_to"  => "nullable|date_format:d.m.Y"
         ];
     }
 }

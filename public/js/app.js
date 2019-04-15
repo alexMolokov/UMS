@@ -29,7 +29,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		19: 0
+/******/ 		23: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -34019,6 +34019,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
+        resetErrors: function resetErrors() {
+            this.state = __WEBPACK_IMPORTED_MODULE_0__states__["a" /* STATES */].START;
+            this.err = { validation: [], common: [] };
+        },
+
+
         uploadInfo: function uploadInfo(url, data, success) {
             var _this = this;
 
@@ -34181,8 +34187,6 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_roles__ = __webpack_require__(54);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _this = this;
-
 
 
 
@@ -34221,11 +34225,11 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         },
         hasAnyPermission: function hasAnyPermission(state) {
             return function (permissions) {
-                if (_this.isSuperAdmin(state)) return true;
+                if (typeof state.user.roles[__WEBPACK_IMPORTED_MODULE_5__mixins_roles__["a" /* ROLES */].SUPER_ADMIN] != "undefined") return true;
 
                 for (var i = 0; i < permissions.length; i++) {
-                    console.log(_this.hasPermission(state, permissions[i]));
-                    // if(typeof state.user.permissions[permission] != "undefined") return true;
+                    var permission = permissions[i];
+                    if (typeof state.user.permissions[permission] != "undefined") return true;
                 }
                 return false;
             };
@@ -37074,7 +37078,7 @@ var routes = [{ path: '/login',
         path: '/admin/users',
         name: 'admin-users',
         component: function component(resolve) {
-            __webpack_require__.e/* require */(2).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(75)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            __webpack_require__.e/* require */(3).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(75)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
         },
         meta: { permission: __WEBPACK_IMPORTED_MODULE_0__mixins_permissions__["a" /* PERMISSIONS */].ADMIN_WATCH_USER }
     }, {
@@ -37120,10 +37124,10 @@ var routes = [{ path: '/login',
         },
         meta: { permission: __WEBPACK_IMPORTED_MODULE_0__mixins_permissions__["a" /* PERMISSIONS */].MESSENGER_WATCH_USER }
     }, {
-        path: '/messenger/load-users-file',
+        path: '/messenger/load-users-file/:ou',
         name: 'messenger-load-users-file',
         component: function component(resolve) {
-            __webpack_require__.e/* require */(3).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(82)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            __webpack_require__.e/* require */(2).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(82)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
         },
         meta: { permission: __WEBPACK_IMPORTED_MODULE_0__mixins_permissions__["a" /* PERMISSIONS */].MESSENGER_EDIT_USER }
     }, {

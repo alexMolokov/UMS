@@ -5,7 +5,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
           <li class="header">НАВИГАЦИЯ</li>
-          <li class="treeview">
+          <li class="treeview" v-if="hasAnyPermission([permissions.ADMIN_WATCH_USER, permissions.ADMIN_WATCH_ROLE])">
             <a href="#">
               <i class="fa fa-wrench"></i>
               <span>Система</span>
@@ -69,6 +69,7 @@
 
           </li>
 
+          <!--
           <li  v-if="hasPermission(permissions.LOG_WATCH)">
             <router-link to="/logs">
               <i class="fa fa-map-o"></i> <span>Логи</span>
@@ -80,7 +81,7 @@
               <i class="fa fa-envelope"></i> <span>Обратная связь</span>
             </router-link>
           </li>
-
+        -->
 
         </ul>
       </section>
@@ -104,7 +105,7 @@
 
     },
     computed: {
-        ...mapGetters(["hasPermission"])
+        ...mapGetters(["hasPermission", "hasAnyPermission"])
     }
 
   }

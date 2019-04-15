@@ -21,7 +21,7 @@ class AuthController extends Controller
        {
             $user = Auth::user();
 
-            if(!$user->blocked)
+            if($this->isActive($user))
             {
                 Auth::login($user);
                 $data = $user->toArray();
@@ -35,6 +35,25 @@ class AuthController extends Controller
        }
 
         return response()->error(__("Authentication failed!"), []);
+    }
+
+    private function isActive($user)
+    {
+        if ($user->blocked) return false;
+
+        if ($user->date_from) {
+            if(strtotime($user->date_from) > strtotime("now")) {
+                return false;
+            }
+        }
+
+        if ($user->date_to) {
+            if (strtotime($user->date_to) < strtotime("now")) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public function logout(Request $request)
@@ -53,16 +72,19 @@ class AuthController extends Controller
         if(Auth::check())
         {
             $user = Auth::user();
-            Auth::login($user);
 
-            $data = $user->toArray();
+            if($this->isActive($user)) {
+                Auth::login($user);
 
-            $data = $data + [
-                    "roles" => $this->_getUserRoles($user),
-                    "permissions" => $this->_getUserPermissions($user)
-                ];
+                $data = $user->toArray();
 
-            return response()->success($data);
+                $data = $data + [
+                        "roles" => $this->_getUserRoles($user),
+                        "permissions" => $this->_getUserPermissions($user)
+                    ];
+
+                return response()->success($data);
+            }
         }
 
         return response()->error('Not auth');

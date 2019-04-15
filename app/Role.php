@@ -4,6 +4,7 @@ namespace App;
 
 use Spatie\Permission\Models\Role as SpatieRole;
 
+
 class Role extends SpatieRole
 {
     const SUPER_ADMIN = "superAdmin";
@@ -23,6 +24,9 @@ class Role extends SpatieRole
         $this->permissions()->detach();
     }
 
+    public function isEdit(){
+        return ($this->is_editable == 1);
+    }
 
     public function setPermissions($permissions = [])
     {

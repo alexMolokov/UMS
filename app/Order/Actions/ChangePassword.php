@@ -71,11 +71,10 @@ class ChangePassword extends Action implements IAction
 
         if($result->getStatus())
         {
-            $this->notify(ActionFactory::CHANGE_PASSWORD, [
-                "event" =>ActionFactory::CHANGE_PASSWORD,
-                "user_id" => $this->order->created_by,
-                "data" => (object)["login" => $obj->login]
-            ]);
+            $this->notify(
+                ActionFactory::CHANGE_PASSWORD,
+                $this->getNotifyData((object) ["login" => $obj->login])
+            );
             $this->order->order_state_id = State::DONE;
             return $this->order;
         }

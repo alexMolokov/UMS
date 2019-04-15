@@ -2,48 +2,53 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Структура подразделений</h1>
+            <h1 style="display: inline-block" v-translate>Структура подразделений</h1>
+            <div style="display: inline-block; position: relative; margin-left: 20px">
+                <div class="overlay-wrapper">
+                    <a href="#" @click.prevent="save" class="btn btn-primary" v-if="tree.loaded && !tree.empty" v-translate>Сохранить</a>
+                    <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
+                </div>
+            </div>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i>Главная</a></li>
-                <li class="active">Структура подразделений</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i><span v-translate>Главная</span></a></li>
+                <li class="active" v-translate>Структура подразделений</li>
             </ol>
         </section>
         <!-- Main content -->
         <section class="content">
             <div class="messenger-users-wrapper box">
-                <div class="panel-box tree structure" style="position: relative">
-                    <i class="fa fa-refresh" aria-hidden="true" style="position: absolute; top:5px; right: 0; cursor: pointer"  @click.prevent="reloadPage"></i>
-                    <v-jstree :data="tree.data" :async="loadTree"allow-batch whole-row  ref="jsTree"  @item-click="itemClick">
-                        <template slot-scope="_">
-                            <div>
-                                <i :class="_.vm.themeIconClasses" role="presentation" v-if="!_.model.loading"></i>
-                                {{_.model.text}}
-                                <a v-if="_.model.opened" class="structure-action" @click.prevent="addItem(_.vm, _.model, $event)"><i style="color: green" class="fa fa-plus-square"></i></a>
-                                <a v-if="_.model.opened" class="structure-action" @click.prevent="removeItemWrapper(_.vm, _.model, $event)"><i style="color: red" class="fa fa-trash-o"></i></a>
-                            </div>
-                        </template>
-                    </v-jstree>
-                    <div style="position: absolute; bottom: 10px; left: 0; width: 100%; text-align: center;" v-if="!isSaved">
-                        <div class="overlay-wrapper">
-                            <a href="#" @click.prevent="save" class="btn btn-primary">Сохранить</a>
-                            <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
+                <div class="panel-box tree structure">
+                    <div>
+                        <v-jstree v-if="!tree.empty" :data="tree.data" :async="loadTree"allow-batch whole-row  ref="jsTree"  @item-click="itemClick">
+                            <template slot-scope="_">
+                                <div>
+                                    <i :class="_.vm.themeIconClasses" role="presentation" v-if="!_.model.loading"></i>
+                                    {{_.model.text}}
+                                    <a v-if="_.model.opened" class="structure-action" @click.prevent="addItem(_.vm, _.model, $event)"><i style="color: green" class="fa fa-plus-square"></i></a>
+                                    <a v-if="_.model.opened" class="structure-action" @click.prevent="removeItemWrapper(_.vm, _.model, $event)"><i style="color: red" class="fa fa-trash-o"></i></a>
+                                </div>
+                            </template>
+                        </v-jstree>
+                        <div v-if="tree.empty">
+                            Нет назначенных подразделений
                         </div>
                     </div>
+
                 </div>
                 <div class="handler"></div>
                 <div class="panel-box user-table">
                     <div class="row" style="margin-bottom: 20px">
-                        <div class="col-sm-12 col-md-9 col-lg-6">
-                            <h3 style="margin-top: 0px; margin-bottom: 20px; font-size: 20px;">Выделенный элемент</h3>
+                        <div class="col-sm-12 col-md-9 col-lg-6" v-if="tree.loaded && !tree.empty">
+                            <h3 style="margin-top: 0px; margin-bottom: 20px; font-size: 20px;" v-translate>Выделенный элемент</h3>
                             <div class="form-group">
-                                <label for="name" class="control-label">Название</label>
+                                <label for="name" class="control-label" v-translate>Название</label>
                                 <div>
-                                    <input type="text" class="form-control" id="name" name="name"  v-model="tree.selectedNode.name">
+                                    <div><input type="text" class="form-control" id="name" name="name"  v-model="tree.selectedNode.name"></div>
                                 </div>
                             </div>
 
-                            <div style="display: flex; margin-bottom: 20px;" v-if="!isSaved">
-                                <div style="flex: 1 1 auto; text-align: right"><a href="#" @click.prevent="changeName" class="btn btn-primary" :disabled="changeDisabled">Изменить</a></div>
+                            <div style="display: flex; margin-bottom: 20px;">
+                                <div style="flex: 1 1 auto; text-align: right"><a href="#" @click.prevent="changeData" class="btn btn-primary" :disabled="changeDisabled" v-translate>Изменить</a></div>
                             </div>
 
                             <error-inform :err="err" :state="state" @error-inform:closed="closeErrorInform"></error-inform>
@@ -73,8 +78,6 @@
     import draggableWindow from '../../mixins/draggable-window';
     import {STATES} from "../../mixins/states";
     import OkActionInform  from '../../mixins/ok-action-inform.vue';
-
-    //import VJstree from 'vue-jstree'
     import VJstree from "vue-jstree/src/tree.vue";
     import loadTree from "../../mixins/load-tree";
 
@@ -86,7 +89,7 @@
                 actions: {
                     "delete": new Map(),
                     "add": new Map(),
-                    "rename": new Map()
+                    "change": new Map()
                 },
                 saved: false,
                 okMessage: ""
@@ -102,46 +105,39 @@
             ...mapGetters(["hasPermission"]),
             changeDisabled(){
                 return this.tree.selectedNode.name == ""
-            },
-            isSaved(){
-                return this.saved;
             }
         },
         methods: {
             reloadPage(){
-                console.log(this.$router.currentRoute);
                 this.$router.push(this.$router.currentRoute.path);
-                //this.$router.go(this.$router.currentRoute)
             },
 
             itemClick (node) {
+                this.tree.allItems.set(node.model.id, node.model);
                 this.setSelectedNode(node)
             },
             setSelectedNode(node){
                 this.tree.selectedNode.model = node.model;
                 this.tree.selectedNode.name = node.model.text;
                 this.tree.selectedNode.node = node;
-
-                console.log(this.tree.selectedNode);
             },
-            changeName(){
+            changeData(){
                 this.tree.selectedNode.model.text  = this.tree.selectedNode.name;
                 this.tree.selectedNode.model.value.name  = this.tree.selectedNode.name;
-                this.saveForRename(this.tree.selectedNode.model)
+
+                this.saveForChange(this.tree.selectedNode.model)
             },
-            saveForRename(model){
+            saveForChange(model){
               if(this.isExistsTree(model)) {
-                  this.actions.rename.set(model.id, model);
+                  this.actions.change.set(model.id, model);
               }
             },
             saveForDelete(model){
 
                 if(this.isExistsTree(model)) {
-                    this.actions.rename.delete(model.id);
+                    this.actions.change.delete(model.id);
                     this.actions.delete.set(model.id, model);
                 }
-
-
             },
 
             addItem(){
@@ -219,6 +215,12 @@
 
             },
 
+            resetActions(){
+                this.actions["delete"] = new Map();
+                this.actions["change"] = new Map();
+                this.actions["add"] = new Map();
+
+            },
             getRemoveItems() {
               let result = [];
               let self = this;
@@ -232,14 +234,14 @@
 
               return result;
             },
-            getRenameItems() {
+            getChangeItems() {
                 let result = {};
                 let self = this;
-                let keys = self.actions["rename"].keys();
+                let keys = self.actions["change"].keys();
 
                 for (let key of keys) {
-                    let item = self.actions["rename"].get(key);
-                    result[item.id] = item.text;
+                    let item = self.actions["change"].get(key);
+                    result[item.id] = {"name": item.text};
                 }
 
                 return result;
@@ -276,7 +278,7 @@
             save(){
 
                 let data = {
-                    "rename": this.getRenameItems(),
+                    "change": this.getChangeItems(),
                     "add":  this.getAddItems(),
                     "remove": this.getRemoveItems()
                 };
@@ -289,9 +291,33 @@
                         self.saved = true;
                         self.okMessage = "Структура подразделений была изменена"
 
-                        console.log(self.okMessage)
+                        self.setGuidAndParentForAddedItems(data);
+                        self.resetActions();
                     }
                 );
+            },
+            setGuidAndParentForAddedItems(items){
+                let self = this;
+                items.forEach(function(item){
+                    let parentItem = self.tree.allItems.get(item.parentId);
+
+                    if(parentItem.children.length > 0) {
+                        let len = parentItem.children.length;
+                        for(let i=0; i< len; i++ ){
+                            if(parentItem.children[i].text == item.name) {
+                                if(!self.isExistsTree(parentItem.children[i])) {
+                                    parentItem.children[i].id = item.id;
+                                    self.tree.allItems.set(item.id, parentItem.children[i]);
+                                }
+                            }
+                        }
+
+
+                    }
+
+                })
+
+
             },
             closeErrorInform(){
                 this.state = STATES.START;
@@ -335,7 +361,7 @@
         display: flex;
 
         .handler {
-            width: 20px;
+            width: 2px;
             padding: 0;
             cursor: ew-resize;
             flex: 0 0 auto;
@@ -356,19 +382,7 @@
 
             &.user-table {
                 flex-grow: 1;
-                /*flex: 1 1 1200px;
 
-                @media (max-width: 1200px) {
-                    flex: 1 1 1000px;
-                }
-
-                @media (max-width: 1024px) {
-                    flex: 1 1 600px;
-                }
-
-                @media (max-width: 800px) {
-                    flex: 1 1 400px;
-                }*/
 
 
 
@@ -400,8 +414,8 @@
             &.tree {
                 height: calc(100vh - 145px);
                 min-width: 250px;
-
-               /* flex: 1 1 150px;*/
+                overflow-y: auto;
+                position: relative;
 
                 .tree-selected {
                     background: #e1e1e1 !important;

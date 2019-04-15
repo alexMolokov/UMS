@@ -21,33 +21,38 @@ use App\Exceptions\Messenger\MessengerException;
 use Illuminate\Support\Facades\Crypt;
 use \EncryptServer\Models\User;
 
-class CreateUser extends Action implements IAction
+class CreateUsers extends Action implements IAction
 {
 
     public function getData() : array
     {
-        $data =  $this->request->only([
-            "firstName",
-            "lastName",
-            "middleName",
-            "nickName",
-            "email",
-            "login",
-            "password",
-            "blocked",
-            "ou"
-        ]);
-        $data["password"] = Crypt::encryptString($data["password"]);
+        $data = ["users" => []];
+
+        $users = $this->request->input("users");
+        foreach($users as $user)
+        {
+            $data["users"][] = [
+                "firstName" => $user["firstName"],
+                "lastName" => $user["lastName"],
+                "middleName" => $user["middleName"],
+                "email" =>  $user["email"],
+                "login" =>  $user["login"],
+                "password" => Crypt::encryptString($user["password"]),
+                "ou" => $user["ou"][0],
+                "ouname" => $user["ouname"]
+            ];
+        }
+
         return $data;
     }
 
 
     public function getSubject() : string {
-        return __("Create User");
+        return __("Create Users");
     }
 
     public function getType() {
-        return ActionFactory::CREATE_USER;
+        return ActionFactory::CREATE_USERS;
     }
 
     public function getPermissionName(): string {
@@ -63,43 +68,35 @@ class CreateUser extends Action implements IAction
         $service = $this->getUserService();
         $data = (array) json_decode($this->order->data);
 
-
-        $users = [];
-        $users[] = $data;
-
-
-
-        $map = User::getMapForSave();
-
-        foreach($users as $user) {
-            $request = [];
-            foreach($map as $key => $value){
-                if(isset($user[$key])) {
-                    $request[$value] = $user[$key];
-                }
-            }
-            $request["password"] = Crypt::decryptString($data["password"]);
-            $messengerUser = new User($request);
+        $users = $data["users"];
+        foreach($users as $user){
+            $user = (array) $user;
+            $user["password"] =  Crypt::decryptString($user["password"]);
+            $messengerUser = new User([
+                "firstName" => $user["firstName"],
+                "lastName" => $user["lastName"],
+                "middleName" => $user["middleName"],
+                "email" =>  $user["email"],
+                "login" =>  $user["login"],
+                "password" => $user["password"],
+                "ou" => $user["ou"]
+            ]);
             $result = $service->add($messengerUser);
-
             if($result->getStatus())
             {
-                unset($user["password"]);
+                $data = $user;
+                unset($data["password"]);
+
                 $this->notify(ActionFactory::CREATE_USER, [
                     "event" => ActionFactory::CREATE_USER,
                     "user_id" => $this->order->created_by,
-                    "data" => (object) $user
+                    "data" => (object) $data
                 ]);
 
             }
-        }
 
+        }
         $this->order->order_state_id = State::DONE;
         return $this->order;
-
-
-
-        throw new MessengerException($result->getDescription());
-
     }
 }
