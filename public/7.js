@@ -328,7 +328,7 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(233)
+var __vue_script__ = __webpack_require__(219)
 /* template */
 var __vue_template__ = null
 /* template functional */
@@ -370,7 +370,34 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 221:
+/***/ 219:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__permissions__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'has-permission',
+  data: function data() {
+    return {
+      permissions: __WEBPACK_IMPORTED_MODULE_0__permissions__["a" /* PERMISSIONS */]
+    };
+  },
+
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(["hasPermission", "hasAnyPermission"]))
+});
+
+/***/ }),
+
+/***/ 222:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -422,7 +449,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 222:
+/***/ 223:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -431,6 +458,7 @@ module.exports = Component.exports
         return {
             tree: {
                 data: [],
+                rootElement: null,
                 loaded: false,
                 empty: false,
                 allItems: new Map(),
@@ -452,9 +480,17 @@ module.exports = Component.exports
             sNode.model = {};
             sNode.node = {};
         },
+        initRootElement: function initRootElement(rootElement) {
+            if (this.tree.rootElement === null) {
+                this.tree.rootElement = rootElement;
+                this.tree.rootElement.loading = true;
+            }
+        },
 
         loadTree: function loadTree(oriNode, resolve) {
             var _this = this;
+
+            this.initRootElement(oriNode);
 
             var getId = function getId(oriNode) {
                 var id = null;
@@ -508,33 +544,6 @@ module.exports = Component.exports
             }, {}, function (data) {});
         }
     }
-});
-
-/***/ }),
-
-/***/ 233:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__permissions__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'has-permission',
-  data: function data() {
-    return {
-      permissions: __WEBPACK_IMPORTED_MODULE_0__permissions__["a" /* PERMISSIONS */]
-    };
-  },
-
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(["hasPermission", "hasAnyPermission"]))
 });
 
 /***/ }),
@@ -717,6 +726,7 @@ var ITEM_HEIGHT_LARGE = 32;
                     return t.id === node.id;
                 });
                 selectedNode.parentItem.splice(index, 0, newItem);
+                return newItem;
             };
             node.addAfter = function (data, selectedNode) {
                 var newItem = self.initializeDataItem(data);
@@ -724,6 +734,7 @@ var ITEM_HEIGHT_LARGE = 32;
                     return t.id === node.id;
                 }) + 1;
                 selectedNode.parentItem.splice(index, 0, newItem);
+                return newItem;
             };
             node.addChild = function (data) {
                 var newItem = self.initializeDataItem(data);
@@ -845,7 +856,8 @@ var ITEM_HEIGHT_LARGE = 32;
         handleAsyncLoad: function handleAsyncLoad(oriParent, oriNode, oriItem) {
             var self = this;
             if (this.async) {
-                if (oriParent[0].loading) {
+
+                if (oriParent.length > 0 && oriParent[0].loading) {
                     this.async(oriNode, function (data) {
                         if (data.length > 0) {
                             for (var i in data) {
@@ -1499,13 +1511,13 @@ if (false) {
 
 /***/ }),
 
-/***/ 327:
+/***/ 330:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(328);
+var content = __webpack_require__(331);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -1526,7 +1538,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 328:
+/***/ 331:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(95)(false);
@@ -1541,7 +1553,7 @@ exports.push([module.i, "\n.structure .structure-action {\n  display: inline-blo
 
 /***/ }),
 
-/***/ 329:
+/***/ 332:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1554,15 +1566,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_has_permission_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__mixins_has_permission_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_permissions__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mixins_draggable_window__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mixins_draggable_window__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__mixins_states__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__mixins_ok_action_inform_vue__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__mixins_ok_action_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__mixins_ok_action_inform_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_jstree_src_tree_vue__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_jstree_src_tree_vue__ = __webpack_require__(222);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_jstree_src_tree_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_vue_jstree_src_tree_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__mixins_load_tree__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__mixins_load_tree__ = __webpack_require__(223);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1667,7 +1684,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         errorInform: __WEBPACK_IMPORTED_MODULE_1__mixins_error_inform_vue___default.a,
         OkActionInform: __WEBPACK_IMPORTED_MODULE_7__mixins_ok_action_inform_vue___default.a
     },
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(["hasPermission"]), {
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])(["hasPermission", "isSuperAdmin"]), {
         changeDisabled: function changeDisabled() {
             return this.tree.selectedNode.name == "";
         }
@@ -1703,20 +1720,34 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 this.actions.delete.set(model.id, model);
             }
         },
+        addTop: function addTop() {
+
+            var first = this.tree.rootElement.$children[0];
+            var model = first.model;
+
+            var newItem = model.addBefore(this._getNewItemObject(this.tree.rootElement.id), first);
+
+            if (this.isExistsTree(model)) {
+                this.actions.add.set(newItem.id, newItem);
+            }
+        },
+        _getNewItemObject: function _getNewItemObject(parentId) {
+            return {
+                text: "Новое подразделение",
+                opened: true,
+                value: {
+                    name: "Новое подразделение",
+                    hasUsers: false,
+                    parentId: parentId
+                },
+                isLeaf: true,
+                icon: "fa fa-sticky-note-o"
+            };
+        },
         addItem: function addItem() {
             var model = this.tree.selectedNode.model;
             if (model.id !== undefined) {
-                var newItem = model.addChild({
-                    text: "Новое подразделение",
-                    opened: true,
-                    value: {
-                        name: "Новое подразделение",
-                        hasUsers: false,
-                        parentId: model.id
-                    },
-                    isLeaf: true,
-                    icon: "fa fa-sticky-note-o"
-                });
+                var newItem = model.addChild(this._getNewItemObject(model.id));
 
                 if (this.isExistsTree(model)) {
                     this.actions.add.set(newItem.id, newItem);
@@ -1916,15 +1947,33 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             items.forEach(function (item) {
                 var parentItem = self.tree.allItems.get(item.parentId);
 
-                if (parentItem.children.length > 0) {
-                    var len = parentItem.children.length;
-                    for (var i = 0; i < len; i++) {
-                        if (parentItem.children[i].text == item.name) {
-                            if (!self.isExistsTree(parentItem.children[i])) {
-                                parentItem.children[i].id = item.id;
-                                self.tree.allItems.set(item.id, parentItem.children[i]);
+                if (typeof parentItem != "undefined") {
+                    if (parentItem.children.length > 0) {
+                        var len = parentItem.children.length;
+                        for (var i = 0; i < len; i++) {
+                            if (parentItem.children[i].text == item.name) {
+                                if (!self.isExistsTree(parentItem.children[i])) {
+                                    parentItem.children[i].id = item.id;
+                                    self.tree.allItems.set(item.id, parentItem.children[i]);
+                                }
                             }
                         }
+                    }
+                } else {
+                    parentItem = self.tree.rootElement;
+
+                    if (parentItem.$children.length > 0) {
+                        var _len = parentItem.$children.length;
+                        for (var _i = 0; _i < _len; _i++) {
+                            if (parentItem.$children[_i].model.text == item.name) {
+                                if (!self.isExistsTree(parentItem.$children[_i].model)) {
+                                    parentItem.$children[_i].model.id = item.id;
+                                    self.tree.allItems.set(item.id, parentItem.$children[_i].model);
+                                    break;
+                                }
+                            }
+                        }
+                        console.log("3");
                     }
                 }
             });
@@ -1942,7 +1991,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 
-/***/ 330:
+/***/ 333:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1994,7 +2043,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 
-/***/ 331:
+/***/ 334:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -2049,6 +2098,40 @@ var render = function() {
           ])
         ]
       ),
+      _vm._v(" "),
+      _vm.isSuperAdmin
+        ? _c(
+            "div",
+            {
+              staticStyle: {
+                display: "inline-block",
+                position: "relative",
+                "margin-left": "20px"
+              }
+            },
+            [
+              _vm.tree.loaded && !_vm.tree.empty
+                ? _c(
+                    "a",
+                    {
+                      directives: [
+                        { name: "translate", rawName: "v-translate" }
+                      ],
+                      staticClass: "btn btn-primary",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.addTop($event)
+                        }
+                      }
+                    },
+                    [_vm._v("Добавить верхний уровень")]
+                  )
+                : _vm._e()
+            ]
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c("ol", { staticClass: "breadcrumb" }, [
         _c("li", [
@@ -2329,13 +2412,13 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(327)
+  __webpack_require__(330)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(329)
+var __vue_script__ = __webpack_require__(332)
 /* template */
-var __vue_template__ = __webpack_require__(331)
+var __vue_template__ = __webpack_require__(334)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

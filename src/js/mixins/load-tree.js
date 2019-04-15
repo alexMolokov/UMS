@@ -3,6 +3,7 @@ export default {
         return {
             tree: {
                 data: [],
+                rootElement: null,
                 loaded: false,
                 empty: false,
                 allItems: new Map(),
@@ -27,7 +28,14 @@ export default {
           sNode.node = {};
 
         },
+        initRootElement(rootElement) {
+            if(this.tree.rootElement === null) {
+                this.tree.rootElement = rootElement;
+                this.tree.rootElement.loading = true;
+            }
+        },
         loadTree: function (oriNode, resolve) {
+            this.initRootElement(oriNode)
 
             let getId = function(oriNode) {
                 let id = null;

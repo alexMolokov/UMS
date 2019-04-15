@@ -328,7 +328,7 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(233)
+var __vue_script__ = __webpack_require__(219)
 /* template */
 var __vue_template__ = null
 /* template functional */
@@ -370,7 +370,34 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 221:
+/***/ 219:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__permissions__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'has-permission',
+  data: function data() {
+    return {
+      permissions: __WEBPACK_IMPORTED_MODULE_0__permissions__["a" /* PERMISSIONS */]
+    };
+  },
+
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(["hasPermission", "hasAnyPermission"]))
+});
+
+/***/ }),
+
+/***/ 222:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -422,7 +449,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 222:
+/***/ 223:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -431,6 +458,7 @@ module.exports = Component.exports
         return {
             tree: {
                 data: [],
+                rootElement: null,
                 loaded: false,
                 empty: false,
                 allItems: new Map(),
@@ -452,9 +480,17 @@ module.exports = Component.exports
             sNode.model = {};
             sNode.node = {};
         },
+        initRootElement: function initRootElement(rootElement) {
+            if (this.tree.rootElement === null) {
+                this.tree.rootElement = rootElement;
+                this.tree.rootElement.loading = true;
+            }
+        },
 
         loadTree: function loadTree(oriNode, resolve) {
             var _this = this;
+
+            this.initRootElement(oriNode);
 
             var getId = function getId(oriNode) {
                 var id = null;
@@ -508,33 +544,6 @@ module.exports = Component.exports
             }, {}, function (data) {});
         }
     }
-});
-
-/***/ }),
-
-/***/ 233:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__permissions__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'has-permission',
-  data: function data() {
-    return {
-      permissions: __WEBPACK_IMPORTED_MODULE_0__permissions__["a" /* PERMISSIONS */]
-    };
-  },
-
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])(["hasPermission", "hasAnyPermission"]))
 });
 
 /***/ }),
@@ -717,6 +726,7 @@ var ITEM_HEIGHT_LARGE = 32;
                     return t.id === node.id;
                 });
                 selectedNode.parentItem.splice(index, 0, newItem);
+                return newItem;
             };
             node.addAfter = function (data, selectedNode) {
                 var newItem = self.initializeDataItem(data);
@@ -724,6 +734,7 @@ var ITEM_HEIGHT_LARGE = 32;
                     return t.id === node.id;
                 }) + 1;
                 selectedNode.parentItem.splice(index, 0, newItem);
+                return newItem;
             };
             node.addChild = function (data) {
                 var newItem = self.initializeDataItem(data);
@@ -845,7 +856,8 @@ var ITEM_HEIGHT_LARGE = 32;
         handleAsyncLoad: function handleAsyncLoad(oriParent, oriNode, oriItem) {
             var self = this;
             if (this.async) {
-                if (oriParent[0].loading) {
+
+                if (oriParent.length > 0 && oriParent[0].loading) {
                     this.async(oriNode, function (data) {
                         if (data.length > 0) {
                             for (var i in data) {
@@ -5863,9 +5875,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_ok_action_inform_vue__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_ok_action_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__mixins_ok_action_inform_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_jstree_src_tree_vue__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_jstree_src_tree_vue__ = __webpack_require__(222);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_jstree_src_tree_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vue_jstree_src_tree_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__mixins_load_tree__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__mixins_load_tree__ = __webpack_require__(223);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //

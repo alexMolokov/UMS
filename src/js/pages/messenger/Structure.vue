@@ -9,6 +9,11 @@
                     <div class="overlay" v-if="submitting"><i class="fa fa-refresh fa-spin"></i></div>
                 </div>
             </div>
+
+            <div style="display: inline-block; position: relative; margin-left: 20px" v-if="isSuperAdmin">
+                    <a href="#" @click.prevent="addTop" class="btn btn-primary" v-if="tree.loaded && !tree.empty" v-translate>Добавить верхний уровень</a>
+            </div>
+
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i><span v-translate>Главная</span></a></li>
                 <li class="active" v-translate>Структура подразделений</li>
@@ -102,7 +107,7 @@
             OkActionInform
         },
         computed: {
-            ...mapGetters(["hasPermission"]),
+            ...mapGetters(["hasPermission","isSuperAdmin"]),
             changeDisabled(){
                 return this.tree.selectedNode.name == ""
             }
@@ -139,21 +144,40 @@
                     this.actions.delete.set(model.id, model);
                 }
             },
+            addTop() {
+
+                let first = this.tree.rootElement.$children[0];
+                let model = first.model;
+
+                let newItem = model.addBefore(
+                    this._getNewItemObject(this.tree.rootElement.id),
+                    first
+                );
+
+                if(this.isExistsTree(model)) {
+                    this.actions.add.set(newItem.id, newItem);
+                }
+            },
+            _getNewItemObject(parentId) {
+                return {
+                    text: "Новое подразделение",
+                    opened: true,
+                    value: {
+                        name: "Новое подразделение",
+                        hasUsers: false,
+                        parentId: parentId,
+                    },
+                    isLeaf: true,
+                    icon: "fa fa-sticky-note-o"
+                }
+            },
 
             addItem(){
                     let model = this.tree.selectedNode.model;
                     if (model.id !== undefined) {
-                        let newItem = model.addChild({
-                            text: "Новое подразделение",
-                            opened: true,
-                            value: {
-                              name: "Новое подразделение",
-                              hasUsers: false,
-                              parentId: model.id
-                            },
-                            isLeaf: true,
-                            icon: "fa fa-sticky-note-o"
-                        })
+                        let newItem = model.addChild(
+                            this._getNewItemObject(model.id)
+                        );
 
                         if(this.isExistsTree(model)) {
                             this.actions.add.set(newItem.id, newItem);
@@ -301,19 +325,43 @@
                 items.forEach(function(item){
                     let parentItem = self.tree.allItems.get(item.parentId);
 
-                    if(parentItem.children.length > 0) {
-                        let len = parentItem.children.length;
-                        for(let i=0; i< len; i++ ){
-                            if(parentItem.children[i].text == item.name) {
-                                if(!self.isExistsTree(parentItem.children[i])) {
-                                    parentItem.children[i].id = item.id;
-                                    self.tree.allItems.set(item.id, parentItem.children[i]);
+                    if(typeof parentItem != "undefined")
+                    {
+                        if(parentItem.children.length > 0) {
+                            let len = parentItem.children.length;
+                            for(let i=0; i< len; i++ ){
+                                if(parentItem.children[i].text == item.name) {
+                                    if(!self.isExistsTree(parentItem.children[i])) {
+                                        parentItem.children[i].id = item.id;
+                                        self.tree.allItems.set(item.id, parentItem.children[i]);
+                                    }
                                 }
                             }
                         }
+                    } else {
+                        parentItem = self.tree.rootElement;
 
-
+                        if(parentItem.$children.length > 0) {
+                            let len = parentItem.$children.length;
+                                for(let i=0; i< len; i++ ){
+                                    if(parentItem.$children[i].model.text == item.name) {
+                                    if(!self.isExistsTree(parentItem.$children[i].model)) {
+                                        parentItem.$children[i].model.id = item.id;
+                                        self.tree.allItems.set(item.id, parentItem.$children[i].model);
+                                        break;
+                                    }
+                                }
+                            }
+                            console.log("3");
+                        }
                     }
+
+
+
+
+
+
+
 
                 })
 

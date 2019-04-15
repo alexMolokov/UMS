@@ -37049,7 +37049,7 @@ var routes = [{ path: '/login',
     meta: { requiresNoAuth: true }
 }, { path: '/',
     component: function component(resolve) {
-        __webpack_require__.e/* require */(9).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(71)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+        __webpack_require__.e/* require */(10).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(71)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
     },
     name: "dashboard",
     meta: { requiresAuth: true },
@@ -37099,7 +37099,7 @@ var routes = [{ path: '/login',
         path: '/admin/role/:id',
         name: 'admin-role-id',
         component: function component(resolve) {
-            __webpack_require__.e/* require */(10).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(78)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+            __webpack_require__.e/* require */(9).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(78)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
         },
         meta: { permission: __WEBPACK_IMPORTED_MODULE_0__mixins_permissions__["a" /* PERMISSIONS */].ADMIN_WATCH_ROLE }
     }, {
