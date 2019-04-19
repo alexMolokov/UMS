@@ -14,6 +14,12 @@
                     <a href="#" @click.prevent="addTop" class="btn btn-primary" v-if="tree.loaded && !tree.empty" v-translate>Добавить верхний уровень</a>
             </div>
 
+            <div style="display: inline-block; position: relative; margin-left: 20px" v-if="isSuperAdmin">
+                <form-import-ou  v-if="forms.showImportStructure"  @close="forms.showImportStructure = false" @form:import-done="handleImport"></form-import-ou>
+                <a href="#" @click.prevent="forms.showImportStructure = true" class="btn btn-primary" v-if="tree.loaded && !tree.empty" v-translate>Импорт</a>
+            </div>
+
+
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i><span v-translate>Главная</span></a></li>
                 <li class="active" v-translate>Структура подразделений</li>
@@ -26,7 +32,7 @@
                     <div>
                         <v-jstree v-if="!tree.empty" :data="tree.data" :async="loadTree"allow-batch whole-row  ref="jsTree"  @item-click="itemClick">
                             <template slot-scope="_">
-                                <div>
+                                <div :class="{ new_item: !isExistsTree(_.model) && !_.model.loading}">
                                     <i :class="_.vm.themeIconClasses" role="presentation" v-if="!_.model.loading"></i>
                                     {{_.model.text}}
                                     <a v-if="_.model.opened" class="structure-action" @click.prevent="addItem(_.vm, _.model, $event)"><i style="color: green" class="fa fa-plus-square"></i></a>
@@ -85,6 +91,7 @@
     import OkActionInform  from '../../mixins/ok-action-inform.vue';
     import VJstree from "vue-jstree/src/tree.vue";
     import loadTree from "../../mixins/load-tree";
+    import formImportOu from "../../components/window/messenger/formImportOU.vue";
 
     export default {
         name: 'messenger-users',
@@ -96,6 +103,9 @@
                     "add": new Map(),
                     "change": new Map()
                 },
+                forms: {
+                   showImportStructure: false
+                },
                 saved: false,
                 okMessage: ""
 
@@ -104,7 +114,8 @@
         components: {
             VJstree,
             errorInform,
-            OkActionInform
+            OkActionInform,
+            formImportOu
         },
         computed: {
             ...mapGetters(["hasPermission","isSuperAdmin"]),
@@ -113,6 +124,9 @@
             }
         },
         methods: {
+            handleImport() {
+
+            },
             reloadPage(){
                 this.$router.push(this.$router.currentRoute.path);
             },
@@ -467,6 +481,11 @@
 
                 .tree-selected {
                     background: #e1e1e1 !important;
+                }
+
+                .new_item {
+                    color: green;
+                    font-weight: 600;
                 }
 
             }

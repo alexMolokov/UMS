@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<organization-units>
+    <ou>
+        <name>Министерство 1</name>
+        <children>
+            <ou>
+                <name>Организация 1.1</name>
+                <children>
+                    <ou>
+                        <name>Подразделение 1.1.1</name>
+                    </ou>
+                    <ou>
+                        <name>Подразделение 1.1.2</name>
+                    </ou>
+                </children>
+            </ou>
+            <ou>
+                <name>Организация 2</name>
+                <children>
+                    <ou>
+                        <name>Подразделение 1.2.1</name>
+                    </ou>
+                    <ou>
+                        <name>Подразделение 1.2.2</name>
+                    </ou>
+                </children>
+            </ou>
+        </children>
+    </ou>
+    <ou>
+        <name>Министерство 2</name>
+        <children>
+            <ou>
+                <name>Организация 2.1</name>
+                <children>
+                    <ou>
+                        <name>Подразделение 2.1.1</name>
+                    </ou>
+                    <ou>
+                        <name>Подразделение 2.1.2</name>
+                    </ou>
+                </children>
+            </ou>
+            <ou>
+                <name>Организация 2</name>
+                <children>
+                    <ou>
+                        <name>Подразделение 2.2.1</name>
+                    </ou>
+                    <ou>
+                        <name>Подразделение 2.2.2</name>
+                    </ou>
+                </children>
+            </ou>
+        </children>
+    </ou>
+</organization-units>

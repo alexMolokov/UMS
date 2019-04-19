@@ -6045,6 +6045,9 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/*jshint esversion: 6 */
+
+
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function data() {
         return {
@@ -6087,10 +6090,11 @@ module.exports = Component.exports
             var getId = function getId(oriNode) {
                 var id = null;
                 if (typeof oriNode !== "undefined") {
-                    id = typeof oriNode.data.value != "undefined" ? oriNode.data.value.id : null;
+                    id = typeof oriNode.data.value !== "undefined" ? oriNode.data.value.id : null;
                 }
                 return id;
             };
+
             var setIcon = function setIcon(obj, isLeaf) {
                 obj.icon = isLeaf ? "fa fa-sticky-note-o" : "fa fa-folder";
                 obj.isLeaf = isLeaf;
@@ -6100,7 +6104,9 @@ module.exports = Component.exports
 
             this.uploadInfo('/admin/tree/children', { "id": id }, function (data) {
 
-                if (data.length == 0) setIcon(oriNode.data, true);
+                if (data.length === 0) {
+                    setIcon(oriNode.data, true);
+                }
 
                 var result = [];
                 var self = _this;
@@ -6114,9 +6120,9 @@ module.exports = Component.exports
                     setIcon(obj, !item.hasChild);
                     //self.tree.allItems.set(item.id, item);
 
-                    if (id === null && index == 0) {
-                        if (typeof self.table != "undefined") {
-                            if (typeof self.table.moreParams != "undefined") {
+                    if (id === null && index === 0) {
+                        if (typeof self.table !== "undefined") {
+                            if (typeof self.table.moreParams !== "undefined") {
                                 obj.selected = true;
                                 self.table.moreParams.ou_id = item.id;
                             }
@@ -6125,7 +6131,7 @@ module.exports = Component.exports
                     result.push(obj);
                 });
 
-                if (id === null && result.length == 0) {
+                if (id === null && result.length === 0) {
                     _this.tree.empty = true;
                     _this.tree.loaded = true;
                     return;
