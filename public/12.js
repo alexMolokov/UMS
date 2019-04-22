@@ -6,9 +6,9 @@ webpackJsonp([12],{
 var disposed = false
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(118)
+var __vue_script__ = __webpack_require__(119)
 /* template */
-var __vue_template__ = __webpack_require__(119)
+var __vue_template__ = __webpack_require__(120)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -49,6 +49,54 @@ module.exports = Component.exports
 /***/ }),
 
 /***/ 118:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(137)
+/* template */
+var __vue_template__ = __webpack_require__(138)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/js/mixins/ok-action-inform.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-03ad89df", Component.options)
+  } else {
+    hotAPI.reload("data-v-03ad89df", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 119:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -94,7 +142,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 119:
+/***/ 120:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -156,54 +204,6 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-5d373c7e", module.exports)
   }
 }
-
-/***/ }),
-
-/***/ 120:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(4)
-/* script */
-var __vue_script__ = __webpack_require__(137)
-/* template */
-var __vue_template__ = __webpack_require__(138)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "src/js/mixins/ok-action-inform.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-03ad89df", Component.options)
-  } else {
-    hotAPI.reload("data-v-03ad89df", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
 
 /***/ }),
 
@@ -322,7 +322,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 220:
+/***/ 225:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -371,13 +371,13 @@ var ORDER_STATES = {
 
 /***/ }),
 
-/***/ 395:
+/***/ 457:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(396);
+var content = __webpack_require__(458);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -398,7 +398,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 396:
+/***/ 458:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(95)(false);
@@ -413,19 +413,19 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 397:
+/***/ 459:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_error_inform_vue__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_error_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__mixins_error_inform_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ok_action_inform_vue__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ok_action_inform_vue__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ok_action_inform_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__mixins_ok_action_inform_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ajax_form_vue__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ajax_form_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__mixins_ajax_form_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_states__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_order_states__ = __webpack_require__(220);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_order_states__ = __webpack_require__(225);
 //
 //
 //
@@ -486,22 +486,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 var formBlockAccount = function formBlockAccount() {
-    return __webpack_require__.e/* import() */(22/* duplicate */).then(__webpack_require__.bind(null, 246));
+    return __webpack_require__.e/* import() */(22/* duplicate */).then(__webpack_require__.bind(null, 280));
 };
 var formChangeProfile = function formChangeProfile() {
-    return __webpack_require__.e/* import() */(21/* duplicate */).then(__webpack_require__.bind(null, 247));
+    return __webpack_require__.e/* import() */(21/* duplicate */).then(__webpack_require__.bind(null, 281));
 };
 var formCreateUser = function formCreateUser() {
-    return __webpack_require__.e/* import() */(20/* duplicate */).then(__webpack_require__.bind(null, 248));
+    return __webpack_require__.e/* import() */(20/* duplicate */).then(__webpack_require__.bind(null, 282));
 };
 var formCreateUsers = function formCreateUsers() {
-    return __webpack_require__.e/* import() */(18/* duplicate */).then(__webpack_require__.bind(null, 249));
+    return __webpack_require__.e/* import() */(18/* duplicate */).then(__webpack_require__.bind(null, 283));
 };
 var formMoveUser = function formMoveUser() {
-    return __webpack_require__.e/* import() */(17/* duplicate */).then(__webpack_require__.bind(null, 250));
+    return __webpack_require__.e/* import() */(17/* duplicate */).then(__webpack_require__.bind(null, 284));
 };
 var formCopyUser = function formCopyUser() {
-    return __webpack_require__.e/* import() */(19/* duplicate */).then(__webpack_require__.bind(null, 251));
+    return __webpack_require__.e/* import() */(19/* duplicate */).then(__webpack_require__.bind(null, 285));
 };
 
 
@@ -607,7 +607,7 @@ var formCopyUser = function formCopyUser() {
 
 /***/ }),
 
-/***/ 398:
+/***/ 460:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -763,13 +763,13 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(395)
+  __webpack_require__(457)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(397)
+var __vue_script__ = __webpack_require__(459)
 /* template */
-var __vue_template__ = __webpack_require__(398)
+var __vue_template__ = __webpack_require__(460)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

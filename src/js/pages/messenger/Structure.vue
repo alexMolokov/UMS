@@ -15,7 +15,7 @@
             </div>
 
             <div style="display: inline-block; position: relative; margin-left: 20px" v-if="isSuperAdmin">
-                <form-import-ou  v-if="forms.showImportStructure"  @close="forms.showImportStructure = false" @form:import-done="handleImport"></form-import-ou>
+                <form-import-ou  v-if="forms.showImportStructure"  @close="forms.showImportStructure = false" @import-ou="handleImport"></form-import-ou>
                 <a href="#" @click.prevent="forms.showImportStructure = true" class="btn btn-primary" v-if="tree.loaded && !tree.empty" v-translate>Импорт</a>
             </div>
 
@@ -34,7 +34,7 @@
                             <template slot-scope="_">
                                 <div :class="{ new_item: !isExistsTree(_.model) && !_.model.loading}">
                                     <i :class="_.vm.themeIconClasses" role="presentation" v-if="!_.model.loading"></i>
-                                    {{_.model.text}}
+                                    <span :class="{barrier: hasBarrier(_.model)}">{{_.model.text}}</span>
                                     <a v-if="_.model.opened" class="structure-action" @click.prevent="addItem(_.vm, _.model, $event)"><i style="color: green" class="fa fa-plus-square"></i></a>
                                     <a v-if="_.model.opened" class="structure-action" @click.prevent="removeItemWrapper(_.vm, _.model, $event)"><i style="color: red" class="fa fa-trash-o"></i></a>
                                 </div>
@@ -124,16 +124,13 @@
             }
         },
         methods: {
-            handleImport() {
-
-            },
             reloadPage(){
                 this.$router.push(this.$router.currentRoute.path);
             },
-
             itemClick (node) {
                 this.tree.allItems.set(node.model.id, node.model);
-                this.setSelectedNode(node)
+                this.setSelectedNode(node);
+                node.model.opened = true;
             },
             setSelectedNode(node){
                 this.tree.selectedNode.model = node.model;
@@ -152,14 +149,12 @@
               }
             },
             saveForDelete(model){
-
                 if(this.isExistsTree(model)) {
                     this.actions.change.delete(model.id);
                     this.actions.delete.set(model.id, model);
                 }
             },
             addTop() {
-
                 let first = this.tree.rootElement.$children[0];
                 let model = first.model;
 
@@ -172,12 +167,12 @@
                     this.actions.add.set(newItem.id, newItem);
                 }
             },
-            _getNewItemObject(parentId) {
+            _getNewItemObject(parentId, name = "Новое подразделение") {
                 return {
-                    text: "Новое подразделение",
+                    text: name,
                     opened: true,
                     value: {
-                        name: "Новое подразделение",
+                        name: name,
                         hasUsers: false,
                         parentId: parentId,
                     },
@@ -201,11 +196,66 @@
                         model.icon =  "fa fa-folder";
                     }
             },
+            handleImport(organizationUnitsJson) {
+                let units = organizationUnitsJson["organization-units"]["ou"];
+                let model = this.tree.selectedNode.node.model;
+
+                if(model) {
+                    for(let i = 0; i < units.length; i++ ) {
+                        let newItem = model.addChild(
+                            this._getNewItemObject(model.id, units[i]["name"][0])
+                        );
+
+                        if(units[i]["children"][0]) {
+                            this.importRecursion(newItem, units[i]["children"][0]);
+                        }
+
+                        if(this.isExistsTree(model)) {
+                            this.actions.add.set(newItem.id, newItem);
+                        }
+
+                    }
+                } else {
+                    model = this.tree.rootElement.$children[0].model;
+
+                    for(let i = 0; i < units.length; i++ ) {
+                        let newItem = model.addBefore(
+                            this._getNewItemObject(this.tree.rootElement.id, units[i]["name"][0]),
+                            this.tree.rootElement.$children[0]
+                        );
+
+                        if(units[i]["children"][0]) {
+                            this.importRecursion(newItem, units[i]["children"][0]);
+                        }
+
+                        this.actions.add.set(newItem.id, newItem);
+                    }
+              }
+            },
+            importRecursion(model, childUnits) {
+
+
+                let units = childUnits.ou;
+
+                for(let i = 0; i < units.length; i++ ) {
+                    let newItem = model.addChild(
+                        this._getNewItemObject(model.id, units[i]["name"][0])
+                    );
+                    if(units[i]["children"]) {
+                        this.importRecursion(newItem, units[i]["children"][0]);
+                    }
+                }
+            },
+
             isExistsTree(model){
                 if(Number.isInteger(model.id)){
                     return false;
                 }
                 return true;
+            },
+            hasBarrier(model){
+              let barrierEnabled = 1;
+              return (model.value.barrier == barrierEnabled)
             },
 
             removeItemWrapper() {
@@ -366,8 +416,7 @@
                                     }
                                 }
                             }
-                            console.log("3");
-                        }
+                           }
                     }
 
 
@@ -486,6 +535,10 @@
                 .new_item {
                     color: green;
                     font-weight: 600;
+                }
+
+                .barrier {
+                    border-bottom: 1px dashed #dddddd;
                 }
 
             }

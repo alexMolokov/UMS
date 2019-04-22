@@ -43,6 +43,7 @@ class MessengerTree implements Tree
         return [
             "id" =>  $unit->getGuid(),
             "name" =>  $unit->getName(),
+            "barrier" => $unit->getBarrier(),
             "parentId" =>  $unit->getParent(),
             "hasChild" => true
         ];

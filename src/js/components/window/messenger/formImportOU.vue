@@ -102,8 +102,11 @@
                   });
               },
               handleJson(json) {
-                  console.log(json);
+                  this.$emit("import-ou", json);
+                  this.close();
+
               }
+
 
             }
 
